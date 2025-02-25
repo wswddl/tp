@@ -325,7 +325,68 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**Use case: Add a person**
+
+**MSS**
+
+1.  User requests to add a person by providing the
+    `NAME`, `PHONE_NUMBER`, `EMAIL`, `ADDRESS` and optionally any number of `TAG`
+2.  AddressBook adds the person with the detail into the list
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The details don't follow the correct format.
+
+    * 1a1. AddressBook shows an error message.
+
+* 1b. Lacks details like `NAME`, `PHONE_NUMBER`, `EMAIL` or `ADDRESS`.
+
+    * 1b1. AddressBook shows an error message.
+
+**Use case: Edit a person**
+
+**MSS**
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list using the specified `INDEX`
+and provide the new detail for that person
+4.  AddressBook edit the person's detail
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. The new details don't follow the correct format.
+
+    * 3b1. AddressBook shows an error message.
+
+**Use case: Find a person**
+
+**MSS**
+
+1.  User requests to find a person by `NAME`.
+2.  AddressBook find persons whose name matches at least one of the keyword (case-insensitive).
+    
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
 
 ### Non-Functional Requirements
 
