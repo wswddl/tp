@@ -11,15 +11,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Lau Heng Yi
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/lauhengyi.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/lauhengyi)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
+- Role: Team Lead
+- Responsibilities: Model
 
 ### Ernest Lim
 
@@ -28,8 +28,10 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/ernestlsy)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Documentation
-* Responsibilities: Model
+
+- Role: Team Lead
+- Responsibilities: UI
+
 
 ### Ong Li Hong
 
@@ -37,8 +39,9 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](https://github.com/wswddl)] [[portfolio](team/johndoe.md)]
 
-* Role: Deliverables
-* Responsibilities: UI
+- Role: Developer
+- Responsibilities: Data
+
 
 ### Yu Qian
 
@@ -47,8 +50,10 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/yuqiannemo)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Code Quality
-* Responsibilities: Model
+
+- Role: Developer
+- Responsibilities: Dev Ops + Threading
+
 
 ### James Doe
 
@@ -57,5 +62,5 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/johndoe)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: UI
+- Role: Developer
+- Responsibilities: UI
