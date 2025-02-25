@@ -328,12 +328,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 *{More to be added}*
 
 ### Non-Functional Requirements
-
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+1. Should run on any mainstream OS (Windows, macOS, Linux) with Java 17 or above installed.
+2. Should handle up to 1000 candidates without noticeable lag in typical usage.
+3. Common commands (e.g., adding candidates, updating statuses, searching) should execute within 200ms under normal load.
+4. A user with above-average typing speed should be able to perform most tasks faster using commands than using a mouse.
+5. Should provide clear error messages and usage hints for invalid commands.
+6. Candidate data should be stored securely, ensuring unauthorized users cannot access sensitive information.
+7. Data should be persistently stored and not lost between sessions.
 
 ### Glossary
 
