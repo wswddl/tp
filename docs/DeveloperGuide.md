@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# RecruitTrack Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -274,13 +274,17 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* HR teams handling candidate pipelines
+* Manages multiple candidate pipelines
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
+* are data-driven decision makers
+* works in a face-paced environment
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: Simplifies candidate tracking by organizing applicant information, 
+communication history, and hiring stages for quick access in a fast, no-frills CLI environment
 
 
 ### User stories
