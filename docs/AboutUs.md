@@ -11,44 +11,49 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Lau Heng Yi
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/lauhengyi.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/lauhengyi)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
+- Role: Team Lead
+- Responsibilities: Model
 
-### Jane Doe
+### Ernest Lim
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/ernestlsy.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/ernestlsy)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
 
-### Johnny Doe
+- Role: Team Lead
+- Responsibilities: UI
 
-<img src="images/johndoe.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+### Ong Li Hong
 
-* Role: Developer
-* Responsibilities: Data
+<img src="images/wswddl.png" width="200px">
 
-### Jean Doe
+[[github](https://github.com/wswddl)] [[portfolio](team/johndoe.md)]
 
-<img src="images/johndoe.png" width="200px">
+- Role: Developer
+- Responsibilities: Data
 
-[[github](http://github.com/johndoe)]
+
+### Yu Qian
+
+<img src="images/yuqiannemo.png" width="200px">
+
+[[github](http://github.com/yuqiannemo)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+
+- Role: Developer
+- Responsibilities: Dev Ops + Threading
+
 
 ### Gabriella
 
@@ -57,5 +62,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/GabriellaGloria)]
 [[portfolio](team/johndoe.md)]
 
+
 * Role: Testing
 * Responsibilities: UI
+
