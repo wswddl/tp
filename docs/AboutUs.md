@@ -37,8 +37,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](https://github.com/wswddl)] [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: Deliverables
+* Role: Deliverables
+* Responsibilities: UI
 
 ### Jean Doe
 
