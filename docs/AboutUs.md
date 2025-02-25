@@ -21,24 +21,24 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Ernest Lim
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/ernestlsy.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/ernestlsy)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Team Lead
+* Role: Documentation
+* Responsibilities: Model
+
+### Ong Li Hong
+
+<img src="images/wswddl.png" width="200px">
+
+[[github](https://github.com/wswddl)] [[portfolio](team/johndoe.md)]
+
+* Role: Deliverables
 * Responsibilities: UI
-
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Data
 
 ### Yu Qian
 
