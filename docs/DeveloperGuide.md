@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# RecruitTrack Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -274,27 +274,58 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* HR teams handling candidate pipelines
+* Manages multiple candidate pipelines
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
+* are data-driven decision makers
+* works in a face-paced environment
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: Simplifies candidate tracking by organizing applicant information, 
+communication history, and hiring stages for quick access in a fast, no-frills CLI environment
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority      | As a …​                             | I want to …​                                                                         | So that I can…​                                   |
+|---------------|-------------------------------------|--------------------------------------------------------------------------------------|---------------------------------------------------|
+| `* * *`	| user	| specify the stage of the application process each applicant is in	| keep track of each applicant’s progress |
+| `* * *`	| user	| filter by an applicant’s application process	| keep track of which applicants are left in each stage |
+| `* * *`	| user	| search for a candidate by name or job position	| quickly find relevant information |
+| `* * *`	| user	| view a summary of all candidates in a specific hiring stage	| prioritize my workload |
+| `* * *`	| user	| view statistics (e.g., number of hired candidates, time needed in each stage)	| evaluate my recruitment process |
+| `* * *`	| user	| sort candidates by the date they applied	| review the most recent applications first |
+| `* * *`	| user	| add candidates’ details	| track them easily |
+| `* * *`	| user	| view a candidate’s status	| know their hiring progress |
+| `* * *`	| user	| move candidates to different stages	| manage the hiring process |
+| `* * `        | user                                | group applicants based on what jobs they are applying for                            | manage applicants from different jobs more easily |
+| `* *`  | 	power user	                        | delete multiple candidates with a single command                                     | 	keep my database clean                           |
+| `* *`  | 	power user	                        | tag candidates	                                                                      | easily classify and retrieve important applicants |
+| `* *`  | forgetful user                      | 	have timely reminders for scheduled interviews                                      | 	not miss them                                    |
+| `* *`  | user who is not familiar with CLIs  | have easy access to a list of supported commands, especially the commonly used ones  | get up to speed with using the CLI                |
+| `* *`	| user	| attach a photo to each applicant	| identify the applicants easily                    |
+| `* *`	| user	| add notes to each candidate’s profile	| record important details from interviews or assessments |
+| `* *`	| user	| bulk update candidate statuses	| save time |
+| `* *`	| user	| set deadlines for each hiring stage	| ensure the recruitment process stays on track |
+| `* *`	| user	| export candidate data as a CSV file	| analyze and share information easily with my team |
+| `* *`	| power user	| schedule automated status updates for candidates (e.g., send follow-up emails after a week)	| streamline my communication workflow |
+| `* *`	| user	| assign different access levels to team members	| protect sensitive candidate data while still allowing collaboration |
+| `* *`	| user	| add a simple rating (e.g., 1-5 stars) to candidates	| quickly assess their potential |
+| `* *`	| user	| assign a candidate to a specific recruiter	| ensure proper follow-up and accountability |
+| `*`	| user	| search for particular keywords in past communication history	| revisit specific conversations I’ve had |
+| `*`	| long-time user	| delete communication history for specific contacts	| free up storage space when needed |
+| `*`	| long-time user	| have the option to assign new shortcuts or keywords to my frequently used commands	| navigate the application more efficiently |
+| `*`	| user	| receive notifications when a candidate has been in a stage for too long	| take action to move them forward |
+| `*`	| user	| restore mistakenly deleted candidates within a certain time frame	| recover important information if needed |
+| `*`	| user	| integrate RecruitTrack with my email client	| track all correspondence with candidates in one place |
+| `*`	| user	| generate customized reports based on hiring trends and candidate performance	| make data-driven recruitment decisions |
+| `*`	| user	| log communication history	| remember past interactions |
+| `*`	| user	| send an email template from the CLI	| quickly communicate with candidates |
+| `*`	| user	| view a candidate’s resume and notes before an interview	| prepare relevant questions |
 
 *{More to be added}*
 
@@ -389,17 +420,31 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   Use case ends.
 
 ### Non-Functional Requirements
-
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+1. Should run on any mainstream OS (Windows, macOS, Linux) with Java 17 or above installed.
+2. Should handle up to 1000 candidates without noticeable lag in typical usage.
+3. Common commands (e.g., adding candidates, updating statuses, searching) should execute within 200ms under normal load.
+4. A user with above-average typing speed should be able to perform most tasks faster using commands than using a mouse.
+5. Should provide clear error messages and usage hints for invalid commands.
+6. Candidate data should be stored securely, ensuring unauthorized users cannot access sensitive information.
+7. Data should be persistently stored and not lost between sessions.
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+- **Mainstream OS** - Windows, Linux, Unix, MacOS
+- **Private contact detail** - A contact detail that is not meant to be shared with others
+- **Applicant** – A person who has applied for a job and is stored as a contact in the system.  
+- **Application Metadata** – Information related to an applicant’s job application, such as job position, status, and contact details.  
+- **Contact** – A stored applicant or candidate with essential details such as name, email, phone, job position, and application status.  
+- **Custom Status** – A user-defined application status when the `--custom` flag is used.  
+- **Error Message** – A notification displayed when an invalid input or operation occurs (e.g., invalid email format, missing required fields).  
+- **Email Validation** – A process ensuring the provided email follows a valid format (e.g., `user@domain.com`).  
+- **`--force` Flag** – A command option that allows updating an existing contact if a duplicate email or phone number is found.  
+- **Identifier Type** – A flag (`-n`, `-e`, `-p`, `-id`) used to specify whether a contact is searched by name, email, phone number, or system ID.  
+- **Job Position** – The role or position that an applicant is applying for, stored in the system.  
+- **Parameter** – A required or optional value provided in a command (e.g., `NAME`, `EMAIL`, `STATUS`).  
+- **Status Update** – A change in an applicant’s application stage using the `update` command.  
+- **System ID** – A unique numerical identifier assigned to each contact in the system.  
+- **Unique Identifier** – A distinct value (email, phone number, or system ID) used to identify contacts.  
 
 --------------------------------------------------------------------------------------------------------------------
 
