@@ -283,7 +283,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * are data-driven decision makers
 * works in a face-paced environment
 
-**Value proposition**: Simplifies candidate tracking by organizing applicant information, 
+**Value proposition**: Simplifies candidate tracking by organizing applicant information,
 communication history, and hiring stages for quick access in a fast, no-frills CLI environment
 
 
@@ -410,7 +410,7 @@ and provide the new detail for that person
 
 1.  User requests to find a person by `NAME`.
 2.  AddressBook find persons whose name matches at least one of the keyword (case-insensitive).
-    
+
     Use case ends.
 
 **Extensions**
@@ -432,19 +432,19 @@ and provide the new detail for that person
 
 - **Mainstream OS** - Windows, Linux, Unix, MacOS
 - **Private contact detail** - A contact detail that is not meant to be shared with others
-- **Applicant** – A person who has applied for a job and is stored as a contact in the system.  
-- **Application Metadata** – Information related to an applicant’s job application, such as job position, status, and contact details.  
-- **Contact** – A stored applicant or candidate with essential details such as name, email, phone, job position, and application status.  
-- **Custom Status** – A user-defined application status when the `--custom` flag is used.  
-- **Error Message** – A notification displayed when an invalid input or operation occurs (e.g., invalid email format, missing required fields).  
-- **Email Validation** – A process ensuring the provided email follows a valid format (e.g., `user@domain.com`).  
-- **`--force` Flag** – A command option that allows updating an existing contact if a duplicate email or phone number is found.  
-- **Identifier Type** – A flag (`-n`, `-e`, `-p`, `-id`) used to specify whether a contact is searched by name, email, phone number, or system ID.  
-- **Job Position** – The role or position that an applicant is applying for, stored in the system.  
-- **Parameter** – A required or optional value provided in a command (e.g., `NAME`, `EMAIL`, `STATUS`).  
-- **Status Update** – A change in an applicant’s application stage using the `update` command.  
-- **System ID** – A unique numerical identifier assigned to each contact in the system.  
-- **Unique Identifier** – A distinct value (email, phone number, or system ID) used to identify contacts.  
+- **Applicant** – A person who has applied for a job and is stored as a contact in the system.
+- **Application Metadata** – Information related to an applicant’s job application, such as job position, status, and contact details.
+- **Contact** – A stored applicant or candidate with essential details such as name, email, phone, job position, and application status.
+- **Custom Status** – A user-defined application status when the `--custom` flag is used.
+- **Error Message** – A notification displayed when an invalid input or operation occurs (e.g., invalid email format, missing required fields).
+- **Email Validation** – A process ensuring the provided email follows a valid format (e.g., `user@domain.com`).
+- **`--force` Flag** – A command option that allows updating an existing contact if a duplicate email or phone number is found.
+- **Identifier Type** – A flag (`-n`, `-e`, `-p`, `-id`) used to specify whether a contact is searched by name, email, phone number, or system ID.
+- **Job Position** – The role or position that an applicant is applying for, stored in the system.
+- **Parameter** – A required or optional value provided in a command (e.g., `NAME`, `EMAIL`, `STATUS`).
+- **Status Update** – A change in an applicant’s application stage using the `update` command.
+- **System ID** – A unique numerical identifier assigned to each contact in the system.
+- **Unique Identifier** – A distinct value (email, phone number, or system ID) used to identify contacts.
 
 --------------------------------------------------------------------------------------------------------------------
 
