@@ -19,7 +19,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/johndoe.md)]
 
 - Role: Team Lead
-- Responsibilities: Model
+- Responsibilities: Logic
 
 ### Ernest Lim
 
@@ -29,8 +29,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/johndoe.md)]
 
 
-- Role: Team Lead
-- Responsibilities: UI
+- Role: Documentation
+- Responsibilities: Model
 
 
 ### Ong Li Hong
@@ -39,8 +39,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](https://github.com/wswddl)] [[portfolio](team/johndoe.md)]
 
-- Role: Developer
-- Responsibilities: Data
+- Role: Deliverables
+- Responsibilities: Ui
 
 
 ### Yu Qian
@@ -51,8 +51,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/johndoe.md)]
 
 
-- Role: Developer
-- Responsibilities: Dev Ops + Threading
+- Role: Code Quality
+- Responsibilities: Data
 
 
 ### Gabriella
@@ -64,5 +64,5 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 
 * Role: Testing
-* Responsibilities: UI
+* Responsibilities: Storage
 

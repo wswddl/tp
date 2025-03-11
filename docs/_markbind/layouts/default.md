@@ -10,6 +10,7 @@
     <li><a href="{{baseUrl}}/DeveloperGuide.html" class="nav-link">Developer Guide</a></li>
     <li><a href="{{baseUrl}}/AboutUs.html" class="nav-link">About Us</a></li>
     <li><a href="https://github.com/se-edu/addressbook-level3" target="_blank" class="nav-link"><md>:fab-github:</md></a>
+    <li><a href="https://github.com/AY2425S2-CS2103T-W09-1/tp" target="_blank" class="nav-link"><md>Github</md></a>
     </li>
     <li slot="right">
       <form class="navbar-form">
@@ -18,6 +19,8 @@
     </li>
   </navbar>
 </header>
+
+<page-nav-print />
 
 <div id="flex-body">
   <nav id="site-nav">
