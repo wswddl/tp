@@ -3,12 +3,8 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -31,15 +27,17 @@ public class DeleteCommand extends Command {
             + "Example: " + COMMAND_WORD + " n/John Doe";
 
     static final String MESSAGE_CONFIRMATION_REQUIRED_MULTIPLE_PERSONS =
-            "Are you sure you want to delete all the persons?";
-    static final String MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON = "Are you sure you want to delete this person?";
+            "Are you sure you want to delete all the persons listed below?\n" + "Type 'yes' to continue\n"
+                    + "Type anything else to cancel the deletion";
+    static final String MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON = "Are you sure you want to delete this person?\n"
+            + "Type 'yes' to continue\n"
+            + "Type anything else to cancel the deletion";
     static final String MESSAGE_NO_MATCHING_PERSON = "No matching person found.";
-
+    // todo:
     static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
-    static final String MESSAGE_DELETION_CANCELED = "Deletion canceled.";
 
     private final IdentifierPredicate predicate;
-    private final boolean isForceDelete;
+    private boolean isForceDelete;
     private final Index targetIndex;
 
     /**
@@ -75,6 +73,10 @@ public class DeleteCommand extends Command {
         }
     }
 
+    public void setForceDelete(boolean isForceDelete) {
+        this.isForceDelete = isForceDelete;
+    }
+
     /**
      * Deletes a person by index.
      */
@@ -86,19 +88,11 @@ public class DeleteCommand extends Command {
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-
         if (!isForceDelete) {
-            // Show confirmation dialog
-            boolean isConfirmed = showConfirmationDialog("Confirm Deletion",
-                    MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON);
-
-            if (isConfirmed) {
-                model.deletePerson(personToDelete);
-                return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
-            } else {
-                return new CommandResult(MESSAGE_DELETION_CANCELED);
-            }
+            return new CommandResult(String.format(MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON));
         }
+
+        // Force delete without confirmation
         model.deletePerson(personToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
     }
@@ -114,44 +108,22 @@ public class DeleteCommand extends Command {
             throw new CommandException(MESSAGE_NO_MATCHING_PERSON);
         }
 
-        if (!isForceDelete && filteredList.size() > 1) {
-            // Show confirmation dialog for multiple persons
-            boolean isConfirmed = showConfirmationDialog("Confirm Deletion",
-                    MESSAGE_CONFIRMATION_REQUIRED_MULTIPLE_PERSONS);
-
-            if (isConfirmed) {
-                for (Person person : filteredList) {
-                    model.deletePerson(person);
-                }
-                String deletedNames = filteredList.stream()
-                        .map(Messages::format)
-                        .collect(Collectors.joining(", "));
-                return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedNames));
+        if (!isForceDelete) {
+            if (filteredList.size() > 1) {
+                return new CommandResult(String.format(MESSAGE_CONFIRMATION_REQUIRED_MULTIPLE_PERSONS));
             } else {
-                return new CommandResult(MESSAGE_DELETION_CANCELED);
-            }
-        }
-
-        if (!isForceDelete && filteredList.size() == 1) {
-            // Show confirmation dialog for a single person
-            Person personToDelete = filteredList.get(0);
-            boolean isConfirmed = showConfirmationDialog("Confirm Deletion",
-                    MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON);
-
-            if (isConfirmed) {
-                model.deletePerson(personToDelete);
-                return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
-            } else {
-                return new CommandResult(MESSAGE_DELETION_CANCELED);
+                return new CommandResult(String.format(MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON));
             }
         }
 
         // Force delete without confirmation
-        for (Person person : filteredList) {
+        List<Person> personsToDelete = List.copyOf(filteredList);
+
+        for (Person person : personsToDelete) {
             model.deletePerson(person);
         }
 
-        String deletedNames = filteredList.stream()
+        String deletedNames = personsToDelete.stream()
                 .map(Messages::format)
                 .collect(Collectors.joining(", "));
 
@@ -185,38 +157,5 @@ public class DeleteCommand extends Command {
                 .add("targetIndex", targetIndex)
                 .add("isForceDelete", isForceDelete)
                 .toString();
-    }
-
-    /**
-     * Shows a confirmation dialog and returns the user's response.
-     *
-     * @param title   The title of the dialog.
-     * @param message The message to display.
-     * @return True if the user confirms, false if the user cancels.
-     */
-    private boolean showConfirmationDialog(String title, String message) {
-        // Ensure the dialog is shown on the JavaFX Application Thread
-        if (Platform.isFxApplicationThread()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle(title);
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-
-            Optional<ButtonType> result = alert.showAndWait();
-            return result.isPresent() && result.get() == ButtonType.OK;
-        } else {
-            // If not on the JavaFX Application Thread, use Platform.runLater
-            final boolean[] isConfirmed = {false};
-            Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle(title);
-                alert.setHeaderText(null);
-                alert.setContentText(message);
-
-                Optional<ButtonType> result = alert.showAndWait();
-                isConfirmed[0] = result.isPresent() && result.get() == ButtonType.OK;
-            });
-            return isConfirmed[0];
-        }
     }
 }
