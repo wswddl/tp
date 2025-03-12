@@ -3,6 +3,10 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Applicant's applying JobPosition.
+ * Guarantees: immutable; is valid as declared in {@link #isValidJobPosition(String)}
+ */
 public class JobPosition {
     public static final String MESSAGE_CONSTRAINTS =
             "Job Positions should only contain alphanumeric characters and spaces, and it should not be blank";
