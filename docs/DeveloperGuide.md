@@ -335,7 +335,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC01 - Delete a person**
 
-**MSS**
+**MSS:**
 
 1.  User requests to list persons
 2.  RecruitTrack shows a list of persons
@@ -344,7 +344,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Extensions**
+**Extensions:**
 
 * 2a. The list is empty.
 
@@ -354,18 +354,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 3a1. RecruitTrack shows an error message.
 
-      Use case resumes at step 2.
+      Use case resumes from step 2.
 
 **Use case: UC02 - Add a person**
 
-**MSS**
+**MSS:**
 
 1.  User requests to add a person by providing the details
 2.  RecruitTrack adds the person with the details into the list
 
     Use case ends.
 
-**Extensions**
+**Extensions:**
 
 * 1a. The details don't follow the correct format.
 
@@ -377,7 +377,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC03 - Edit a person**
 
-**MSS**
+**MSS:**
 
 1.  User requests to list persons
 2.  RecruitTrack shows a list of persons
@@ -386,7 +386,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Extensions**
+**Extensions:**
 
 * 2a. The list is empty.
 
@@ -396,24 +396,24 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 3a1. RecruitTrack shows an error message.
 
-      Use case resumes at step 2.
+      Use case resumes from step 2.
 
 * 3b. The new details don't follow the correct format.
 
     * 3b1. RecruitTrack shows an error message.
 
-      Use case resumes at step 2.
+      Use case resumes from step 2.
 
 **Use case: UC04 - Find a person**
 
-**MSS**
+**MSS:**
 
 1.  User requests to find a person by providing the person's details.
 2.  RecruitTrack find persons with the given details.
     
     Use case ends.
 
-**Extensions**
+**Extensions:**
 
 * 2a. The list is empty.
 
