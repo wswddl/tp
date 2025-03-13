@@ -1,6 +1,10 @@
 package seedu.address.logic.commands;
 
+import java.util.List;
 import static java.util.Objects.requireNonNull;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -20,6 +24,11 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";
+    private static final Set<String> CRITERIA = Set.of(PREFIX_NAME.getPrefix(), 
+                                                        PREFIX_EMAIL.getPrefix(), 
+                                                        PREFIX_ID.getPrefix(), 
+                                                        PREFIX_JOB_POSITION.getPrefix(), 
+                                                        PREFIX_STATUS.getPrefix());
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for applicants based on [CRITERIA] and [VALUE].\n"
             + "Parameters:\n"
@@ -32,21 +41,49 @@ public class SearchCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + PREFIX_EMAIL +" john@example.com\n";
 
     private final NameContainsKeywordsPredicate predicate;
-    public static final String MESSAGE_NO_RESULT = "This person already exists in the address book";
+    
+    public static final String MESSAGE_NO_RESULT = "Error: No applicants found.";
+    public static final String MESSAGE_INVALID_CRITERIA = "Error: Invalid search CRITERIA";
+    public static final String MESSAGE_MISSING_VALUE = "Error: Missing VALUE for search";
 
     public SearchCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
+    private void validateKeywords(List<String> keywords) throws CommandException {
+        Set<String> invalidKeywords = IntStream.range(0, keywords.size())
+                .filter(i -> i % 2 == 0) 
+                .mapToObj(keywords::get)
+                .filter(keyword -> !CRITERIA.contains(keyword))
+                .collect(Collectors.toSet());
+    
+        if (!invalidKeywords.isEmpty()) {
+            throw new CommandException(MESSAGE_INVALID_CRITERIA);
+        }
+        Set<String> missingValues = IntStream.range(0, keywords.size())
+                .filter(i -> i % 2 != 0) 
+                .mapToObj(keywords::get)
+                .filter(keyword -> CRITERIA.contains(keyword) || keyword == null)
+                .collect(Collectors.toSet());
+    
+        if (!missingValues.isEmpty()) {
+            throw new CommandException(MESSAGE_MISSING_VALUE);
+        }
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        validateKeywords(predicate.getKeywords());
+
         model.updateFilteredPersonList(predicate);
 
         int count = model.getFilteredPersonList().size();
         if (count == 0) {
             throw new CommandException(MESSAGE_NO_RESULT);
         }
+        
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
     }
