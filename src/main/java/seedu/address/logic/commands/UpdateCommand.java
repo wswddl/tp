@@ -7,6 +7,9 @@ import seedu.address.model.person.IdentifierPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Status;
 
+/**
+ * Updates the {@code Status} of a {@code Person} identified using the specified contact identifier
+ */
 public class UpdateCommand extends Command {
     public static final String COMMAND_WORD = "update";
 
@@ -23,6 +26,10 @@ public class UpdateCommand extends Command {
     private final IdentifierPredicate predicate;
     private final Status status;
 
+    /**
+     * @param predicate     The predicate used to identify the {@code Person} to be updated.
+     * @param status        The {@code Status} to which the {@code Person}'s status should be set to
+     */
     public UpdateCommand(IdentifierPredicate predicate, Status status) {
         this.predicate = predicate;
         this.status = status;
@@ -49,11 +56,10 @@ public class UpdateCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof UpdateCommand)) {
+        if (!(other instanceof UpdateCommand otherUpdateCommand)) {
             return false;
         }
 
-        UpdateCommand otherUpdateCommand = (UpdateCommand) other;
         return predicate.equals(otherUpdateCommand.predicate);
     }
 

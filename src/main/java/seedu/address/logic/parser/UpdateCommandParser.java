@@ -31,7 +31,7 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS);
 
         // Check that only one identifier prefix is provided
-        if (numOfPrefixesPresent(argMultimap) != 1) {
+        if (numOfPrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL) != 1) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         }
 
