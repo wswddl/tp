@@ -18,6 +18,9 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_PERSONS_MATCHED = "%1$d persons matched!";
+    public static final String MESSAGE_NO_MATCHES = "No person matches provided keyword!";
+    public static final String MESSAGE_MULTIPLE_MATCHES = "%1$d persons matched keyword. Please be more specific!";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

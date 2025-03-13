@@ -17,17 +17,25 @@ public class Status {
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public final String status;
+    public static final Status NO_STATUS = new Status("");
+    public static final Status UNDER_REVIEW = new Status("Under review");
+    public static final Status SHORTLISTED = new Status("Shortlisted");
+    public static final Status INTERVIEW_SCHEDULED = new Status("Interview scheduled");
+    public static final Status OFFERED = new Status("Offer extended");
+    public static final Status ACCEPTED = new Status("Offer accepted");
+    public static final Status DECLINED = new Status("Offer declined");
+
+    public final String value;
 
     /**
      * Constructs a {@code Status}.
      *
-     * @param status A valid status.
+     * @param value A valid status String.
      */
-    public Status(String status) {
-        requireNonNull(status);
-        checkArgument(isValidStatus(status), MESSAGE_CONSTRAINTS);
-        this.status = status;
+    public Status(String value) {
+        requireNonNull(value);
+        checkArgument(isValidStatus(value), MESSAGE_CONSTRAINTS);
+        this.value = value;
     }
 
     /**
@@ -35,12 +43,6 @@ public class Status {
      */
     public static boolean isValidStatus(String test) {
         return test.matches(VALIDATION_REGEX);
-    }
-
-
-    @Override
-    public String toString() {
-        return this.status;
     }
 
     @Override
@@ -59,6 +61,14 @@ public class Status {
 
     @Override
     public int hashCode() {
-        return this.status.hashCode();
+        return value.hashCode();
     }
+
+    /**
+     * Format state as text for viewing.
+     */
+    public String toString() {
+        return '[' + value + ']';
+    }
+
 }

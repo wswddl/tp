@@ -25,6 +25,7 @@ public class Person {
     private final JobPosition jobPosition;
     private final Status status;
     private final Address address;
+    private final Status status;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
@@ -63,6 +64,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     /**
