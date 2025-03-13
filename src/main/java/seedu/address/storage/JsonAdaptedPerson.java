@@ -104,12 +104,13 @@ class JsonAdaptedPerson {
         final Email modelEmail = new Email(email);
 
         if (jobPosition == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, JobPosition.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    JobPosition.class.getSimpleName()));
         }
         if (!JobPosition.isValidJobPosition(jobPosition)) {
             throw new IllegalValueException(JobPosition.MESSAGE_CONSTRAINTS);
         }
-        final JobPosition modelJobPosition= new JobPosition(jobPosition);
+        final JobPosition modelJobPosition = new JobPosition(jobPosition);
 
         if (status == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName()));

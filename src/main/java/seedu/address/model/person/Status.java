@@ -17,14 +17,6 @@ public class Status {
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-// for next increment
-//    public static final Status UNDER_REVIEW = new Status("Under review");
-//    public static final Status SHORTLISTED = new Status("Shortlisted");
-//    public static final Status INTERVIEW_SCHEDULED = new Status("Interview scheduled");
-//    public static final Status OFFERED = new Status("Offer extended");
-//    public static final Status ACCEPTED = new Status("Offer accepted");
-//    public static final Status DECLINED = new Status("Offer declined");
-
     public final String value;
 
     /**

@@ -23,7 +23,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.JobPosition;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -104,7 +103,8 @@ public class EditCommand extends Command {
         Status updatedStatus = editPersonDescriptor.getStatus().orElse(personToEdit.getStatus());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, personToEdit.getJobPosition(), updatedStatus, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, personToEdit.getJobPosition(), updatedStatus,
+                updatedAddress, updatedTags);
     }
 
     @Override

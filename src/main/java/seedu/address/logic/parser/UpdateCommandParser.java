@@ -2,14 +2,24 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.EmailMatchesKeywordPredicate;
+import seedu.address.model.person.IdentifierPredicate;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.NameMatchesKeywordPredicate;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.PhoneMatchesKeywordPredicate;
+import seedu.address.model.person.Status;
 
 /**
  * Parses input arguments and creates a new UpdateCommand object
@@ -35,7 +45,7 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         }
 
-        Status status = null;
+        Status status;
         // Check if status is provided and valid
         if (argMultimap.getValue(PREFIX_STATUS).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
