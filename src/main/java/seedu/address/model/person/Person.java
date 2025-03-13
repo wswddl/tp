@@ -25,6 +25,7 @@ public class Person {
     private final JobPosition jobPosition;
     private final Status status;
     private final Address address;
+    private final Status status;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
@@ -126,6 +127,7 @@ public class Person {
                 .add("jobPosition", jobPosition)
                 .add("status", status)
                 .add("address", address)
+                .add("status", status)
                 .add("tags", tags)
                 .toString();
     }
