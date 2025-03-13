@@ -56,7 +56,7 @@ public class Status {
             return false;
         }
 
-        return this.status.equals(otherStatus.status);
+        return this.value.equals(otherStatus.value);
     }
 
     @Override
