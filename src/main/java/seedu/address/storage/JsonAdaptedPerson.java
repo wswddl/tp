@@ -140,7 +140,8 @@ class JsonAdaptedPerson {
         final LocalDateTime modelAddedTime = addedTime;
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelJobPosition, modelStatus, modelAddress, modelAddedTime, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelJobPosition, modelStatus, modelAddress,
+                modelAddedTime, modelTags);
     }
 
 }
