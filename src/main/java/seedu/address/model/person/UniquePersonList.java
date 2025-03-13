@@ -139,7 +139,7 @@ public class UniquePersonList implements Iterable<Person> {
         } else if (prefix.equals(new Prefix("s/"))) {
             // sort by status
             internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
-                    .compare(p1.getStatus().status, p2.getStatus().status));
+                    .compare(p1.getStatus().value, p2.getStatus().value));
 
         } // ignore non-sorting prefix
     }

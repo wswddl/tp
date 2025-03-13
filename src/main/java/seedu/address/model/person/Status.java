@@ -17,17 +17,17 @@ public class Status {
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public final String status;
+    public final String value;
 
     /**
      * Constructs a {@code Status}.
      *
-     * @param status A valid status.
+     * @param value A valid status String.
      */
-    public Status(String status) {
-        requireNonNull(status);
-        checkArgument(isValidStatus(status), MESSAGE_CONSTRAINTS);
-        this.status = status;
+    public Status(String value) {
+        requireNonNull(value);
+        checkArgument(isValidStatus(value), MESSAGE_CONSTRAINTS);
+        this.value = value;
     }
 
     /**
@@ -35,12 +35,6 @@ public class Status {
      */
     public static boolean isValidStatus(String test) {
         return test.matches(VALIDATION_REGEX);
-    }
-
-
-    @Override
-    public String toString() {
-        return this.status;
     }
 
     @Override
@@ -54,11 +48,19 @@ public class Status {
             return false;
         }
 
-        return this.status.equals(otherStatus.status);
+        return this.value.equals(otherStatus.value);
     }
 
     @Override
     public int hashCode() {
-        return this.status.hashCode();
+        return value.hashCode();
     }
+
+    /**
+     * Format state as text for viewing.
+     */
+    public String toString() {
+        return '[' + value + ']';
+    }
+
 }

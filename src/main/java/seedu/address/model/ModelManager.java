@@ -13,6 +13,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Status;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -112,6 +113,17 @@ public class ModelManager implements Model {
         addressBook.setPerson(target, editedPerson);
     }
 
+    @Override
+    public Person setStatus(Person target, Status status) {
+        requireAllNonNull(target, status);
+
+        Person editedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(),
+                target.getJobPosition(), status, target.getAddress(), target.getAddedTime(), target.getTags());
+        this.setPerson(target, editedPerson);
+
+        return editedPerson;
+    }
+
     // Added for applicant sorting
     @Override
     public void sortPersons(Prefix prefix) {
@@ -135,6 +147,10 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    public int getFilteredPersonListSize() {
+        return filteredPersons.size();
     }
 
     @Override
