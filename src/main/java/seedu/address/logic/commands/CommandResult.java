@@ -48,6 +48,12 @@ public class CommandResult {
         return exit;
     }
 
+    // currently isConfirmation only applies to the deletion command
+    public boolean isConfirmation() {
+        return feedbackToUser.equals(DeleteCommand.MESSAGE_CONFIRMATION_REQUIRED_MULTIPLE_PERSONS)
+                || feedbackToUser.equals(DeleteCommand.MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

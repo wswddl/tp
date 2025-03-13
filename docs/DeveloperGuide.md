@@ -283,7 +283,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * are data-driven decision makers
 * works in a face-paced environment
 
-**Value proposition**: Simplifies candidate tracking by organizing applicant information, 
+**Value proposition**: Simplifies candidate tracking by organizing applicant information,
 communication history, and hiring stages for quick access in a fast, no-frills CLI environment
 
 
@@ -331,20 +331,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `RecruitTrack` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC01 - Delete a person**
 
-**MSS**
+**MSS:**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  RecruitTrack shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  RecruitTrack deletes the person
 
     Use case ends.
 
-**Extensions**
+**Extensions:**
 
 * 2a. The list is empty.
 
@@ -352,43 +352,41 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. RecruitTrack shows an error message.
 
-      Use case resumes at step 2.
+      Use case resumes from step 2.
 
-**Use case: Add a person**
+**Use case: UC02 - Add a person**
 
-**MSS**
+**MSS:**
 
-1.  User requests to add a person by providing the
-    `NAME`, `PHONE_NUMBER`, `EMAIL`, `ADDRESS` and optionally any number of `TAG`
-2.  AddressBook adds the person with the detail into the list
+1.  User requests to add a person by providing the details
+2.  RecruitTrack adds the person with the details into the list
 
     Use case ends.
 
-**Extensions**
+**Extensions:**
 
 * 1a. The details don't follow the correct format.
 
-    * 1a1. AddressBook shows an error message.
+    * 1a1. RecruitTrack shows an error message.
 
-* 1b. Lacks details like `NAME`, `PHONE_NUMBER`, `EMAIL` or `ADDRESS`.
+* 1b. Lacks mandatory details.
 
-    * 1b1. AddressBook shows an error message.
+    * 1b1. RecruitTrack shows an error message.
 
-**Use case: Edit a person**
+**Use case: UC03 - Edit a person**
 
-**MSS**
+**MSS:**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to edit a specific person in the list using the specified `INDEX`
-and provide the new detail for that person
-4.  AddressBook edit the person's detail
+2.  RecruitTrack shows a list of persons
+3.  User requests to edit a specific person in the list and provides the new details for that person
+4.  RecruitTrack edit the person's details
 
     Use case ends.
 
-**Extensions**
+**Extensions:**
 
 * 2a. The list is empty.
 
@@ -396,24 +394,26 @@ and provide the new detail for that person
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. RecruitTrack shows an error message.
 
-      Use case resumes at step 2.
+      Use case resumes from step 2.
 
 * 3b. The new details don't follow the correct format.
 
-    * 3b1. AddressBook shows an error message.
+    * 3b1. RecruitTrack shows an error message.
 
-**Use case: Find a person**
+      Use case resumes from step 2.
 
-**MSS**
+**Use case: UC04 - Find a person**
 
-1.  User requests to find a person by `NAME`.
-2.  AddressBook find persons whose name matches at least one of the keyword (case-insensitive).
-    
+**MSS:**
+
+1.  User requests to find a person by providing the person's details.
+2.  RecruitTrack find persons with the given details.
+
     Use case ends.
 
-**Extensions**
+**Extensions:**
 
 * 2a. The list is empty.
 
@@ -432,19 +432,19 @@ and provide the new detail for that person
 
 - **Mainstream OS** - Windows, Linux, Unix, MacOS
 - **Private contact detail** - A contact detail that is not meant to be shared with others
-- **Applicant** – A person who has applied for a job and is stored as a contact in the system.  
-- **Application Metadata** – Information related to an applicant’s job application, such as job position, status, and contact details.  
-- **Contact** – A stored applicant or candidate with essential details such as name, email, phone, job position, and application status.  
-- **Custom Status** – A user-defined application status when the `--custom` flag is used.  
-- **Error Message** – A notification displayed when an invalid input or operation occurs (e.g., invalid email format, missing required fields).  
-- **Email Validation** – A process ensuring the provided email follows a valid format (e.g., `user@domain.com`).  
-- **`--force` Flag** – A command option that allows updating an existing contact if a duplicate email or phone number is found.  
-- **Identifier Type** – A flag (`-n`, `-e`, `-p`, `-id`) used to specify whether a contact is searched by name, email, phone number, or system ID.  
-- **Job Position** – The role or position that an applicant is applying for, stored in the system.  
-- **Parameter** – A required or optional value provided in a command (e.g., `NAME`, `EMAIL`, `STATUS`).  
-- **Status Update** – A change in an applicant’s application stage using the `update` command.  
-- **System ID** – A unique numerical identifier assigned to each contact in the system.  
-- **Unique Identifier** – A distinct value (email, phone number, or system ID) used to identify contacts.  
+- **Applicant** – A person who has applied for a job and is stored as a contact in the system.
+- **Application Metadata** – Information related to an applicant’s job application, such as job position, status, and contact details.
+- **Contact** – A stored applicant or candidate with essential details such as name, email, phone, job position, and application status.
+- **Custom Status** – A user-defined application status when the `--custom` flag is used.
+- **Error Message** – A notification displayed when an invalid input or operation occurs (e.g., invalid email format, missing required fields).
+- **Email Validation** – A process ensuring the provided email follows a valid format (e.g., `user@domain.com`).
+- **`--force` Flag** – A command option that allows updating an existing contact if a duplicate email or phone number is found.
+- **Identifier Type** – A flag (`-n`, `-e`, `-p`, `-id`) used to specify whether a contact is searched by name, email, phone number, or system ID.
+- **Job Position** – The role or position that an applicant is applying for, stored in the system.
+- **Parameter** – A required or optional value provided in a command (e.g., `NAME`, `EMAIL`, `STATUS`).
+- **Status Update** – A change in an applicant’s application stage using the `update` command.
+- **System ID** – A unique numerical identifier assigned to each contact in the system.
+- **Unique Identifier** – A distinct value (email, phone number, or system ID) used to identify contacts.
 
 --------------------------------------------------------------------------------------------------------------------
 

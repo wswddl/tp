@@ -10,6 +10,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -32,6 +33,7 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final AddressBookParser addressBookParser;
+    private Command pendingCommand = null;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -47,8 +49,28 @@ public class LogicManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         CommandResult commandResult;
-        Command command = addressBookParser.parseCommand(commandText);
-        commandResult = command.execute(model);
+
+        if (pendingCommand != null) {
+            if (commandText.equalsIgnoreCase("yes")) {
+                // currently only deletion needs the confirmation
+                DeleteCommand deleteCommand = (DeleteCommand) pendingCommand;
+                deleteCommand.setForceDelete(true);
+
+                System.out.println("deleting command");
+                commandResult = deleteCommand.execute(model);
+                pendingCommand = null;
+            } else {
+                pendingCommand = null;
+                return new CommandResult("Deletion cancelled.");
+            }
+        } else {
+            Command command = addressBookParser.parseCommand(commandText);
+            commandResult = command.execute(model);
+
+            if (commandResult.isConfirmation()) {
+                pendingCommand = command;
+            }
+        }
 
         try {
             storage.saveAddressBook(model.getAddressBook());
