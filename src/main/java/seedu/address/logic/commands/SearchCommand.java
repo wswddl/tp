@@ -4,6 +4,11 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
@@ -13,13 +18,18 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
  */
 public class SearchCommand extends Command {
 
-    public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_WORD = "search";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
-
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for applicants based on [CRITERIA] and [VALUE].\n"
+            + "Parameters:   "
+            + PREFIX_NAME + ": Applicant's name\n"
+            + PREFIX_EMAIL + ": Applicant's email address\n"
+            + PREFIX_ID + ": System's assigned ID "
+            + PREFIX_JOB_POSITION + ": Job position.   "
+            + PREFIX_STATUS + ": Hiring stage.\n"
+            + "Example: " + COMMAND_WORD + PREFIX_NAME + " John Doe\n"
+            + "Example: " + COMMAND_WORD + PREFIX_EMAIL +" john@example.com";
+            
     private final NameContainsKeywordsPredicate predicate;
 
     public SearchCommand(NameContainsKeywordsPredicate predicate) {
