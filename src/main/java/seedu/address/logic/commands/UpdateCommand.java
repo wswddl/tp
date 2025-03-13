@@ -17,6 +17,9 @@ public class UpdateCommand extends Command {
 
     private static final String MESSAGE_UPDATE_STATUS_SUCCESS = "Updated status of: %1$s";
 
+    public static final String MESSAGE_NO_MATCHES = "No person matches provided keyword!";
+    public static final String MESSAGE_MULTIPLE_MATCHES = "%1$d persons matched keyword. Please be more specific!";
+
     private final IdentifierPredicate predicate;
     private final Status status;
 
@@ -30,9 +33,9 @@ public class UpdateCommand extends Command {
         model.updateFilteredPersonList(predicate);
         int numberOfMatches = model.getFilteredPersonListSize();
         if (numberOfMatches == 0) {
-            return new CommandResult(String.format(Messages.MESSAGE_NO_MATCHES));
+            return new CommandResult(String.format(MESSAGE_NO_MATCHES));
         } else if (numberOfMatches > 1 ) {
-            return new CommandResult(String.format(Messages.MESSAGE_MULTIPLE_MATCHES, numberOfMatches));
+            return new CommandResult(String.format(MESSAGE_MULTIPLE_MATCHES, numberOfMatches));
         }
         Person target = model.getFilteredPersonList().get(0);
         Person updatedPerson = model.setStatus(target, status);

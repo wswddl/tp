@@ -116,9 +116,9 @@ public class ModelManager implements Model {
     public Person setStatus(Person target, Status status) {
         requireAllNonNull(target, status);
 
-        Person editedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getAddress(),
-                status, target.getTags());
-        setPerson(target, editedPerson);
+        Person editedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(),
+                target.getJobPosition(), status, target.getAddress(), target.getTags());
+        this.setPerson(target, editedPerson);
 
         return editedPerson;
     }
