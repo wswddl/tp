@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.*;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -39,7 +40,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, jobPosition, status, address, tagList);
+        LocalDateTime addedTime = LocalDateTime.now();
+
+        Person person = new Person(name, phone, email, jobPosition, status, address, addedTime, tagList);
 
         return new AddCommand(person);
     }

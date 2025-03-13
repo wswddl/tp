@@ -3,24 +3,24 @@ package seedu.address.logic.commands;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Prefix;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CRITERIA_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sort the applicants based on [CRITERIA]."
-            + " Accepted [CRITERIA]: "
-            + PREFIX_NAME + ": Sort by name. "
-            + PREFIX_EMAIL + ": Sort by name.\n"
-            // jp, id, stage cant be implemented yet
-            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "; "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sort the applicants based on [CRITERIA].\n"
+            + "Accepted [CRITERIA]:   "
+            + PREFIX_NAME + ": Sort by name.   "
+            + PREFIX_EMAIL + ": Sort by email address.   "
+            + PREFIX_ADDED_TIME + ": Sort by added time.   "
+            + PREFIX_JOB_POSITION + ": Sort by job position.   "
+            + PREFIX_STATUS + ": Sort by application status.\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_EMAIL;
 
     public static final String MESSAGE_SUCCESS = "Applicant list has been sorted successfully based on %1$s";
@@ -45,16 +45,16 @@ public class SortCommand extends Command {
             this.criteria = "Email Address";
             break;
 
-        case "t/":
+        case "time/":
             this.criteria = "Added Time";
             break;
 
-        case "jp/":
+        case "j/":
             this.criteria = "Job Position";
             break;
 
         case "s/":
-            this.criteria = "Applicantion Stage";
+            this.criteria = "Application Status";
             break;
 
         default:

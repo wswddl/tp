@@ -21,21 +21,6 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new ParseException(e.getMessage());
         }
 
-        /*
-        if (args.equals(" n/")) {
-            return new SortCommand(new Prefix("n/"));
-        } else if (args.equals(" e/")) {
-            return new SortCommand(new Prefix("e/"));
-        } else if (args.equals(" id/")) {
-            return new SortCommand(new Prefix("id/"));
-        } else if (args.equals(" jp/")) {
-            return new SortCommand(new Prefix("jp/"));
-        } else if (args.equals(" s/")) {
-            return new SortCommand(new Prefix("s/"));
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE));
-        }
-         */
     }
 
 }

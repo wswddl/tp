@@ -100,8 +100,8 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     public void sortPersons(Prefix prefix) {
-
-        Comparator<String> customComparator = (s1, s2) -> {
+        // sort String based on lexicographic order with case sensitivity (A, a, B, b, ..., Z, z)
+        Comparator<String> caseSensitiveLexicographicComparator = (s1, s2) -> {
             for (int i = 0; i < Math.min(s1.length(), s2.length()); i++) {
                 char c1 = s1.charAt(i);
                 char c2 = s2.charAt(i);
@@ -119,22 +119,29 @@ public class UniquePersonList implements Iterable<Person> {
 
         if (prefix.equals(new Prefix("n/"))) {
             // sort by name
-            internalList.sort((p1, p2) -> customComparator.compare(p1.getName().fullName, p2.getName().fullName));
-            //internalList.sort((p1, p2) -> p1.getName().fullName.compareTo(p2.getName().fullName));
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p1.getName().fullName, p2.getName().fullName));
+
         } else if (prefix.equals(new Prefix("e/"))) {
             // sort by email address
-            internalList.sort((p1, p2) -> customComparator.compare(p1.getEmail().value, p2.getEmail().value));
-        } else if (prefix.equals(new Prefix("t/"))) {
-            // sort by added time
-            //internalList.sort((p1, p2) -> p1.getId());
-        } else if (prefix.equals(new Prefix("jp/"))) {
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p1.getEmail().value, p2.getEmail().value));
+
+        } else if (prefix.equals(new Prefix("time/"))) {
+            // sort by added time, first added appear at the top
+            internalList.sort((p1, p2) -> p1.getAddedTime().compareTo(p2.getAddedTime()));
+
+        } else if (prefix.equals(new Prefix("j/"))) {
             // sort by job position
-            internalList.sort((p1, p2) -> customComparator.compare(p1.getJobPosition().jobPosition, p2.getJobPosition().jobPosition));
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p1.getJobPosition().jobPosition, p2.getJobPosition().jobPosition));
+
         } else if (prefix.equals(new Prefix("s/"))) {
             // sort by status
-            internalList.sort((p1, p2) -> customComparator.compare(p1.getStatus().status, p2.getStatus().status));
-            
-        }
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p1.getStatus().status, p2.getStatus().status));
+
+        } // ignore non-sorting prefix
     }
 
     /**
