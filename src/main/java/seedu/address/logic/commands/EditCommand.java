@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -100,8 +101,11 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        // addedTime can't & won't be changed
+        LocalDateTime originalAddedTime = personToEdit.getAddedTime();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, personToEdit.getJobPosition(), personToEdit.getStatus(), updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, personToEdit.getJobPosition(),
+                personToEdit.getStatus(), updatedAddress, originalAddedTime, updatedTags);
     }
 
     @Override

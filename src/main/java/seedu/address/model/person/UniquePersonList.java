@@ -3,11 +3,13 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -95,6 +97,51 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.setAll(persons);
+    }
+
+    public void sortPersons(Prefix prefix) {
+        // sort String based on lexicographic order with case sensitivity (A, a, B, b, ..., Z, z)
+        Comparator<String> caseSensitiveLexicographicComparator = (s1, s2) -> {
+            for (int i = 0; i < Math.min(s1.length(), s2.length()); i++) {
+                char c1 = s1.charAt(i);
+                char c2 = s2.charAt(i);
+
+                if (c1 != c2) {
+                    if (Character.toLowerCase(c1) == Character.toLowerCase(c2)) {
+                        return Character.compare(c1, c2);
+                    }
+                    return Character.compare(Character.toLowerCase(c1), Character.toLowerCase(c2));
+                }
+
+            }
+            return Integer.compare(s1.length(), s2.length());
+        };
+
+        if (prefix.equals(new Prefix("n/"))) {
+            // sort by name
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p1.getName().fullName, p2.getName().fullName));
+
+        } else if (prefix.equals(new Prefix("e/"))) {
+            // sort by email address
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p1.getEmail().value, p2.getEmail().value));
+
+        } else if (prefix.equals(new Prefix("time/"))) {
+            // sort by added time, first added appear at the top
+            internalList.sort((p1, p2) -> p1.getAddedTime().compareTo(p2.getAddedTime()));
+
+        } else if (prefix.equals(new Prefix("j/"))) {
+            // sort by job position
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p1.getJobPosition().jobPosition, p2.getJobPosition().jobPosition));
+
+        } else if (prefix.equals(new Prefix("s/"))) {
+            // sort by status
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p1.getStatus().status, p2.getStatus().status));
+
+        } // ignore non-sorting prefix
     }
 
     /**

@@ -9,14 +9,15 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class UniquePersonListTest {
@@ -172,4 +173,35 @@ public class UniquePersonListTest {
     public void toStringMethod() {
         assertEquals(uniquePersonList.asUnmodifiableObservableList().toString(), uniquePersonList.toString());
     }
+
+    @Test
+    public void sortPersons_basedOnName_success() {
+        Email email = new Email("123@gmail.com");
+        Phone phone = new Phone("1234567890");
+        JobPosition jp = new JobPosition("job");
+        Status status = new Status("status");
+        Address address = new Address("happy street");
+        LocalDateTime addedTime = LocalDateTime.now();
+        Set<Tag> tags = new HashSet<>();
+        Person p1 = new Person(new Name("Aa"), phone, email, jp, status, address, addedTime, tags);
+        Person p2 = new Person(new Name("aaa"), phone, email, jp, status, address, addedTime, tags);
+        Person p3 = new Person(new Name("Bbb"), phone, email, jp, status, address, addedTime, tags);
+        Person p4 = new Person(new Name("bbB"), phone, email, jp, status, address, addedTime, tags);
+        uniquePersonList.add(p3);
+        uniquePersonList.add(p2);
+        uniquePersonList.add(p1);
+        uniquePersonList.add(p4);
+
+        UniquePersonList expectedList = new UniquePersonList();
+        expectedList.add(p1);
+        expectedList.add(p2);
+        expectedList.add(p3);
+        expectedList.add(p4);
+
+        uniquePersonList.sortPersons(new Prefix("n/"));
+        assertEquals(expectedList, uniquePersonList);
+    }
+
+
+
 }
