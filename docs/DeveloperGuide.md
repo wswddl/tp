@@ -9,19 +9,19 @@
 <!-- * Table of Contents -->
 <page-nav-print />
 
----
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
 
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
 
----
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
----
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
 
@@ -29,36 +29,35 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 <puml src="diagrams/ArchitectureDiagram.puml" width="280" />
 
-The **_Architecture Diagram_** given above explains the high-level design of the App.
+The ***Architecture Diagram*** given above explains the high-level design of the App.
 
 Given below is a quick overview of main components and how they interact with each other.
 
 **Main components of the architecture**
 
 **`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
-
-- At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
-- At shut down, it shuts down the other components and invokes cleanup methods where necessary.
+* At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
+* At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
 The bulk of the app's work is done by the following four components:
 
-- [**`UI`**](#ui-component): The UI of the App.
-- [**`Logic`**](#logic-component): The command executor.
-- [**`Model`**](#model-component): Holds the data of the App in memory.
-- [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
+* [**`UI`**](#ui-component): The UI of the App.
+* [**`Logic`**](#logic-component): The command executor.
+* [**`Model`**](#model-component): Holds the data of the App in memory.
+* [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
 **How the architecture components interact with each other**
 
-The _Sequence Diagram_ below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
 Each of the four main components (also shown in the diagram above),
 
-- defines its _API_ in an `interface` with the same name as the Component.
-- implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* defines its *API* in an `interface` with the same name as the Component.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -78,10 +77,10 @@ The `UI` component uses the JavaFx UI framework. The layout of these UI parts ar
 
 The `UI` component,
 
-- executes user commands using the `Logic` component.
-- listens for changes to `Model` data so that the UI can be updated with the modified data.
-- keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-- depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* executes user commands using the `Logic` component.
+* listens for changes to `Model` data so that the UI can be updated with the modified data.
+* keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
+* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
 ### Logic component
 
@@ -113,22 +112,21 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
 How the parsing works:
-
-- When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
-- All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
+
 The `Model` component,
 
-- stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-- stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-- stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-- does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
+* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
+* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
 
@@ -138,6 +136,7 @@ The `Model` component,
 
 </box>
 
+
 ### Storage component
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
@@ -145,16 +144,15 @@ The `Model` component,
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-
-- can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-- inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
-- depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
+* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
----
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Implementation**
 
@@ -166,9 +164,9 @@ This section describes some noteworthy details on how certain features are imple
 
 The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-- `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-- `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-- `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
+* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
+* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
 
 These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
 
@@ -195,6 +193,7 @@ Step 3. The user executes `add n/David …​` to add a new person. The `add` co
 Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
+
 
 <box type="info" seamless>
 
@@ -241,15 +240,14 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 **Aspect: How undo & redo executes:**
 
-- **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire address book.
+  * Pros: Easy to implement.
+  * Cons: May have performance issues in terms of memory usage.
 
-  - Pros: Easy to implement.
-  - Cons: May have performance issues in terms of memory usage.
-
-- **Alternative 2:** Individual command knows how to undo/redo by
+* **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  - Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  - Cons: We must ensure that the implementation of each individual command are correct.
+  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+  * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
 
@@ -257,17 +255,18 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
----
+
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
-- [Documentation guide](Documentation.md)
-- [Testing guide](Testing.md)
-- [Logging guide](Logging.md)
-- [Configuration guide](Configuration.md)
-- [DevOps guide](DevOps.md)
+* [Documentation guide](Documentation.md)
+* [Testing guide](Testing.md)
+* [Logging guide](Logging.md)
+* [Configuration guide](Configuration.md)
+* [DevOps guide](DevOps.md)
 
----
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Requirements**
 
@@ -275,59 +274,60 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-- HR teams handling candidate pipelines
-- Manages multiple candidate pipelines
-- prefer desktop apps over other types
-- can type fast
-- prefers typing to mouse interactions
-- is reasonably comfortable using CLI apps
-- are data-driven decision makers
-- works in a face-paced environment
+* HR teams handling candidate pipelines
+* Manages multiple candidate pipelines
+* prefer desktop apps over other types
+* can type fast
+* prefers typing to mouse interactions
+* is reasonably comfortable using CLI apps
+* are data-driven decision makers
+* works in a face-paced environment
 
 **Value proposition**: Simplifies candidate tracking by organizing applicant information,
 communication history, and hiring stages for quick access in a fast, no-frills CLI environment
+
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                            | I want to …​                                                                                | So that I can…​                                                     |
-| -------- | ---------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `* * *`  | user                               | specify the stage of the application process each applicant is in                           | keep track of each applicant’s progress                             |
-| `* * *`  | user                               | filter by an applicant’s application process                                                | keep track of which applicants are left in each stage               |
-| `* * *`  | user                               | search for a candidate by name or job position                                              | quickly searchrelevant information                                  |
-| `* * *`  | user                               | view a summary of all candidates in a specific hiring stage                                 | prioritize my workload                                              |
-| `* * *`  | user                               | view statistics (e.g., number of hired candidates, time needed in each stage)               | evaluate my recruitment process                                     |
-| `* * *`  | user                               | sort candidates by the date they applied                                                    | review the most recent applications first                           |
-| `* * *`  | user                               | add candidates’ details                                                                     | track them easily                                                   |
-| `* * *`  | user                               | view a candidate’s status                                                                   | know their hiring progress                                          |
-| `* * *`  | user                               | move candidates to different stages                                                         | manage the hiring process                                           |
-| `* * `   | user                               | group applicants based on what jobs they are applying for                                   | manage applicants from different jobs more easily                   |
-| `* *`    | power user                         | delete multiple candidates with a single command                                            | keep my database clean                                              |
-| `* *`    | power user                         | tag candidates                                                                              | easily classify and retrieve important applicants                   |
-| `* *`    | forgetful user                     | have timely reminders for scheduled interviews                                              | not miss them                                                       |
-| `* *`    | user who is not familiar with CLIs | have easy access to a list of supported commands, especially the commonly used ones         | get up to speed with using the CLI                                  |
-| `* *`    | user                               | attach a photo to each applicant                                                            | identify the applicants easily                                      |
-| `* *`    | user                               | add notes to each candidate’s profile                                                       | record important details from interviews or assessments             |
-| `* *`    | user                               | bulk update candidate statuses                                                              | save time                                                           |
-| `* *`    | user                               | set deadlines for each hiring stage                                                         | ensure the recruitment process stays on track                       |
-| `* *`    | user                               | export candidate data as a CSV file                                                         | analyze and share information easily with my team                   |
-| `* *`    | power user                         | schedule automated status updates for candidates (e.g., send follow-up emails after a week) | streamline my communication workflow                                |
-| `* *`    | user                               | assign different access levels to team members                                              | protect sensitive candidate data while still allowing collaboration |
-| `* *`    | user                               | add a simple rating (e.g., 1-5 stars) to candidates                                         | quickly assess their potential                                      |
-| `* *`    | user                               | assign a candidate to a specific recruiter                                                  | ensure proper follow-up and accountability                          |
-| `*`      | user                               | search for particular keywords in past communication history                                | revisit specific conversations I’ve had                             |
-| `*`      | long-time user                     | delete communication history for specific contacts                                          | free up storage space when needed                                   |
-| `*`      | long-time user                     | have the option to assign new shortcuts or keywords to my frequently used commands          | navigate the application more efficiently                           |
-| `*`      | user                               | receive notifications when a candidate has been in a stage for too long                     | take action to move them forward                                    |
-| `*`      | user                               | restore mistakenly deleted candidates within a certain time frame                           | recover important information if needed                             |
-| `*`      | user                               | integrate RecruitTrack with my email client                                                 | track all correspondence with candidates in one place               |
-| `*`      | user                               | generate customized reports based on hiring trends and candidate performance                | make data-driven recruitment decisions                              |
-| `*`      | user                               | log communication history                                                                   | remember past interactions                                          |
-| `*`      | user                               | send an email template from the CLI                                                         | quickly communicate with candidates                                 |
-| `*`      | user                               | view a candidate’s resume and notes before an interview                                     | prepare relevant questions                                          |
+| Priority      | As a …​                             | I want to …​                                                                         | So that I can…​                                   |
+|---------------|-------------------------------------|--------------------------------------------------------------------------------------|---------------------------------------------------|
+| `* * *`	| user	| specify the stage of the application process each applicant is in	| keep track of each applicant’s progress |
+| `* * *`	| user	| filter by an applicant’s application process	| keep track of which applicants are left in each stage |
+| `* * *`	| user	| search for a candidate by name or job position	| quickly find relevant information |
+| `* * *`	| user	| view a summary of all candidates in a specific hiring stage	| prioritize my workload |
+| `* * *`	| user	| view statistics (e.g., number of hired candidates, time needed in each stage)	| evaluate my recruitment process |
+| `* * *`	| user	| sort candidates by the date they applied	| review the most recent applications first |
+| `* * *`	| user	| add candidates’ details	| track them easily |
+| `* * *`	| user	| view a candidate’s status	| know their hiring progress |
+| `* * *`	| user	| move candidates to different stages	| manage the hiring process |
+| `* * `        | user                                | group applicants based on what jobs they are applying for                            | manage applicants from different jobs more easily |
+| `* *`  | 	power user	                        | delete multiple candidates with a single command                                     | 	keep my database clean                           |
+| `* *`  | 	power user	                        | tag candidates	                                                                      | easily classify and retrieve important applicants |
+| `* *`  | forgetful user                      | 	have timely reminders for scheduled interviews                                      | 	not miss them                                    |
+| `* *`  | user who is not familiar with CLIs  | have easy access to a list of supported commands, especially the commonly used ones  | get up to speed with using the CLI                |
+| `* *`	| user	| attach a photo to each applicant	| identify the applicants easily                    |
+| `* *`	| user	| add notes to each candidate’s profile	| record important details from interviews or assessments |
+| `* *`	| user	| bulk update candidate statuses	| save time |
+| `* *`	| user	| set deadlines for each hiring stage	| ensure the recruitment process stays on track |
+| `* *`	| user	| export candidate data as a CSV file	| analyze and share information easily with my team |
+| `* *`	| power user	| schedule automated status updates for candidates (e.g., send follow-up emails after a week)	| streamline my communication workflow |
+| `* *`	| user	| assign different access levels to team members	| protect sensitive candidate data while still allowing collaboration |
+| `* *`	| user	| add a simple rating (e.g., 1-5 stars) to candidates	| quickly assess their potential |
+| `* *`	| user	| assign a candidate to a specific recruiter	| ensure proper follow-up and accountability |
+| `*`	| user	| search for particular keywords in past communication history	| revisit specific conversations I’ve had |
+| `*`	| long-time user	| delete communication history for specific contacts	| free up storage space when needed |
+| `*`	| long-time user	| have the option to assign new shortcuts or keywords to my frequently used commands	| navigate the application more efficiently |
+| `*`	| user	| receive notifications when a candidate has been in a stage for too long	| take action to move them forward |
+| `*`	| user	| restore mistakenly deleted candidates within a certain time frame	| recover important information if needed |
+| `*`	| user	| integrate RecruitTrack with my email client	| track all correspondence with candidates in one place |
+| `*`	| user	| generate customized reports based on hiring trends and candidate performance	| make data-driven recruitment decisions |
+| `*`	| user	| log communication history	| remember past interactions |
+| `*`	| user	| send an email template from the CLI	| quickly communicate with candidates |
+| `*`	| user	| view a candidate’s resume and notes before an interview	| prepare relevant questions |
 
-_{More to be added}_
+*{More to be added}*
 
 ### Use cases
 
@@ -346,15 +346,15 @@ _{More to be added}_
 
 **Extensions:**
 
-- 2a. The list is empty.
+* 2a. The list is empty.
 
   Use case ends.
 
-- 3a. The given index is invalid.
+* 3a. The given index is invalid.
 
-  - 3a1. RecruitTrack shows an error message.
+    * 3a1. RecruitTrack shows an error message.
 
-    Use case resumes from step 2.
+      Use case resumes from step 2.
 
 **Use case: UC02 - Add a person**
 
@@ -367,13 +367,13 @@ _{More to be added}_
 
 **Extensions:**
 
-- 1a. The details don't follow the correct format.
+* 1a. The details don't follow the correct format.
 
-  - 1a1. RecruitTrack shows an error message.
+    * 1a1. RecruitTrack shows an error message.
 
-- 1b. Lacks mandatory details.
+* 1b. Lacks mandatory details.
 
-  - 1b1. RecruitTrack shows an error message.
+    * 1b1. RecruitTrack shows an error message.
 
 **Use case: UC03 - Edit a person**
 
@@ -388,39 +388,38 @@ _{More to be added}_
 
 **Extensions:**
 
-- 2a. The list is empty.
+* 2a. The list is empty.
 
   Use case ends.
 
-- 3a. The given index is invalid.
+* 3a. The given index is invalid.
 
-  - 3a1. RecruitTrack shows an error message.
+    * 3a1. RecruitTrack shows an error message.
 
-    Use case resumes from step 2.
+      Use case resumes from step 2.
 
-- 3b. The new details don't follow the correct format.
+* 3b. The new details don't follow the correct format.
 
-  - 3b1. RecruitTrack shows an error message.
+    * 3b1. RecruitTrack shows an error message.
 
-    Use case resumes from step 2.
+      Use case resumes from step 2.
 
-**Use case: UC04 - searcha person**
+**Use case: UC04 - Find a person**
 
 **MSS:**
 
-1.  User requests to searcha person by providing the person's details.
-2.  RecruitTrack searchpersons with the given details.
+1.  User requests to find a person by providing the person's details.
+2.  RecruitTrack find persons with the given details.
 
     Use case ends.
 
 **Extensions:**
 
-- 2a. The list is empty.
+* 2a. The list is empty.
 
   Use case ends.
 
 ### Non-Functional Requirements
-
 1. Should run on any mainstream OS (Windows, macOS, Linux) with Java 17 or above installed.
 2. Should handle up to 1000 candidates without noticeable lag in typical usage.
 3. Common commands (e.g., adding candidates, updating statuses, searching) should execute within 200ms under normal load.
@@ -447,7 +446,7 @@ _{More to be added}_
 - **System ID** – A unique numerical identifier assigned to each contact in the system.
 - **Unique Identifier** – A distinct value (email, phone number, or system ID) used to identify contacts.
 
----
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
 
@@ -456,7 +455,7 @@ Given below are instructions to test the app manually.
 <box type="info" seamless>
 
 **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more _exploratory_ testing.
+testers are expected to do more *exploratory* testing.
 
 </box>
 
@@ -473,7 +472,7 @@ testers are expected to do more _exploratory_ testing.
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
    1. Re-launch the app by double-clicking the jar file.<br>
-      Expected: The most recent window size and location is retained.
+       Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
 

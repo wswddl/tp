@@ -9,7 +9,7 @@
 <!-- * Table of Contents -->
 <page-nav-print />
 
----
+--------------------------------------------------------------------------------------------------------------------
 
 ## Setting up the project in your computer
 
@@ -32,7 +32,7 @@ If you plan to use Intellij IDEA (highly recommended):
    1. Run the `seedu.address.Main` and try a few commands.
    1. [Run the tests](Testing.md) to ensure they all pass.
 
----
+--------------------------------------------------------------------------------------------------------------------
 
 ## Before writing code
 
@@ -57,6 +57,6 @@ If you plan to use Intellij IDEA (highly recommended):
 1. **Do the tutorials**
    These tutorials will help you get acquainted with the codebase.
 
-   - [Tracing code](https://se-education.org/guides/tutorials/ab3TracingCode.html)
-   - [Adding a new command](https://se-education.org/guides/tutorials/ab3AddRemark.html)
-   - [Removing fields](https://se-education.org/guides/tutorials/ab3RemovingFields.html)
+   * [Tracing code](https://se-education.org/guides/tutorials/ab3TracingCode.html)
+   * [Adding a new command](https://se-education.org/guides/tutorials/ab3AddRemark.html)
+   * [Removing fields](https://se-education.org/guides/tutorials/ab3RemovingFields.html)
