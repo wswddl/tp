@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +33,7 @@ class JsonAdaptedPerson {
     private final String jobPosition;
     private final String status;
     private final String address;
+    private final LocalDateTime addedTime;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -41,6 +43,7 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("jobPosition") String jobPosition,
                              @JsonProperty("status") String status, @JsonProperty("address") String address,
+                             @JsonProperty("addedTime") LocalDateTime addedTime,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
@@ -48,6 +51,7 @@ class JsonAdaptedPerson {
         this.jobPosition = jobPosition;
         this.status = status;
         this.address = address;
+        this.addedTime = addedTime;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -63,6 +67,8 @@ class JsonAdaptedPerson {
         jobPosition = source.getJobPosition().jobPosition;
         status = source.getStatus().value;
         address = source.getAddress().value;
+        addedTime = source.getAddedTime();
+
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -128,8 +134,13 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        if (addedTime == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "AddedTime"));
+        }
+        final LocalDateTime modelAddedTime = addedTime;
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelJobPosition, modelStatus, modelAddress, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelJobPosition, modelStatus, modelAddress, modelAddedTime, modelTags);
     }
 
 }

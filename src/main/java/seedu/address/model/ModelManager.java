@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Status;
 
@@ -121,6 +122,14 @@ public class ModelManager implements Model {
         this.setPerson(target, editedPerson);
 
         return editedPerson;
+    }
+
+    // Added for applicant sorting
+    @Override
+    public void sortPersons(Prefix prefix) {
+        requireAllNonNull(prefix);
+
+        addressBook.sortPersons(prefix);
     }
 
     //=========== Filtered Person List Accessors =============================================================
