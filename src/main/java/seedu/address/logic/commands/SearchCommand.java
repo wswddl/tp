@@ -9,11 +9,7 @@ import java.util.stream.IntStream;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
+import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
@@ -24,27 +20,30 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";
-    private static final Set<String> CRITERIA = Set.of(PREFIX_NAME.getPrefix(), 
-                                                        PREFIX_EMAIL.getPrefix(), 
-                                                        PREFIX_ID.getPrefix(), 
-                                                        PREFIX_JOB_POSITION.getPrefix(), 
-                                                        PREFIX_STATUS.getPrefix());
+
+    private static final Set<String> CRITERIA = Set.of(
+            CliSyntax.PREFIX_NAME.getPrefix(),
+            CliSyntax.PREFIX_EMAIL.getPrefix(),
+            CliSyntax.PREFIX_ID.getPrefix(),
+            CliSyntax.PREFIX_JOB_POSITION.getPrefix(),
+            CliSyntax.PREFIX_STATUS.getPrefix()
+    );
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for applicants based on [CRITERIA] and [VALUE].\n"
             + "Parameters:\n"
-            + PREFIX_NAME + ": Applicant's name    "
-            + PREFIX_EMAIL + ": Applicant's email address    "
-            + PREFIX_ID + ": System's assigned ID    "
-            + PREFIX_JOB_POSITION + ": Job position   "
-            + PREFIX_STATUS + ": Hiring stage\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + " John Doe\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_EMAIL +" john@example.com\n";
+            + CliSyntax.PREFIX_NAME + ": Applicant's name    "
+            + CliSyntax.PREFIX_EMAIL + ": Applicant's email address    "
+            + CliSyntax.PREFIX_ID + ": System's assigned ID    "
+            + CliSyntax.PREFIX_JOB_POSITION + ": Job position    "
+            + CliSyntax.PREFIX_STATUS + ": Hiring stage\n"
+            + "Example: " + COMMAND_WORD + " " + CliSyntax.PREFIX_NAME + " John Doe\n"
+            + "Example: " + COMMAND_WORD + " " + CliSyntax.PREFIX_EMAIL + " john@example.com\n";
 
-    private final NameContainsKeywordsPredicate predicate;
-    
     public static final String MESSAGE_NO_RESULT = "Error: No applicants found.";
     public static final String MESSAGE_INVALID_CRITERIA = "Error: Invalid search CRITERIA";
     public static final String MESSAGE_MISSING_VALUE = "Error: Missing VALUE for search";
+
+    private final NameContainsKeywordsPredicate predicate;
 
     public SearchCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
@@ -52,20 +51,21 @@ public class SearchCommand extends Command {
 
     private void validateKeywords(List<String> keywords) throws CommandException {
         Set<String> invalidKeywords = IntStream.range(0, keywords.size())
-                .filter(i -> i % 2 == 0) 
+                .filter(i -> i % 2 == 0)
                 .mapToObj(keywords::get)
                 .filter(keyword -> !CRITERIA.contains(keyword))
                 .collect(Collectors.toSet());
-    
+
         if (!invalidKeywords.isEmpty()) {
             throw new CommandException(MESSAGE_INVALID_CRITERIA);
         }
+
         Set<String> missingValues = IntStream.range(0, keywords.size())
-                .filter(i -> i % 2 != 0) 
+                .filter(i -> i % 2 != 0)
                 .mapToObj(keywords::get)
-                .filter(keyword -> CRITERIA.contains(keyword) || keyword == null)
+                .filter(value -> CRITERIA.contains(value) || value == null)
                 .collect(Collectors.toSet());
-    
+
         if (!missingValues.isEmpty()) {
             throw new CommandException(MESSAGE_MISSING_VALUE);
         }
@@ -74,7 +74,6 @@ public class SearchCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
         validateKeywords(predicate.getKeywords());
 
         model.updateFilteredPersonList(predicate);
@@ -83,18 +82,18 @@ public class SearchCommand extends Command {
         if (count == 0) {
             throw new CommandException(MESSAGE_NO_RESULT);
         }
-        
+
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, count)
+        );
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
+        if (this == other) {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof SearchCommand)) {
             return false;
         }
