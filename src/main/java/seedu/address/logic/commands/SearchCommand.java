@@ -21,15 +21,15 @@ public class SearchCommand extends Command {
     public static final String COMMAND_WORD = "search";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for applicants based on [CRITERIA] and [VALUE].\n"
-            + "Parameters:   "
-            + PREFIX_NAME + ": Applicant's name\n"
-            + PREFIX_EMAIL + ": Applicant's email address\n"
-            + PREFIX_ID + ": System's assigned ID "
-            + PREFIX_JOB_POSITION + ": Job position.   "
-            + PREFIX_STATUS + ": Hiring stage.\n"
-            + "Example: " + COMMAND_WORD + PREFIX_NAME + " John Doe\n"
-            + "Example: " + COMMAND_WORD + PREFIX_EMAIL +" john@example.com";
-            
+            + "Parameters:\n"
+            + PREFIX_NAME + ": Applicant's name    "
+            + PREFIX_EMAIL + ": Applicant's email address    "
+            + PREFIX_ID + ": System's assigned ID    "
+            + PREFIX_JOB_POSITION + ": Job position   "
+            + PREFIX_STATUS + ": Hiring stage\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + " John Doe\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_EMAIL +" john@example.com\n";
+
     private final NameContainsKeywordsPredicate predicate;
 
     public SearchCommand(NameContainsKeywordsPredicate predicate) {
