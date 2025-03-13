@@ -43,7 +43,7 @@ If you plan to use Intellij IDEA (highly recommended):
    <box type="tip" seamless>
 
    **Tip:**
-   Optionally, you can follow the guide [_[se-edu/guides] Using Checkstyle_](https://se-education.org/guides/tutorials/checkstyle.html) to searchhow to use the CheckStyle within IDEA e.g., to report problems _as_ you write code.
+   Optionally, you can follow the guide [_[se-edu/guides] Using Checkstyle_](https://se-education.org/guides/tutorials/checkstyle.html) to find how to use the CheckStyle within IDEA e.g., to report problems _as_ you write code.
    </box>
 
 1. **Set up CI**

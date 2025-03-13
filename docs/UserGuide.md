@@ -119,7 +119,7 @@ Examples:
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `searchKEYWORD [MORE_KEYWORDS]`
+Format: `search KEYWORD [MORE_KEYWORDS]`
 
 - The search is case-insensitive. e.g `hans` will match `Hans`
 - The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -130,8 +130,8 @@ Format: `searchKEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-- `searchJohn` returns `john` and `John Doe`
-- `searchalex david` returns `Alex Yeoh`, `David Li`<br>
+- `search John` returns `john` and `John Doe`
+- `search alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'searchalex david'](images/findAlexDavidResult.png)
 
 ### Deleting a person : `delete`
@@ -204,6 +204,6 @@ _Details coming soon ..._
 | **Clear**  | `clear`                                                                                                                                                               |
 | **Delete** | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
 | **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
-| **Find**   | `searchKEYWORD [MORE_KEYWORDS]`<br> e.g., `searchJames Jake`                                                                                                          |
+| **Find**   | `search KEYWORD [MORE_KEYWORDS]`<br> e.g., `search James Jake`                                                                                                          |
 | **List**   | `list`                                                                                                                                                                |
 | **Help**   | `help`                                                                                                                                                                |
