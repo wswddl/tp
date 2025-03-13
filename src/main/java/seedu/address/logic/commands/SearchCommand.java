@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
@@ -31,15 +32,21 @@ public class SearchCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + PREFIX_EMAIL +" john@example.com\n";
 
     private final NameContainsKeywordsPredicate predicate;
+    public static final String MESSAGE_NO_RESULT = "This person already exists in the address book";
 
     public SearchCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
     @Override
-    public CommandResult execute(Model model) {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
+
+        int count = model.getFilteredPersonList().size();
+        if (count == 0) {
+            throw new CommandException(MESSAGE_NO_RESULT);
+        }
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
     }
