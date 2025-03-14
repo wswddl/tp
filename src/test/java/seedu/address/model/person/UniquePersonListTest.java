@@ -1,10 +1,9 @@
 package seedu.address.model.person;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -175,7 +174,7 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void sortPersons_basedOnName_success() {
+    public void sortPersons_basedOnName_caseSensitiveLexicographical_success() {
         Email email = new Email("123@gmail.com");
         Phone phone = new Phone("1234567890");
         JobPosition jp = new JobPosition("job");
@@ -193,13 +192,42 @@ public class UniquePersonListTest {
         uniquePersonList.add(p4);
 
         UniquePersonList expectedList = new UniquePersonList();
-        expectedList.add(p1);
-        expectedList.add(p2);
-        expectedList.add(p3);
-        expectedList.add(p4);
+        expectedList.add(p1); // Aa
+        expectedList.add(p2); // aaa
+        expectedList.add(p3); // Bbb
+        expectedList.add(p4); // bbB
 
-        uniquePersonList.sortPersons(new Prefix("n/"));
+        uniquePersonList.sortPersons(PREFIX_NAME);
         assertEquals(expectedList, uniquePersonList);
+    }
+
+    @Test
+    public void sortPersons_basedOnName_lexicographicalOnly_fail() {
+        Email email = new Email("123@gmail.com");
+        Phone phone = new Phone("1234567890");
+        JobPosition jp = new JobPosition("job");
+        Status status = new Status("status");
+        Address address = new Address("happy street");
+        LocalDateTime addedTime = LocalDateTime.now();
+        Set<Tag> tags = new HashSet<>();
+        Person p1 = new Person(new Name("Aa"), phone, email, jp, status, address, addedTime, tags);
+        Person p2 = new Person(new Name("aaa"), phone, email, jp, status, address, addedTime, tags);
+        Person p3 = new Person(new Name("Bbb"), phone, email, jp, status, address, addedTime, tags);
+        Person p4 = new Person(new Name("bbB"), phone, email, jp, status, address, addedTime, tags);
+        uniquePersonList.add(p3);
+        uniquePersonList.add(p2);
+        uniquePersonList.add(p1);
+        uniquePersonList.add(p4);
+
+        UniquePersonList wronglySortedList = new UniquePersonList();
+        // Error: lexicographical only
+        wronglySortedList.add(p1); // Aa
+        wronglySortedList.add(p3); // Bbb
+        wronglySortedList.add(p2); // aaa
+        wronglySortedList.add(p4); // bbB
+
+        uniquePersonList.sortPersons(PREFIX_NAME);
+        assertNotEquals(wronglySortedList, uniquePersonList);
     }
 
 
