@@ -11,7 +11,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.JobPosition;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -59,7 +65,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         jobPosition = source.getJobPosition().jobPosition;
-        status = source.getStatus().status;
+        status = source.getStatus().value;
         address = source.getAddress().value;
         addedTime = source.getAddedTime();
 
@@ -104,12 +110,13 @@ class JsonAdaptedPerson {
         final Email modelEmail = new Email(email);
 
         if (jobPosition == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, JobPosition.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    JobPosition.class.getSimpleName()));
         }
         if (!JobPosition.isValidJobPosition(jobPosition)) {
             throw new IllegalValueException(JobPosition.MESSAGE_CONSTRAINTS);
         }
-        final JobPosition modelJobPosition= new JobPosition(jobPosition);
+        final JobPosition modelJobPosition = new JobPosition(jobPosition);
 
         if (status == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName()));
@@ -133,7 +140,8 @@ class JsonAdaptedPerson {
         final LocalDateTime modelAddedTime = addedTime;
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelJobPosition, modelStatus, modelAddress, modelAddedTime, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelJobPosition, modelStatus, modelAddress,
+                modelAddedTime, modelTags);
     }
 
 }
