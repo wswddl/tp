@@ -3,8 +3,8 @@ package seedu.address.logic.commands;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.applicant.IdentifierPredicate;
 import seedu.address.model.applicant.Applicant;
+import seedu.address.model.applicant.IdentifierPredicate;
 import seedu.address.model.applicant.Status;
 
 /**
