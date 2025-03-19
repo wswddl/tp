@@ -58,6 +58,7 @@ public class PersonCard extends UiPart<Region> {
         email.setText(applicant.getEmail().value);
         jobPosition.setText(applicant.getJobPosition().jobPosition);
         status.setText(applicant.getStatus().value);
+
         applicant.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
