@@ -2,11 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.time.LocalDateTime;
@@ -35,6 +31,10 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_JOB_POSITION_AMY = "Senior Frontend Engineer";
+    public static final String VALID_JOB_POSITION_BOB = "UI / UX";
+    public static final String VALID_STATUS_AMY = "Behavioural Interview";
+    public static final String VALID_STATUS_BOB = "Offer given";
     public static final LocalDateTime VALID_ADDED_TIME_AMY = LocalDateTime.of(2025, 2, 28, 01, 00, 00);
     public static final LocalDateTime VALID_ADDED_TIME_BOB = LocalDateTime.of(2025, 2, 28, 00, 00, 00);
     public static final String VALID_TAG_HUSBAND = "husband";
@@ -48,12 +48,18 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    public static final String JOB_POSITION_DESC_AMY = " " + PREFIX_JOB_POSITION + VALID_JOB_POSITION_AMY;
+    public static final String JOB_POSITION_DESC_BOB = " " + PREFIX_JOB_POSITION + VALID_JOB_POSITION_BOB;
+    public static final String STATUS_DESC_AMY = " " + PREFIX_STATUS + VALID_STATUS_AMY;
+    public static final String STATUS_DESC_BOB = " " + PREFIX_STATUS + VALID_STATUS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
+    public static final String INVALID_JOB_POSITION_DESC = " " + PREFIX_EMAIL + "!&&Front-end &Engineer"; // '& not allowed in Job Position
+    public static final String INVALID_STATUS_DESC = " " + PREFIX_NAME + "Rejected&"; // '&' not allowed in Status
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
