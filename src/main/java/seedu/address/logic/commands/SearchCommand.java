@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
 import static java.util.Objects.requireNonNull;
+
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

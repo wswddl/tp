@@ -22,8 +22,12 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.applicant.*;
+import seedu.address.model.applicant.Address;
 import seedu.address.model.applicant.Applicant;
+import seedu.address.model.applicant.Email;
+import seedu.address.model.applicant.Name;
+import seedu.address.model.applicant.Phone;
+import seedu.address.model.applicant.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -87,8 +91,8 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Applicant} with the details of {@code applicantToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Applicant} with the details of
+     * {@code applicantToEdit} edited with {@code editPersonDescriptor}.
      */
     private static Applicant createEditedPerson(Applicant applicantToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert applicantToEdit != null;
@@ -131,10 +135,11 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Stores the details to edit the applicant with. Each non-empty field value will replace the
-     * corresponding field value of the applicant.
+     * Stores the details to edit the applicant with. Each non-empty field value
+     * will replace the corresponding field value of the applicant.
      */
     public static class EditPersonDescriptor {
+
         private Name name;
         private Phone phone;
         private Email email;
@@ -142,11 +147,12 @@ public class EditCommand extends Command {
         private Status status;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         /**
-         * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
+         * Copy constructor. A defensive copy of {@code tags} is used
+         * internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
@@ -205,16 +211,16 @@ public class EditCommand extends Command {
         }
 
         /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
+         * Sets {@code tags} to this object's {@code tags}. A defensive copy of
+         * {@code tags} is used internally.
          */
         public void setTags(Set<Tag> tags) {
             this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
+         * Returns an unmodifiable tag set, which throws
+         * {@code UnsupportedOperationException} if modification is attempted.
          * Returns {@code Optional#empty()} if {@code tags} is null.
          */
         public Optional<Set<Tag>> getTags() {
