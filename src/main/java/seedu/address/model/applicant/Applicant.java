@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.applicant;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -12,10 +12,10 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Applicant in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Person {
+public class Applicant {
 
     // Identity fields
     private final Name name;
@@ -32,8 +32,8 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
-                  Address address, LocalDateTime addedTime, Set<Tag> tags) {
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags);
         this.name = name;
         this.phone = phone;
@@ -84,13 +84,13 @@ public class Person {
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */
-    public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
+    public boolean isSamePerson(Applicant otherApplicant) {
+        if (otherApplicant == this) {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        return otherApplicant != null
+                && otherApplicant.getName().equals(getName());
     }
 
     /**
@@ -104,18 +104,18 @@ public class Person {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Person)) {
+        if (!(other instanceof Applicant)) {
             return false;
         }
 
-        Person otherPerson = (Person) other;
-        return name.equals(otherPerson.name)
-                && phone.equals(otherPerson.phone)
-                && email.equals(otherPerson.email)
-                && jobPosition.equals(otherPerson.jobPosition)
-                && status.equals(otherPerson.status)
-                && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags);
+        Applicant otherApplicant = (Applicant) other;
+        return name.equals(otherApplicant.name)
+                && phone.equals(otherApplicant.phone)
+                && email.equals(otherApplicant.email)
+                && jobPosition.equals(otherApplicant.jobPosition)
+                && status.equals(otherApplicant.status)
+                && address.equals(otherApplicant.address)
+                && tags.equals(otherApplicant.tags);
     }
 
     @Override

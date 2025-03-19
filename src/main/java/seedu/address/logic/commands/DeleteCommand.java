@@ -10,18 +10,18 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.IdentifierPredicate;
-import seedu.address.model.person.Person;
+import seedu.address.model.applicant.Applicant;
+import seedu.address.model.applicant.IdentifierPredicate;
 
 /**
- * Deletes a person identified using the specified contact identifier from the address book.
+ * Deletes a applicant identified using the specified contact identifier from the address book.
  */
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the contact identifier provided.\n"
+            + ": Deletes the applicant identified by the contact identifier provided.\n"
             + "Parameters: "
             + "n/NAME | p/PHONE | e/EMAIL | id/ID [--force]\n"
             + "Example: " + COMMAND_WORD + " n/John Doe";
@@ -29,19 +29,19 @@ public class DeleteCommand extends Command {
     static final String MESSAGE_CONFIRMATION_REQUIRED_MULTIPLE_PERSONS =
             "Are you sure you want to delete all the persons listed below?\n" + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the deletion";
-    static final String MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON = "Are you sure you want to delete this person?\n"
+    static final String MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON = "Are you sure you want to delete this applicant?\n"
             + "Type 'yes' to continue\n"
             + "Type anything else to cancel the deletion";
-    static final String MESSAGE_NO_MATCHING_PERSON = "No matching person found.";
+    static final String MESSAGE_NO_MATCHING_PERSON = "No matching applicant found.";
     // todo:
-    static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Applicant: %1$s";
 
     private final IdentifierPredicate predicate;
     private boolean isForceDelete;
     private final Index targetIndex;
 
     /**
-     * @param predicate     The predicate used to filter the person(s) to be deleted.
+     * @param predicate     The predicate used to filter the applicant(s) to be deleted.
      * @param isForceDelete A flag indicating whether the deletion should proceed without confirmation.
      */
     public DeleteCommand(IdentifierPredicate predicate, boolean isForceDelete) {
@@ -51,7 +51,7 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * @param targetIndex   The index used to filter the person to be deleted.
+     * @param targetIndex   The index used to filter the applicant to be deleted.
      * @param isForceDelete A flag indicating whether the deletion should proceed without confirmation.
      */
     public DeleteCommand(Index targetIndex, boolean isForceDelete) {
@@ -78,31 +78,31 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Deletes a person by index.
+     * Deletes a applicant by index.
      */
     private CommandResult deleteByIndex(Model model) throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Applicant> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        Applicant applicantToDelete = lastShownList.get(targetIndex.getZeroBased());
         if (!isForceDelete) {
             return new CommandResult(String.format(MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON));
         }
 
         // Force delete without confirmation
-        model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+        model.deletePerson(applicantToDelete);
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(applicantToDelete)));
     }
 
     /**
-     * Deletes a person by predicate.
+     * Deletes a applicant by predicate.
      */
     private CommandResult deleteByPredicate(Model model) throws CommandException {
         model.updateFilteredPersonList(predicate);
-        List<Person> filteredList = model.getFilteredPersonList();
+        List<Applicant> filteredList = model.getFilteredPersonList();
 
         if (filteredList.isEmpty()) {
             throw new CommandException(MESSAGE_NO_MATCHING_PERSON);
@@ -117,10 +117,10 @@ public class DeleteCommand extends Command {
         }
 
         // Force delete without confirmation
-        List<Person> personsToDelete = List.copyOf(filteredList);
+        List<Applicant> personsToDelete = List.copyOf(filteredList);
 
-        for (Person person : personsToDelete) {
-            model.deletePerson(person);
+        for (Applicant applicant : personsToDelete) {
+            model.deletePerson(applicant);
         }
 
         String deletedNames = personsToDelete.stream()

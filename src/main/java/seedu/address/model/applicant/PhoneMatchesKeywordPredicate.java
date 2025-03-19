@@ -1,9 +1,9 @@
-package seedu.address.model.person;
+package seedu.address.model.applicant;
 
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Person}'s {@code Phone} matches the keyword given.
+ * Tests that a {@code Applicant}'s {@code Phone} matches the keyword given.
  */
 public class PhoneMatchesKeywordPredicate extends IdentifierPredicate {
 
@@ -12,8 +12,8 @@ public class PhoneMatchesKeywordPredicate extends IdentifierPredicate {
     }
 
     @Override
-    public boolean test(Person person) {
-        return keyword.equalsIgnoreCase(person.getPhone().value);
+    public boolean test(Applicant applicant) {
+        return keyword.equalsIgnoreCase(applicant.getPhone().value);
     }
 
     @Override

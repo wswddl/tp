@@ -15,13 +15,8 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.JobPosition;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Status;
+import seedu.address.model.applicant.*;
+import seedu.address.model.applicant.Applicant;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -57,9 +52,9 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         LocalDateTime addedTime = LocalDateTime.now();
 
-        Person person = new Person(name, phone, email, jobPosition, status, address, addedTime, tagList);
+        Applicant applicant = new Applicant(name, phone, email, jobPosition, status, address, addedTime, tagList);
 
-        return new AddCommand(person);
+        return new AddCommand(applicant);
     }
 
     /**

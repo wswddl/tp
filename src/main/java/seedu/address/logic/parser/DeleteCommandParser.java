@@ -12,13 +12,13 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.EmailMatchesKeywordPredicate;
-import seedu.address.model.person.IdentifierPredicate;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.NameMatchesKeywordPredicate;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.PhoneMatchesKeywordPredicate;
+import seedu.address.model.applicant.Email;
+import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
+import seedu.address.model.applicant.IdentifierPredicate;
+import seedu.address.model.applicant.Name;
+import seedu.address.model.applicant.NameMatchesKeywordPredicate;
+import seedu.address.model.applicant.Phone;
+import seedu.address.model.applicant.PhoneMatchesKeywordPredicate;
 
 /**
  * Parses input arguments and creates a new DeleteCommand object
