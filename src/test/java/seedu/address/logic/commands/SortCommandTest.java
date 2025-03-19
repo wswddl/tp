@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CRITERIA_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class SortCommandTest {
@@ -24,7 +26,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_sortByName_success() {
-        Prefix prefix = new Prefix("n/");
+        Prefix prefix = PREFIX_NAME;
         try {
             SortCommand sortCommand = new SortCommand(prefix);
             String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, sortCommand.getCriteria());
@@ -40,7 +42,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_sortByEmailAddress_success() {
-        Prefix prefix = new Prefix("e/");
+        Prefix prefix = PREFIX_EMAIL;
         try {
             SortCommand sortCommand = new SortCommand(prefix);
             String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, sortCommand.getCriteria());
@@ -57,6 +59,7 @@ public class SortCommandTest {
 
     @Test
     public void execute_sortByUnknownCriteria_doNothing() {
+        // Undefined prefix
         Prefix prefix = new Prefix("z/");
         try {
             SortCommand sortCommand = new SortCommand(prefix);

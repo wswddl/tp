@@ -13,6 +13,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 
+/**
+ * Sort the person list in the address book.
+ */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
@@ -34,33 +37,22 @@ public class SortCommand extends Command {
 
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an SortCommand to add the specified {@code Prefix}
      */
     public SortCommand(Prefix prefix) throws CommandException {
         requireNonNull(prefix);
         this.prefix = prefix;
-        switch (prefix.getPrefix()) {
-        case "n/":
+        if (prefix.equals(PREFIX_NAME)) {
             this.criteria = "Name";
-            break;
-
-        case "e/":
+        } else if (prefix.equals(PREFIX_EMAIL)) {
             this.criteria = "Email Address";
-            break;
-
-        case "time/":
+        } else if (prefix.equals(PREFIX_ADDED_TIME)) {
             this.criteria = "Added Time";
-            break;
-
-        case "j/":
+        } else if (prefix.equals(PREFIX_JOB_POSITION)) {
             this.criteria = "Job Position";
-            break;
-
-        case "s/":
+        } else if (prefix.equals(PREFIX_STATUS)) {
             this.criteria = "Application Status";
-            break;
-
-        default:
+        } else {
             throw new CommandException(String.format(
                     MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE));
         }
@@ -72,7 +64,7 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) throws CommandException {
+    public CommandResult execute(Model model) {
         requireNonNull(model);
 
         model.sortPersons(this.prefix);
