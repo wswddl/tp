@@ -33,7 +33,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `delete id/3` : Deletes the 3rd contact shown in the current list.
 
    * `clear` : Deletes all contacts.
 
@@ -132,19 +132,28 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+### Deleting an applicant : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified applicant from RecruitTrack, including all associated application details.
 
-Format: `delete INDEX`
+**Format:** `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* Deletes the contact based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`.
+* The `IDENTIFIER_TYPE` can be one of the following:
+    * `n/` – Name
+    * `e/` – Email
+    * `p/` – Phone number
+    * `id/` – The ID in the last shown list
+* The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
+* The `--force` flag (optional) bypasses confirmation prompts and deletes the contact immediately.
 
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+**Examples:**
+* `delete n/John Doe` deletes the contact with the name "John Doe".
+* `delete e/johndoe@example.com` deletes the contact with the email "johndoe@example.com".
+* `delete p/98765432` deletes the contact with the phone number "+6598765432".
+* `delete id/3 --force` deletes the 3rd contact in the last shown list without confirmation.
+  ![delete command](images/deleteCommand.png)
+  ![delete confirmation](images/deleteConfirmation.png)
 
 ### Clearing all entries : `clear`
 
