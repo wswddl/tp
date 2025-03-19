@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
 import static java.util.Objects.requireNonNull;
+
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -21,15 +22,11 @@ public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";
 
-    private static final Set<String> CRITERIA = Set.of(
-            CliSyntax.PREFIX_NAME.getPrefix(),
-            CliSyntax.PREFIX_EMAIL.getPrefix(),
-            CliSyntax.PREFIX_ID.getPrefix(),
-            CliSyntax.PREFIX_JOB_POSITION.getPrefix(),
-            CliSyntax.PREFIX_STATUS.getPrefix()
-    );
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for applicants based on [CRITERIA] and [VALUE].\n"
+    public static final String MESSAGE_INVALID_CRITERIA = "Error: Invalid search CRITERIA";
+    public static final String MESSAGE_MISSING_VALUE = "Error: Missing VALUE for search";
+    public static final String MESSAGE_NO_RESULT = "Error: No applicants found.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Searches for applicants based on [CRITERIA] and [VALUE].\n"
             + "Parameters:\n"
             + CliSyntax.PREFIX_NAME + ": Applicant's name    "
             + CliSyntax.PREFIX_EMAIL + ": Applicant's email address    "
@@ -39,9 +36,13 @@ public class SearchCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + CliSyntax.PREFIX_NAME + " John Doe\n"
             + "Example: " + COMMAND_WORD + " " + CliSyntax.PREFIX_EMAIL + " john@example.com\n";
 
-    public static final String MESSAGE_NO_RESULT = "Error: No applicants found.";
-    public static final String MESSAGE_INVALID_CRITERIA = "Error: Invalid search CRITERIA";
-    public static final String MESSAGE_MISSING_VALUE = "Error: Missing VALUE for search";
+    private static final Set<String> CRITERIA = Set.of(
+            CliSyntax.PREFIX_NAME.getPrefix(),
+            CliSyntax.PREFIX_EMAIL.getPrefix(),
+            CliSyntax.PREFIX_ID.getPrefix(),
+            CliSyntax.PREFIX_JOB_POSITION.getPrefix(),
+            CliSyntax.PREFIX_STATUS.getPrefix()
+    );
 
     private final NameContainsKeywordsPredicate predicate;
 
