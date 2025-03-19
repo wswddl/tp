@@ -124,8 +124,8 @@ public class DeleteCommand extends Command {
         }
 
         String deletedNames = personsToDelete.stream()
-                .map(Messages::format)
-                .collect(Collectors.joining(", "));
+                .map(person -> Messages.format(person) + "\n")
+                .collect(Collectors.joining());
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedNames));
     }
