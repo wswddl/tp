@@ -2,7 +2,11 @@ package seedu.address.model.applicant;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDED_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -16,10 +20,13 @@ import seedu.address.model.applicant.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A applicant is considered unique by comparing using {@code Applicant#isSamePerson(Applicant)}. As such, adding and updating of
- * persons uses Applicant#isSamePerson(Applicant) for equality so as to ensure that the applicant being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a applicant uses Applicant#equals(Object) so
- * as to ensure that the applicant with exactly the same fields will be removed.
+ * An applicant is considered unique by comparing using {@code Applicant#isSamePerson(Applicant)}.
+ * As such, adding and updating of persons uses {@code Applicant#isSamePerson(Applicant)}
+ * for equality so as to ensure that the applicant being added or updated is unique in terms of
+ * identity in the UniquePersonList.
+ *
+ * However, the removal of an applicant uses {@code Applicant#equals(Object)} so as to ensure that
+ * the applicant with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
