@@ -1,8 +1,7 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.List;
+import static java.util.Objects.requireNonNull;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
@@ -29,7 +28,8 @@ public class DeleteCommand extends Command {
     static final String MESSAGE_CONFIRMATION_REQUIRED_MULTIPLE_PERSONS =
             "Are you sure you want to delete all the persons listed below?\n" + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the deletion";
-    static final String MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON = "Are you sure you want to delete this applicant?\n"
+    static final String MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON = 
+            "Are you sure you want to delete this applicant?\n"
             + "Type 'yes' to continue\n"
             + "Type anything else to cancel the deletion";
     static final String MESSAGE_NO_MATCHING_PERSON = "No matching applicant found.";
