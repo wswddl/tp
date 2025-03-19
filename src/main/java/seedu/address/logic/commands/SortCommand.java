@@ -14,7 +14,7 @@ import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 
 /**
- * Sort the person list in the address book.
+ * Sort the applicant list in the address book.
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";

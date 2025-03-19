@@ -8,9 +8,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.model.person.EmailMatchesKeywordPredicate;
-import seedu.address.model.person.NameMatchesKeywordPredicate;
-import seedu.address.model.person.PhoneMatchesKeywordPredicate;
+import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
+import seedu.address.model.applicant.NameMatchesKeywordPredicate;
+import seedu.address.model.applicant.PhoneMatchesKeywordPredicate;
 
 public class DeleteCommandParserTest {
 

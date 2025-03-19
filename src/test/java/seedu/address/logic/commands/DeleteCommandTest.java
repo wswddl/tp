@@ -17,8 +17,8 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameMatchesKeywordPredicate;
-import seedu.address.model.person.Person;
+import seedu.address.model.applicant.Applicant;
+import seedu.address.model.applicant.NameMatchesKeywordPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -30,14 +30,14 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Applicant applicantToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON, false);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(personToDelete));
+                Messages.format(applicantToDelete));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        expectedModel.deletePerson(applicantToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
@@ -54,14 +54,14 @@ public class DeleteCommandTest {
     public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Applicant applicantToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON, false);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(personToDelete));
+                Messages.format(applicantToDelete));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        expectedModel.deletePerson(applicantToDelete);
         showNoPerson(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -82,15 +82,15 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validPredicateUnfilteredList_success() {
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        NameMatchesKeywordPredicate predicate = new NameMatchesKeywordPredicate(personToDelete.getName().fullName);
+        Applicant applicantToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        NameMatchesKeywordPredicate predicate = new NameMatchesKeywordPredicate(applicantToDelete.getName().fullName);
         DeleteCommand deleteCommand = new DeleteCommand(predicate, true);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(personToDelete));
+                Messages.format(applicantToDelete));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        expectedModel.deletePerson(applicantToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
@@ -121,7 +121,7 @@ public class DeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different applicant -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
 
         // different force flag -> returns false
