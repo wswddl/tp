@@ -19,7 +19,7 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253")
             .withTags("friends")
-            .withJobPosition("Front-end Engineer")
+            .withJobPosition("Frontend Engineer")
             .withStatus("Resume Screening")
             .withAddedTime(LocalDateTime.of(2025, 3, 13, 00, 00, 00))
             .build();
@@ -27,7 +27,7 @@ public class TypicalPersons {
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends")
-            .withJobPosition("Senior Front-end Engineer")
+            .withJobPosition("Senior Frontend Engineer")
             .withStatus("Technical Interview Round 1")
             .withAddedTime(LocalDateTime.of(2025, 3, 13, 1, 0, 0))
             .build();
@@ -47,8 +47,8 @@ public class TypicalPersons {
             .build();
     public static final Applicant FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
-            .withJobPosition("UI/UX")
-            .withStatus("")
+            .withJobPosition("UI UX")
+            .withStatus("Signed")
             .withAddedTime(LocalDateTime.of(2025, 3, 13, 5, 0, 0))
             .build();
     public static final Applicant GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")

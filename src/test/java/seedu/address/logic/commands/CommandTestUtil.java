@@ -32,7 +32,7 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_JOB_POSITION_AMY = "Senior Frontend Engineer";
-    public static final String VALID_JOB_POSITION_BOB = "UI / UX";
+    public static final String VALID_JOB_POSITION_BOB = "UI UX";
     public static final String VALID_STATUS_AMY = "Behavioural Interview";
     public static final String VALID_STATUS_BOB = "Offer given";
     public static final LocalDateTime VALID_ADDED_TIME_AMY = LocalDateTime.of(2025, 2, 28, 01, 00, 00);
@@ -58,8 +58,8 @@ public class CommandTestUtil {
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_JOB_POSITION_DESC = " " + PREFIX_EMAIL + "!&&Front-end &Engineer"; // '& not allowed in Job Position
-    public static final String INVALID_STATUS_DESC = " " + PREFIX_NAME + "Rejected&"; // '&' not allowed in Status
+    public static final String INVALID_JOB_POSITION_DESC = " " + PREFIX_JOB_POSITION + "!&&Front-end &Engineer"; // '& not allowed in Job Position
+    public static final String INVALID_STATUS_DESC = " " + PREFIX_STATUS + "Rejected&"; // '&' not allowed in Status
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 

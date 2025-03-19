@@ -19,7 +19,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
-    public static final String DEFAULT_JOB_POSITION = "Front-End SWE";
+    public static final String DEFAULT_JOB_POSITION = "Frontend SWE";
 
     public static final String DEFAULT_STATUS = "Resume Screening";
     public static final LocalDateTime DEFAULT_ADDED_TIME = LocalDateTime.of(2031, 1, 1, 00, 30, 00);
