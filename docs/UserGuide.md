@@ -134,7 +134,7 @@ Examples:
 
 ### Deleting an applicant : `delete`
 
-Deletes the specified applicant from RecruitTrack, including all associated application details.
+Deletes the specified applicant from applicant records, including all associated application details.
 
 Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 
