@@ -18,12 +18,18 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+
+    public static final String DEFAULT_JOB_POSITION = "Front-End SWE";
+
+    public static final String DEFAULT_STATUS = "Resume Screening";
     public static final LocalDateTime DEFAULT_ADDED_TIME = LocalDateTime.of(2031, 1, 1, 00, 30, 00);
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private JobPosition jobPosition;
+    private Status status;
     private LocalDateTime addedTime;
     private Set<Tag> tags;
 
@@ -35,6 +41,8 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        jobPosition = new JobPosition(DEFAULT_JOB_POSITION);
+        status = new Status(DEFAULT_STATUS);
         addedTime = DEFAULT_ADDED_TIME;
         tags = new HashSet<>();
     }
@@ -47,6 +55,8 @@ public class PersonBuilder {
         phone = applicantToCopy.getPhone();
         email = applicantToCopy.getEmail();
         address = applicantToCopy.getAddress();
+        jobPosition = applicantToCopy.getJobPosition();
+        status = applicantToCopy.getStatus();
         addedTime = applicantToCopy.getAddedTime();
         tags = new HashSet<>(applicantToCopy.getTags());
     }
@@ -91,13 +101,32 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code JobPosition} of the {@code Applicant} that we are building.
+     */
+    public PersonBuilder withJobPosition(String jobPosition) {
+        this.jobPosition = new JobPosition(jobPosition);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Status} of the {@code Applicant} that we are building.
+     */
+    public PersonBuilder withStatus(String status) {
+        this.status = new Status(status);
+        return this;
+    }
+
+    /**
+     * Sets the {@code AddedTime} of the {@code Applicant} that we are building.
+     */
     public PersonBuilder withAddedTime(LocalDateTime addedTime) {
         this.addedTime = addedTime;
         return this;
     }
 
     public Applicant build() {
-        return new Applicant(name, phone, email, address, addedTime, tags);
+        return new Applicant(name, phone, email, jobPosition, status, address, addedTime, tags);
     }
 
 }
