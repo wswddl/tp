@@ -111,7 +111,7 @@ public class UniquePersonList implements Iterable<Applicant> {
      * Sorts the list of persons based on the given prefix.
      * The sorting works as follows:
      * - If sorting by name, email, job position, or status, the list is sorted in
-     *   lexicographic order with case sensitivity (0, 1, ..., 9, A, a, B, b, ..., Z, z).
+     *   lexicographic order with case sensitivity (A, a, B, b, ..., Z, z).
      * - If sorting by added time, the list is sorted in chronological order,
      *   with the earliest added applicant appearing first.
      * - If the prefix is not recognized, the list remains unchanged.

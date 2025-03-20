@@ -41,7 +41,6 @@
           <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
           <Label fx:id="jobPosition" styleClass="cell_small_label" text="\$jobPosition" />
           <Label fx:id="status" styleClass="cell_small_label" text="\$status" />
-          <Label fx:id="addedTime" styleClass="cell_small_label" text="\$addedTime" />
         </VBox>
       </HBox>
     </VBox>
