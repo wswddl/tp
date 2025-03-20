@@ -4,9 +4,9 @@
   pageNav: 3
 ---
 
-# AB-3 User Guide
+# RecruitTrack User Guide
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+RecruitTrack is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -29,13 +29,13 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `list` : Lists all applicants.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com j/Front-end Engineer s/Online Assessment a/John street, block 123, #01-01` : Adds a applicant named `John Doe` to the Applicant Records.
 
-   * `delete id/3` : Deletes the 3rd contact shown in the current list.
+   * `delete id/3` : Deletes the 3rd applicant shown in the current list.
 
-   * `clear` : Deletes all contacts.
+   * `clear` : Deletes all applicants.
 
    * `exit` : Exits the app.
 
@@ -78,9 +78,9 @@ Format: `help`
 
 ### Adding an applicant: `add`
 
-Adds an applicant to the address book.
+Adds an applicant to the applicant records.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL j/JOB_POSITION s/STATUS a/ADDRESS [t/TAG]…​`
 
 <box type="tip" seamless>
 
@@ -88,18 +88,18 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com j/Frontend Engineer s/Online Assessment a/John street, block 123, #01-01`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com j/Backend Intern s/Offered a/Raffles Hall p/1234567 t/criminal`
 
 ### Listing all applicants : `list`
 
-Shows a list of all applicants in the address book.
+Shows a list of all applicants in the applicant records.
 
 Format: `list`
 
 ### Editing an applicant : `edit`
 
-Edits an existing applicant in the address book.
+Edits an existing applicant in the Applicant Records.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -134,7 +134,7 @@ Examples:
 
 ### Deleting an applicant : `delete`
 
-Deletes the specified applicant from applicant records, including all associated application details.
+Deletes the specified applicant from the applicant records, including all associated application details.
 
 Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 
@@ -145,19 +145,19 @@ Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
     * `p/` – Phone number
     * `id/` – The ID in the last shown list
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
-* The `--force` flag (optional) bypasses confirmation prompts and deletes the contact immediately.
+* The `--force` flag (optional) bypasses confirmation prompts and deletes the applicant immediately.
 
 Examples:
-* `delete n/John Doe` deletes the contact with the name "John Doe".
-* `delete e/johndoe@example.com` deletes the contact with the email "johndoe@example.com".
-* `delete p/98765432` deletes the contact with the phone number "+6598765432".
-* `delete id/3 --force` deletes the 3rd contact in the last shown list without confirmation.
+* `delete n/John Doe` deletes the applicant with the name "John Doe".
+* `delete e/johndoe@example.com` deletes the applicant with the email "johndoe@example.com".
+* `delete p/98765432` deletes the applicant with the phone number "+6598765432".
+* `delete id/3 --force` deletes the 3rd applicant in the last shown list without confirmation.
   ![delete command](images/deleteCommand.png)
   ![delete confirmation](images/deleteConfirmation.png)
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the applicant records.
 
 Format: `clear`
 
@@ -210,6 +210,6 @@ Action     | Format, Examples
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Search**   | `search KEYWORD [MORE_KEYWORDS]`<br> e.g., `search James Jake`
 **List**   | `list`
 **Help**   | `help`

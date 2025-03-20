@@ -12,10 +12,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.applicant.Address;
+import seedu.address.model.applicant.Applicant;
 import seedu.address.model.applicant.Email;
 import seedu.address.model.applicant.JobPosition;
 import seedu.address.model.applicant.Name;
-import seedu.address.model.applicant.Applicant;
 import seedu.address.model.applicant.Phone;
 import seedu.address.model.applicant.Status;
 import seedu.address.model.tag.Tag;
