@@ -81,7 +81,7 @@ public class Applicant {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma d/M/yyyy");
         String formattedTime = this.addedTime.format(formatter)
                 .replace("AM", "a.m.").replace("PM", "p.m.");
-        return formattedTime;
+        return "Added at " + formattedTime;
     }
 
     /**
