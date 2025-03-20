@@ -27,7 +27,7 @@ public class DeleteCommand extends Command {
             + "Example: " + COMMAND_WORD + " n/John Doe";
 
     static final String MESSAGE_CONFIRMATION_REQUIRED_MULTIPLE_PERSONS =
-            "Are you sure you want to delete all the persons listed below?\n" + "Type 'yes' to continue\n"
+            "Are you sure you want to delete all the applicants listed below?\n" + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the deletion";
     static final String MESSAGE_CONFIRMATION_REQUIRED_SINGLE_PERSON =
             "Are you sure you want to delete this applicant?\n"
