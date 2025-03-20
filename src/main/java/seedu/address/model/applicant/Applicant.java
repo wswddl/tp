@@ -3,11 +3,13 @@ package seedu.address.model.applicant;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.scene.control.Label;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
@@ -68,8 +70,19 @@ public class Applicant {
     public Address getAddress() {
         return address;
     }
+
     public LocalDateTime getAddedTime() {
         return this.addedTime;
+    }
+
+    /**
+     * Formatted String of the added time for PersonCard in UI
+     */
+    public String getFormattedAddedTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma d/M/yyyy");
+        String formattedTime = this.addedTime.format(formatter)
+                .replace("AM", "a.m.").replace("PM", "p.m.");
+        return formattedTime;
     }
 
     /**
