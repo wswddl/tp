@@ -157,21 +157,21 @@ Examples:
 
 ### Sorting applicant list : `sort`
 
-Sort the applicant list.
+Sort the applicant list based on the criteria.
 
 Format: `sort CRITERIA/`
 
 * Sort the applicant list by the sorting `CRITERIA/`. The supported `CRITERIA/` are:
   * `n/`: Applicant's name
   * `e/`: Applicant's email address
-  * `time`: The time the applicant was added to the list.
+  * `time/`: The time the applicant was added to the list.
   * `j/`: Job position
   * `s/`: Hiring stage
 * Only one sorting criterion can be provided at a time.
 * The list will be sorted in ascending order based on the chosen criterion.
 
 Examples:
-* `sort n/` sorts the list by name
+* `sort n/` sorts the list by name.
 * `sort time/` sorts the list by the time the applicant was added.
 
 ### Clearing all entries : `clear`
