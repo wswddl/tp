@@ -43,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label status;
     @FXML
+    private Label addedTime;
+    @FXML
     private FlowPane tags;
 
     /**
@@ -58,6 +60,7 @@ public class PersonCard extends UiPart<Region> {
         email.setText(applicant.getEmail().value);
         jobPosition.setText(applicant.getJobPosition().jobPosition);
         status.setText(applicant.getStatus().value);
+        addedTime.setText(applicant.getFormattedAddedTime());
 
         applicant.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
