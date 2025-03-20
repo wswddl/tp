@@ -6,17 +6,19 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CRITERIA_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 public class SortCommandParserTest {
-    private SortCommandParser parser = new SortCommandParser();
+    private final SortCommandParser parser = new SortCommandParser();
 
     @Test
     public void parse_validNameArgs_returnsSortCommand() {
         try {
             String input = " n/";
-            SortCommand expectedSortCommand = new SortCommand(new Prefix("n/"));
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_NAME);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -27,7 +29,7 @@ public class SortCommandParserTest {
     public void parse_validEmailAddressArgs_returnsSortCommand() {
         try {
             String input = " e/";
-            SortCommand expectedSortCommand = new SortCommand(new Prefix("e/"));
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_EMAIL);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
