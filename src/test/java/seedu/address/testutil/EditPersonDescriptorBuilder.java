@@ -32,6 +32,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(applicant.getName());
         descriptor.setPhone(applicant.getPhone());
         descriptor.setEmail(applicant.getEmail());
+        descriptor.setJobPosition(applicant.getJobPosition());
+        descriptor.setStatus(applicant.getStatus());
         descriptor.setAddress(applicant.getAddress());
         descriptor.setTags(applicant.getTags());
     }
@@ -57,6 +59,22 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withEmail(String email) {
         descriptor.setEmail(new Email(email));
+        return this;
+    }
+
+    /**
+     * Sets the {@code JobPosition} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withJobPosition(String jobPosition) {
+        descriptor.setJobPosition(new JobPosition(jobPosition));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Status} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withStatus(String status) {
+        descriptor.setStatus(new Status(status));
         return this;
     }
 
