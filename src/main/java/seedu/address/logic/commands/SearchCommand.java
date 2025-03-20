@@ -7,6 +7,7 @@ import java.util.List;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.Model;
 import seedu.address.model.applicant.IdentifierPredicate;
 
@@ -21,8 +22,12 @@ public class SearchCommand extends Command {
     public static final String MESSAGE_NO_RESULT = "Error: No applicants found.";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Searches for applicants based on specified criteria.\n"
-            + "Parameters: [n/NAME] [e/EMAIL] [jp/JOB_POSITION] [s/STATUS]\n"
-            + "Example: " + COMMAND_WORD + " n/John e/john@example.com";
+            + "Parameters: [" + CliSyntax.PREFIX_NAME + "NAME] "
+            + "[" + CliSyntax.PREFIX_EMAIL + "EMAIL] "
+            + "[" + CliSyntax.PREFIX_JOB_POSITION + "JOB_POSITION] "
+            + "[" + CliSyntax.PREFIX_STATUS + "STATUS]\n"
+            + "Example: " + COMMAND_WORD + " " + CliSyntax.PREFIX_NAME + "John "
+            + CliSyntax.PREFIX_EMAIL + "john@example.com";
 
     private final List<IdentifierPredicate> predicates;
 
