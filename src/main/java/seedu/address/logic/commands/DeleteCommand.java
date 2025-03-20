@@ -34,7 +34,6 @@ public class DeleteCommand extends Command {
             + "Type 'yes' to continue\n"
             + "Type anything else to cancel the deletion";
     static final String MESSAGE_NO_MATCHING_PERSON = "No matching applicant found.";
-    // todo:
     static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Applicant: %1$s";
 
     private final IdentifierPredicate predicate;
