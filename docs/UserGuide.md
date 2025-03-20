@@ -147,10 +147,31 @@ Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 Examples:
 * `delete n/John Doe` deletes the applicant with the name "John Doe".
 * `delete e/johndoe@example.com` deletes the applicant with the email "johndoe@example.com".
-* `delete p/98765432` deletes the applicant with the phone number "+6598765432".
 * `delete id/3 --force` deletes the 3rd applicant in the last shown list without confirmation.
+* `delete p/12345678` deletes the applicant with the phone number "+6512345678".
   ![delete command](images/deleteCommand.png)
   ![delete confirmation](images/deleteConfirmation.png)
+
+### Sorting applicant list : `sort`
+
+Sort the applicant list based on the criteria.
+
+Format: `sort CRITERIA/`
+
+* Sort the applicant list by the sorting `CRITERIA/`. The supported `CRITERIA/` are:
+  * `n/`: Applicant's name
+  * `e/`: Applicant's email address
+  * `time/`: The time the applicant was added to the list.
+  * `j/`: Job position
+  * `s/`: Hiring stage
+* Only one sorting criterion can be provided at a time.
+* The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
+
+Examples:
+* `sort time/` sorts the list by the time the applicant was added.
+* `sort n/` sorts the list by name.
+  ![sort command before](images/sortCommandByNameBefore.png)
+  ![sort command after](images/sortCommandByNameAfter.png)
 
 ### Clearing all entries : `clear`
 
@@ -205,8 +226,9 @@ Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Delete** | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Search**   | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`
+**Sort**   | `sort CRITERIA/`<br> e.g., `sort n/`
 **List**   | `list`
 **Help**   | `help`
