@@ -33,7 +33,7 @@ RecruitTrack is a **desktop app for managing contacts, optimized for use via a  
 
    * `add n/John Doe p/98765432 e/johnd@example.com j/Front-end Engineer s/Online Assessment a/John street, block 123, #01-01` : Adds a applicant named `John Doe` to the Applicant Records.
 
-   * `delete id/3` : Deletes the 3rd applicant shown in the current list.
+   * `delete 3` : Deletes the 3rd applicant shown in the current list.
 
    * `clear` : Deletes all applicants.
 
@@ -53,7 +53,7 @@ RecruitTrack is a **desktop app for managing contacts, optimized for use via a  
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -69,16 +69,16 @@ RecruitTrack is a **desktop app for managing contacts, optimized for use via a  
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Shows a message explaning how to access the help page.
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
 
 
-### Adding an applicant: `add`
+### Adding a applicant: `add`
 
-Adds an applicant to the applicant records.
+Adds a applicant to the applicant records.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL j/JOB_POSITION s/STATUS a/ADDRESS [t/TAG]…​`
 
@@ -97,7 +97,7 @@ Shows a list of all applicants in the applicant records.
 
 Format: `list`
 
-### Editing an applicant : `edit`
+### Editing a applicant : `edit`
 
 Edits an existing applicant in the Applicant Records.
 
@@ -106,7 +106,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * Edits the applicant at the specified `INDEX`. The index refers to the index number shown in the displayed applicant list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the applicant will be removed i.e. adding of tags is not cumulative.
+* When editing tags, the existing tags of the applicant will be removed i.e adding of tags is not cumulative.
 * You can remove all the applicant’s tags by typing `t/` without
     specifying any tags after it.
 
@@ -118,42 +118,30 @@ Examples:
 
 Searches applicants whose names contain any of the given keywords.
 
-Format: `search KEYWORD [MORE_KEYWORDS]`
+Format: `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
 
-* The search is case-insensitive. e.g. `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* The search is case-insensitive. e.g `hans` will match `Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only applicants that match all provided criteria are returned (i.e. `AND` search).<br>
+  e.g. `search n/John e/john@example.com` searches by name and email
 
 Examples:
-* `search John` returns `john` and `John Doe`
-* `search alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'search alex david'](images/findAlexDavidResult.png)
+* `search e/john@example.com` returns `John Doe (john@example.com)`
+* `search j/Software Engineer` returns `Alex Yeoh (Software Engineer)`<br>
 
-### Deleting an applicant : `delete`
+### Deleting a applicant : `delete`
 
-Deletes the specified applicant from the applicant records, including all associated application details.
+Deletes the specified applicant from the applicant records.
 
-Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
+Format: `delete INDEX`
 
-* Deletes the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`.
-* The `IDENTIFIER_TYPE` can be one of the following:
-    * `n/` – Name
-    * `e/` – Email
-    * `p/` – Phone number
-    * `id/` – The ID in the last shown list
-* The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
-* The `--force` flag (optional) bypasses confirmation prompts and deletes the applicant immediately.
+* Deletes the applicant at the specified `INDEX`.
+* The index refers to the index number shown in the displayed applicant list.
+* The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `delete n/John Doe` deletes the applicant with the name "John Doe".
-* `delete e/johndoe@example.com` deletes the applicant with the email "johndoe@example.com".
-* `delete p/98765432` deletes the applicant with the phone number "+6598765432".
-* `delete id/3 --force` deletes the 3rd applicant in the last shown list without confirmation.
-  ![delete command](images/deleteCommand.png)
-  ![delete confirmation](images/deleteConfirmation.png)
+* `list` followed by `delete 2` deletes the 2nd applicant in the applicant records.
+* `search Betsy` followed by `delete 1` deletes the 1st applicant in the results of the `search` command.
 
 ### Clearing all entries : `clear`
 
@@ -210,6 +198,6 @@ Action     | Format, Examples
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Search**   | `search KEYWORD [MORE_KEYWORDS]`<br> e.g., `search James Jake`
+**Search**   | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`
 **List**   | `list`
 **Help**   | `help`
