@@ -12,13 +12,15 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.applicant.NameContainsKeywordsPredicate;
+import seedu.address.model.applicant.IdentifierPredicate;
+import seedu.address.model.applicant.NameMatchesKeywordPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
@@ -29,10 +31,8 @@ public class SearchCommandTest {
 
     @Test
     public void equals() {
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
+        List<IdentifierPredicate> firstPredicate = Collections.singletonList(new NameMatchesKeywordPredicate("first"));
+        List<IdentifierPredicate> secondPredicate = Collections.singletonList(new NameMatchesKeywordPredicate("second"));
 
         SearchCommand findFirstCommand = new SearchCommand(firstPredicate);
         SearchCommand findSecondCommand = new SearchCommand(secondPredicate);
@@ -57,9 +57,9 @@ public class SearchCommandTest {
     @Test
     public void execute_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        NameContainsKeywordsPredicate predicate = preparePredicate(" ");
+        List<IdentifierPredicate> predicate = preparePredicate(" ");
         SearchCommand command = new SearchCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
+        expectedModel.updateFilteredPersonList(person -> predicate.stream().allMatch(p -> p.test(person)));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
@@ -67,25 +67,29 @@ public class SearchCommandTest {
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
+        List<IdentifierPredicate> predicate = preparePredicate("Kurz Elle Kunz");
         SearchCommand command = new SearchCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
+        expectedModel.updateFilteredPersonList(person -> predicate.stream().allMatch(p -> p.test(person)));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
     }
 
     @Test
     public void toStringMethod() {
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
+        List<IdentifierPredicate> predicate = Arrays.asList(new NameMatchesKeywordPredicate("keyword"));
         SearchCommand searchCommand = new SearchCommand(predicate);
         String expected = SearchCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, searchCommand.toString());
     }
 
     /**
-     * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a list of {@code IdentifierPredicate}.
      */
-    private NameContainsKeywordsPredicate preparePredicate(String userInput) {
-        return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private List<IdentifierPredicate> preparePredicate(String userInput) {
+        return Arrays.stream(userInput.split("\\s+"))
+            .map(NameMatchesKeywordPredicate::new)
+            .map(p -> (IdentifierPredicate) p) // Ensure proper type conversion
+            .toList();
+
     }
 }
