@@ -3,92 +3,67 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.Model;
-import seedu.address.model.applicant.NameContainsKeywordsPredicate;
+import seedu.address.model.applicant.IdentifierPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Finds and lists all applicants in the address book that match the given criteria.
+ * Keyword matching is case insensitive, exact match needed
  */
 public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";
 
-    public static final String MESSAGE_INVALID_CRITERIA = "Error: Invalid search CRITERIA";
-    public static final String MESSAGE_MISSING_VALUE = "Error: Missing VALUE for search";
     public static final String MESSAGE_NO_RESULT = "Error: No applicants found.";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Searches for applicants based on [CRITERIA] and [VALUE].\n"
-            + "Parameters:\n"
-            + CliSyntax.PREFIX_NAME + ": Applicant's name    "
-            + CliSyntax.PREFIX_EMAIL + ": Applicant's email address    "
-            + CliSyntax.PREFIX_ID + ": System's assigned ID    "
-            + CliSyntax.PREFIX_JOB_POSITION + ": Job position    "
-            + CliSyntax.PREFIX_STATUS + ": Hiring stage\n"
-            + "Example: " + COMMAND_WORD + " " + CliSyntax.PREFIX_NAME + " John Doe\n"
-            + "Example: " + COMMAND_WORD + " " + CliSyntax.PREFIX_EMAIL + " john@example.com\n";
+            + ": Searches for applicants based on specified criteria.\n"
+            + "Parameters: [n/NAME] [e/EMAIL] [jp/JOB_POSITION] [s/STATUS]\n"
+            + "Example: " + COMMAND_WORD + " n/John e/john@example.com";
 
-    private static final Set<String> CRITERIA = Set.of(
-            CliSyntax.PREFIX_NAME.getPrefix(),
-            CliSyntax.PREFIX_EMAIL.getPrefix(),
-            CliSyntax.PREFIX_ID.getPrefix(),
-            CliSyntax.PREFIX_JOB_POSITION.getPrefix(),
-            CliSyntax.PREFIX_STATUS.getPrefix()
-    );
+    private final List<IdentifierPredicate> predicates;
 
-    private final NameContainsKeywordsPredicate predicate;
-
-    public SearchCommand(NameContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
+    /**
+     * Constructs a {@code SearchCommand} with the specified list of predicates.
+     *
+     * @param predicates A list of predicates to filter the applicants.
+     */
+    public SearchCommand(List<IdentifierPredicate> predicates) {
+        requireNonNull(predicates);
+        this.predicates = predicates;
     }
 
-    private void validateKeywords(List<String> keywords) throws CommandException {
-        Set<String> invalidKeywords = IntStream.range(0, keywords.size())
-                .filter(i -> i % 2 == 0)
-                .mapToObj(keywords::get)
-                .filter(keyword -> !CRITERIA.contains(keyword))
-                .collect(Collectors.toSet());
-
-        if (!invalidKeywords.isEmpty()) {
-            throw new CommandException(MESSAGE_INVALID_CRITERIA);
-        }
-
-        Set<String> missingValues = IntStream.range(0, keywords.size())
-                .filter(i -> i % 2 != 0)
-                .mapToObj(keywords::get)
-                .filter(value -> CRITERIA.contains(value) || value == null)
-                .collect(Collectors.toSet());
-
-        if (!missingValues.isEmpty()) {
-            throw new CommandException(MESSAGE_MISSING_VALUE);
-        }
-    }
-
+    /**
+     * Executes the search command by filtering the applicant list based on the given predicates.
+     *
+     * @param model The model containing the list of applicants.
+     * @return A {@code CommandResult} indicating the number of matching applicants.
+     * @throws CommandException If no applicants match the search criteria.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        validateKeywords(predicate.getKeywords());
 
-        model.updateFilteredPersonList(predicate);
+        // Combine all predicates using logical AND (all conditions must be met)
+        model.updateFilteredPersonList(person -> predicates.stream().allMatch(p -> p.test(person)));
 
         int count = model.getFilteredPersonList().size();
         if (count == 0) {
             throw new CommandException(MESSAGE_NO_RESULT);
         }
 
-        return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, count)
-        );
+        return new CommandResult(String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, count));
     }
 
+    /**
+     * Checks if this {@code SearchCommand} is equal to another object.
+     *
+     * @param other The object to compare.
+     * @return True if the other object is a {@code SearchCommand} with the same predicates.
+     */
     @Override
     public boolean equals(Object other) {
         if (this == other) {
@@ -100,13 +75,18 @@ public class SearchCommand extends Command {
         }
 
         SearchCommand otherSearchCommand = (SearchCommand) other;
-        return predicate.equals(otherSearchCommand.predicate);
+        return predicates.equals(otherSearchCommand.predicates);
     }
 
+    /**
+     * Returns a string representation of this {@code SearchCommand}.
+     *
+     * @return A string representation containing the predicates used in the search.
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("predicate", predicate)
+                .add("predicate", predicates)
                 .toString();
     }
 }
