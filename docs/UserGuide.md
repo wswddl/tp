@@ -152,6 +152,29 @@ Examples:
   ![delete command](images/deleteCommand.png)
   ![delete confirmation](images/deleteConfirmation.png)
 
+### Updating the application status of an applicant : `update`
+
+Updates the status of the specified applicant from the applicant records.
+
+Format: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS`
+
+* Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then updates their application status to the provided `STATUS`.
+* The `IDENTIFIER_TYPE` can be one of the following:
+    * `n/` – Name
+    * `e/` – Email
+    * `p/` – Phone number
+    * `id/` – The index of the applicant in the last shown list
+* The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
+* The `STATUS` should contain only alphanumeric characters and spaces.
+
+Examples:
+* `update n/John Doe s/Interview Scheduled` updates the status of the applicant with the name "John Doe" to "Interview Scheduled".
+* `update e/johndoe@example.com s/Pending Review` updates the status of the applicant with the email "johndoe@example.com" to "Pending Review".
+* `update id/3 s/Offer Accepted` updates the status of the 3rd applicant in the last shown list to "Offer Accepted".
+* `update p/12345678 s/Failed` updates the status of the applicant with the phone number "+6512345678" to "Failed".
+  ![update command before](images/updateCommand_before.png)
+  ![update command after](images/updateCommand_after.png)
+
 ### Sorting applicant list : `sort`
 
 Sort the applicant list based on the criteria.
