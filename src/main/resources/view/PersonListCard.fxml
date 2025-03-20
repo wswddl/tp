@@ -28,7 +28,6 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
       <FlowPane fx:id="tags" />
-      
       <!-- Applicant's Information -->
       <HBox spacing="20" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
         <!-- Left column -->
