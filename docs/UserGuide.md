@@ -150,8 +150,8 @@ Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 Examples:
 * `delete n/John Doe` deletes the applicant with the name "John Doe".
 * `delete e/johndoe@example.com` deletes the applicant with the email "johndoe@example.com".
-* `delete p/98765432` deletes the applicant with the phone number "+6598765432".
 * `delete id/3 --force` deletes the 3rd applicant in the last shown list without confirmation.
+* `delete p/12345678` deletes the applicant with the phone number "+6512345678".
   ![delete command](images/deleteCommand.png)
   ![delete confirmation](images/deleteConfirmation.png)
 
@@ -171,8 +171,10 @@ Format: `sort CRITERIA/`
 * The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
 
 Examples:
-* `sort n/` sorts the list by name.
 * `sort time/` sorts the list by the time the applicant was added.
+* `sort n/` sorts the list by name.
+  ![sort command before](images/sortCommandByNameBefore.png)
+  ![sort command after](images/sortCommandByNameAfter.png)
 
 ### Clearing all entries : `clear`
 
