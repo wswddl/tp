@@ -168,7 +168,7 @@ Format: `sort CRITERIA/`
   * `j/`: Job position
   * `s/`: Hiring stage
 * Only one sorting criterion can be provided at a time.
-* The list will be sorted in ascending order based on the chosen criterion.
+* The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
 
 Examples:
 * `sort n/` sorts the list by name.
@@ -227,8 +227,9 @@ Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Delete** | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Search**   | `search KEYWORD [MORE_KEYWORDS]`<br> e.g., `search James Jake`
+**Sort**   | `sort CRITERIA/`<br> e.g., `sort n/`
 **List**   | `list`
 **Help**   | `help`
