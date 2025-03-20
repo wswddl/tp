@@ -38,6 +38,12 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         boolean isForceDelete = args.contains("--force");
         args = args.replace("--force", ""); // Remove --force from args
 
+        // Other flags that start with "--" are invalid
+        if (args.trim().matches(".*\\s--\\w+.*")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ID);
 
