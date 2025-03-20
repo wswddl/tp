@@ -28,7 +28,6 @@ public class SearchCommandParserTest {
                         new NameMatchesKeywordPredicate("Alice"),
                         new NameMatchesKeywordPredicate("Bob")
                     ));
-                    
         assertParseSuccess(parser, "Alice Bob", expectedSearchCommand);
 
         // multiple whitespaces between keywords
