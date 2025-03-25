@@ -114,6 +114,20 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st applicant to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd applicant to be `Betsy Crower` and clears all existing tags.
 
+### Exporting applicant data: `export`
+
+Allow users to export the candidate data into a CSV file
+
+Format: `export [FILE-NAME]`
+
+* Filename is the name of the CSV file to be generated
+* The exported data includes all applicants in the list. Each row represents one 
+  applicant and includes fields such as : name, email, phone number, job position, status, 
+  rating, and tags.
+
+Examples:
+* `export applicants_data.csv` Export the current applicant data into a file named applicants_data.csv and download for the user.
+
 ### Locating applicants by name: `search`
 
 Searches applicants whose names contain any of the given keywords.
@@ -251,6 +265,7 @@ Action     | Format, Examples
 **Clear**  | `clear`
 **Delete** | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Export**   | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`
 **Search**   | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`
 **Sort**   | `sort CRITERIA/`<br> e.g., `sort n/`
 **List**   | `list`
