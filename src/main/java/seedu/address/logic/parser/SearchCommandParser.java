@@ -25,11 +25,16 @@ import seedu.address.model.applicant.StatusMatchesPredicate;
  */
 public class SearchCommandParser implements Parser<SearchCommand> {
 
+    /**
+     * The order in which prefixes are parsed. This determines the order of predicates in the final command.
+     */
     private static final Prefix[] SEARCH_PREFIX_ORDER = {
         PREFIX_NAME, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS
     };
 
-    /** Mapping of prefixes to their respective predicate constructors. */
+    /** 
+     * Mapping of prefixes to their respective predicate constructors.
+    */
     private static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
             PREFIX_NAME, NameMatchesKeywordPredicate::new,
             PREFIX_EMAIL, EmailMatchesKeywordPredicate::new,
