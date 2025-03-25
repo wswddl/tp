@@ -37,4 +37,10 @@ public class EmailMatchesKeywordPredicate extends IdentifierPredicate {
                 .add("identifierType", "email")
                 .add("keyword", keyword).toString();
     }
+
+
+    @Override
+    public int hashCode() {
+        return keyword.hashCode();
+    }
 }
