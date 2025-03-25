@@ -25,6 +25,10 @@ import seedu.address.model.applicant.StatusMatchesPredicate;
  */
 public class SearchCommandParser implements Parser<SearchCommand> {
 
+    private static final Prefix[] SEARCH_PREFIX_ORDER = {
+        PREFIX_NAME, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS
+    };
+
     /** Mapping of prefixes to their respective predicate constructors. */
     private static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
             PREFIX_NAME, NameMatchesKeywordPredicate::new,
@@ -42,21 +46,22 @@ public class SearchCommandParser implements Parser<SearchCommand> {
     @Override
     public SearchCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-            args, predicateMapping.keySet().toArray(new Prefix[0]));
-
-        if (!argMultimap.areAnyPrefixesPresent(predicateMapping.keySet().toArray(new Prefix[0]))) {
+    
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, SEARCH_PREFIX_ORDER);
+        System.out.println(argMultimap);
+        if (!argMultimap.areAnyPrefixesPresent(SEARCH_PREFIX_ORDER)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
-
+    
         List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
-
+    
         if (predicates.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
-
+    
         return new SearchCommand(predicates);
     }
+    
 
     /**
      * Extracts predicates from the given {@code ArgumentMultimap}.
@@ -66,11 +71,15 @@ public class SearchCommandParser implements Parser<SearchCommand> {
      */
     private List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) {
         List<IdentifierPredicate> predicates = new ArrayList<>();
-
-        predicateMapping.forEach((prefix, predicateConstructor) ->
-                argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
-        );
-
+    
+        for (Prefix prefix : SEARCH_PREFIX_ORDER) {
+            if (argMultimap.getValue(prefix).isPresent()) {
+                String value = argMultimap.getValue(prefix).get();
+                predicates.add(predicateMapping.get(prefix).apply(value));
+            }
+        }
+    
         return predicates;
     }
+    
 }
