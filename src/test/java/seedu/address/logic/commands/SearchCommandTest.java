@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GABRIELLA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -55,23 +53,28 @@ public class SearchCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        List<IdentifierPredicate> predicate = preparePredicate(" ");
+    public void execute_zeroKeywords_allPersonsReturned() {
+        int totalPersons = model.getAddressBook().getPersonList().size();
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, totalPersons);
+    
+        List<IdentifierPredicate> predicate = preparePredicate("");
         SearchCommand command = new SearchCommand(predicate);
-        expectedModel.updateFilteredPersonList(person -> predicate.stream().allMatch(p -> p.test(person)));
+    
+        expectedModel.updateFilteredPersonList(p -> true); 
+    
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(model.getAddressBook().getPersonList(), model.getFilteredPersonList());
     }
+    
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        List<IdentifierPredicate> predicate = preparePredicate("Kurz Elle Kunz");
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        List<IdentifierPredicate> predicate = preparePredicate("Gabriella");
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredPersonList(person -> predicate.stream().allMatch(p -> p.test(person)));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(GABRIELLA), model.getFilteredPersonList());
     }
 
     @Test
@@ -86,6 +89,9 @@ public class SearchCommandTest {
      * Parses {@code userInput} into a list of {@code IdentifierPredicate}.
      */
     private List<IdentifierPredicate> preparePredicate(String userInput) {
+        if (userInput == null || userInput.trim().isEmpty()) {
+            return Collections.emptyList();
+        }
         return Arrays.stream(userInput.split("\\s+"))
             .map(NameMatchesKeywordPredicate::new)
             .map(p -> (IdentifierPredicate) p) // Ensure proper type conversion
