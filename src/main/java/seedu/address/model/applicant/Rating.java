@@ -62,7 +62,7 @@ public class Rating {
      */
     public String toString() {
         if (value.equals("-1")) {
-            return "No rating";
+            return "Unassigned";
         }
         return value + " / 5";
     }

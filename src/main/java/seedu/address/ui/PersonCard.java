@@ -63,7 +63,7 @@ public class PersonCard extends UiPart<Region> {
         jobPosition.setText(applicant.getJobPosition().jobPosition);
         status.setText(applicant.getStatus().value);
         addedTime.setText(applicant.getFormattedAddedTime());
-        rating.setText(applicant.getRating().toString());
+        rating.setText("Rating: " + applicant.getRating().toString());
 
         applicant.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

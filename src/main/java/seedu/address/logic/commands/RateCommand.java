@@ -9,62 +9,62 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.applicant.Applicant;
 import seedu.address.model.applicant.IdentifierPredicate;
-import seedu.address.model.applicant.Status;
+import seedu.address.model.applicant.Rating;
 
 /**
- * Updates the {@code Status} of a {@code Applicant} identified using the specified contact identifier
+ * Assigns a {@code Rating} to a {@code Applicant} identified using the specified contact identifier
  */
-public class UpdateCommand extends Command {
-    public static final String COMMAND_WORD = "update";
+public class RateCommand extends Command {
+    public static final String COMMAND_WORD = "rate";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the application status of the applicant "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a rating of 1 to 5 to the applicant "
             + "identified by the specified contact identifier (name, email, or phone).\n"
-            + "Parameters: IDENTIFIER_TYPE/KEYWORD s/STATUS\n"
-            + "Example: " + COMMAND_WORD + " n/Alex Yeoh s/Interview Scheduled";
+            + "Parameters: IDENTIFIER_TYPE/KEYWORD r/RATING\n"
+            + "Example: " + COMMAND_WORD + " n/Alex Yeoh + r/4";
 
     public static final String MESSAGE_NO_MATCHES = "No applicant matches provided keyword!";
     public static final String MESSAGE_MULTIPLE_MATCHES = "%1$d persons matched keyword. Please be more specific!";
 
-    private static final String MESSAGE_UPDATE_STATUS_SUCCESS = "Updated status of: %1$s";
+    private static final String MESSAGE_ASSIGN_RATING_SUCCESS = "Assigned a rating of %1$s to: %2$s";
 
     private final IdentifierPredicate predicate;
     private final Index targetIndex;
-    private final Status status;
+    private final Rating rating;
 
     /**
-     * @param predicate     The predicate used to identify the {@code Applicant} to be updated.
-     * @param status        The {@code Status} to which the {@code Applicant}'s status should be set to.
+     * @param predicate     The predicate used to identify the {@code Applicant} to be rated.
+     * @param rating        The {@code Rating} to be assigned to the {@code Applicant}.
      */
-    public UpdateCommand(IdentifierPredicate predicate, Status status) {
+    public RateCommand(IdentifierPredicate predicate, Rating rating) {
         this.predicate = predicate;
         this.targetIndex = null;
-        this.status = status;
+        this.rating = rating;
     }
 
     /**
      * @param targetIndex   The index of the {@code Applicant} to be updated in the filtered list.
-     * @param status        The {@code Status} to which the {@code Applicant}'s status should be set to.
+     * @param rating        The {@code Rating} to be assigned to the {@code Applicant}.
      */
-    public UpdateCommand(Index targetIndex, Status status) {
+    public RateCommand(Index targetIndex, Rating rating) {
         this.predicate = null;
         this.targetIndex = targetIndex;
-        this.status = status;
+        this.rating = rating;
     }
 
     /**
-     * Executes update command with target identified by predicate or index,
+     * Executes rate command with target identified by predicate or index,
      * depending on whether targetIndex was provided.
      */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         if (targetIndex == null) {
-            return updateByPredicate(model);
+            return rateByPredicate(model);
         } else {
-            return updateByIndex(model);
+            return rateByIndex(model);
         }
     }
 
-    public CommandResult updateByPredicate(Model model) {
+    public CommandResult rateByPredicate(Model model) {
         model.updateFilteredPersonList(predicate);
         int numberOfMatches = model.getFilteredPersonListSize();
         if (numberOfMatches == 0) {
@@ -73,11 +73,11 @@ public class UpdateCommand extends Command {
             return new CommandResult(String.format(MESSAGE_MULTIPLE_MATCHES, numberOfMatches));
         }
         Applicant target = model.getFilteredPersonList().get(0);
-        Applicant updatedApplicant = model.setStatus(target, status);
-        return new CommandResult(String.format(MESSAGE_UPDATE_STATUS_SUCCESS, Messages.format(updatedApplicant)));
+        Applicant updatedApplicant = model.setRating(target, rating);
+        return new CommandResult(String.format(MESSAGE_ASSIGN_RATING_SUCCESS, rating.toString(), Messages.format(updatedApplicant)));
     }
 
-    public CommandResult updateByIndex(Model model) throws CommandException {
+    public CommandResult rateByIndex(Model model) throws CommandException {
         List<Applicant> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -85,8 +85,8 @@ public class UpdateCommand extends Command {
         }
 
         Applicant target = lastShownList.get(targetIndex.getZeroBased());
-        Applicant updatedApplicant = model.setStatus(target, status);
-        return new CommandResult(String.format(MESSAGE_UPDATE_STATUS_SUCCESS, Messages.format(updatedApplicant)));
+        Applicant updatedApplicant = model.setRating(target, rating);
+        return new CommandResult(String.format(MESSAGE_ASSIGN_RATING_SUCCESS, rating.toString(), Messages.format(updatedApplicant)));
     }
 
     @Override
@@ -96,11 +96,11 @@ public class UpdateCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof UpdateCommand otherUpdateCommand)) {
+        if (!(other instanceof RateCommand otherRateCommand)) {
             return false;
         }
 
-        return predicate.equals(otherUpdateCommand.predicate);
+        return predicate.equals(otherRateCommand.predicate);
     }
 
     @Override
@@ -108,12 +108,12 @@ public class UpdateCommand extends Command {
         if (targetIndex == null) {
             return new ToStringBuilder(this)
                     .add("predicate", predicate)
-                    .add("status", status)
+                    .add("rating", rating)
                     .toString();
         } else {
             return new ToStringBuilder(this)
                     .add("targetIndex", targetIndex)
-                    .add("status", status)
+                    .add("rating", rating)
                     .toString();
         }
     }
