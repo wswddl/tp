@@ -122,8 +122,8 @@ Format: `export [FILE-NAME]`
 
 * Filename is the name of the CSV file to be generated
 * The exported data includes all applicants in the list. Each row represents one 
-  applicant and includes fields such as : name, email, phone number, job position, status, 
-  rating, and tags.
+  applicant and includes fields such as : name, email, phone number,
+  job position, status, and tags.
 
 Examples:
 * `export applicants_data.csv` Export the current applicant data into a file named applicants_data.csv and download for the user.
