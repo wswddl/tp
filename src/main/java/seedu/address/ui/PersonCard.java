@@ -46,6 +46,8 @@ public class PersonCard extends UiPart<Region> {
     private Label addedTime;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label rating;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Applicant} and index to display.
@@ -61,6 +63,7 @@ public class PersonCard extends UiPart<Region> {
         jobPosition.setText(applicant.getJobPosition().jobPosition);
         status.setText(applicant.getStatus().value);
         addedTime.setText(applicant.getFormattedAddedTime());
+        rating.setText(applicant.getRating().toString());
 
         applicant.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

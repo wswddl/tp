@@ -29,8 +29,10 @@ public class Applicant {
     private final Address address;
     private final LocalDateTime addedTime;
     private final Set<Tag> tags = new HashSet<>();
+    private final Rating rating;
 
     /**
+     * Constructor of Applicant without rating.
      * Every field must be present and not null.
      */
     public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
@@ -44,6 +46,25 @@ public class Applicant {
         this.address = address;
         this.addedTime = addedTime;
         this.tags.addAll(tags);
+        this.rating = new Rating("-1");
+    }
+
+    /**
+     * Constructor of Applicant with rating.
+     * Every field must be present and not null.
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags, Rating rating) {
+        requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags, rating);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.jobPosition = jobPosition;
+        this.status = status;
+        this.address = address;
+        this.addedTime = addedTime;
+        this.tags.addAll(tags);
+        this.rating = rating;
     }
 
     public Name getName() {
@@ -92,6 +113,10 @@ public class Applicant {
         return Collections.unmodifiableSet(tags);
     }
 
+    public Rating getRating() {
+        return rating;
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -127,13 +152,14 @@ public class Applicant {
                 && jobPosition.equals(otherApplicant.jobPosition)
                 && status.equals(otherApplicant.status)
                 && address.equals(otherApplicant.address)
-                && tags.equals(otherApplicant.tags);
+                && tags.equals(otherApplicant.tags)
+                && rating.equals((otherApplicant.rating));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, jobPosition, status, address, tags);
+        return Objects.hash(name, phone, email, jobPosition, status, address, tags, rating);
     }
 
     @Override
@@ -146,6 +172,7 @@ public class Applicant {
                 .add("status", status)
                 .add("address", address)
                 .add("tags", tags)
+                .add("rating", rating)
                 .toString();
     }
 
