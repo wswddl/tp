@@ -180,52 +180,23 @@ public class MainWindow extends UiPart<Stage> {
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
             Command command = logic.parseCommand(commandText);
-
+    
             if (command instanceof ExportCommand) {
-                ExportCommand exportCommand = (ExportCommand) command;
-                String suggestedFileName = exportCommand.getFileName();
-
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save Exported CSV");
-                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
-                fileChooser.setInitialFileName(suggestedFileName);
-                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-
-                File file = fileChooser.showSaveDialog(getPrimaryStage());
-
-                if (file != null) {
-                    if (!file.getName().endsWith(".csv")) {
-                        file = new File(file.getAbsolutePath() + ".csv");
-                    }
-
-                    logic.exportCsv(file);
-                    resultDisplay.setFeedbackToUser("Exported applicant list to: " + file.getName());
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Export Successful");
-                    alert.setHeaderText(null);
-                    alert.setContentText("CSV exported to: " + file.getAbsolutePath());
-                    alert.showAndWait();
-                } else {
-                    resultDisplay.setFeedbackToUser("Export cancelled.");
-                }
-
-                return new CommandResult("Export completed.");
+                return handleExportCommand((ExportCommand) command);
             }
-
-
+    
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-
+    
             if (commandResult.isShowHelp()) {
                 handleHelp();
             }
-
+    
             if (commandResult.isExit()) {
                 handleExit();
             }
-
+    
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
@@ -233,4 +204,47 @@ public class MainWindow extends UiPart<Stage> {
             throw e;
         }
     }
+
+    /**
+     * Displays an information alert indicating export success.
+     */
+    private void showExportSuccessPopup(File file) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Export Successful");
+        alert.setHeaderText(null);
+        alert.setContentText("CSV exported to: " + file.getAbsolutePath());
+        alert.showAndWait();
+    }
+
+    /**
+     * Handles execution of the export command with file chooser.
+     */
+    private CommandResult handleExportCommand(ExportCommand exportCommand) throws CommandException {
+        String suggestedFileName = exportCommand.getFileName();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Exported CSV");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        fileChooser.setInitialFileName(suggestedFileName);
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        File file = fileChooser.showSaveDialog(getPrimaryStage());
+
+        if (file != null) {
+            if (!file.getName().endsWith(".csv")) {
+                file = new File(file.getAbsolutePath() + ".csv");
+            }
+
+            logic.exportCsv(file);
+            resultDisplay.setFeedbackToUser("Exported applicant list to: " + file.getName());
+            showExportSuccessPopup(file);
+
+            return new CommandResult("Export completed.");
+        } else {
+            resultDisplay.setFeedbackToUser("Export cancelled.");
+            return new CommandResult("Export cancelled.");
+        }
+    }
+
+    
 }
