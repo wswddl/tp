@@ -17,6 +17,10 @@ public class ExportCommandParser implements Parser<ExportCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
         }
 
+        if (!trimmed.matches("^[\\w\\-. ]+\\.csv$")) {
+            throw new ParseException("Invalid filename. Only letters, digits, '-', '_' and '.' are allowed.");
+        }
+        
         return new ExportCommand(trimmed);
     }
 }
