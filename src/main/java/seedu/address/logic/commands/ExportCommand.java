@@ -28,7 +28,7 @@ public class ExportCommand extends Command {
     public ExportCommand(String fileName) {
         this.fileName = fileName;
     }
-    
+
     public String getFileName() {
         return fileName;
     }
@@ -42,7 +42,7 @@ public class ExportCommand extends Command {
             writer.write("Name,Email,Phone,Job Position,Status,Tags\n");
 
             for (Applicant a : applicants) {
-                writer.write(String.format("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
+                writer.write(String.format("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
                         a.getName().fullName,
                         a.getEmail().value,
                         a.getPhone().value,
