@@ -13,14 +13,27 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     @Override
     public ExportCommand parse(String args) throws ParseException {
         String trimmed = args.trim();
-        if (trimmed.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+    
+        if (trimmed.isEmpty() || trimmed.startsWith(".")) {
+            throw new ParseException("Filename must not be empty or start with a dot.");
         }
-
-        if (!trimmed.matches("^[\\w\\-. ]+\\.csv$")) {
-            throw new ParseException("Invalid filename. Only letters, digits, '-', '_' and '.' are allowed.");
+    
+        // Basic invalid characters check
+        if (!trimmed.matches("^[\\w\\-. ]+$")) {
+            throw new ParseException("Invalid filename. Only letters, digits, '-', '_', '.', and spaces are allowed.");
+        }
+    
+        // Append .csv if not already there
+        if (!trimmed.endsWith(".csv")) {
+            trimmed += ".csv";
+        }
+        
+        // Avoid file name too long
+        if (trimmed.length() > 255) {
+            throw new ParseException("Filename is too long. Keep it under 255 characters.");
         }
         
         return new ExportCommand(trimmed);
     }
+    
 }
