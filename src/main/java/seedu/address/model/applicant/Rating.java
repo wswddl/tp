@@ -4,17 +4,19 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents an Applicant's rating, from 1 to 5
- * Guarantees: immutable; has integer in range 1 to 5 as value
+ * Represents an Applicant's rating
+ * Has value of an integer in range 1 to 5, unless not assigned yet (represented by value of -1)
+ * Guarantees: immutable; has integer in range 1 to 5, or -1, as value
  */
 public class Rating {
     public static final String MESSAGE_CONSTRAINTS =
-            "Ratings should be on a scale of 1 to 5, with 5 being the most promising";
+            "Ratings should be on a scale of 1 to 5, with 5 being the most promising.";
 
     /*
-     * Rating should be an integer in range 1 to 5.
+     * Assigned rating should be an integer in range 1 to 5.
+     * Accepts -1 as representation of unassigned rating
      */
-    public static final String VALIDATION_REGEX = "^[1-5]$";
+    public static final String VALIDATION_REGEX = "^[1-5]$|^-1$";
 
     public final String value;
 
@@ -59,7 +61,10 @@ public class Rating {
      * Format state as text for viewing.
      */
     public String toString() {
-        return value;
+        if (value.equals("-1")) {
+            return "No rating";
+        }
+        return value + " / 5";
     }
 
 }

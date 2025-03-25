@@ -36,6 +36,7 @@ public class RatingTest {
         assertTrue(Rating.isValidRating("1")); // lower boundary
         assertTrue(Rating.isValidRating("5")); // upper boundary
         assertTrue(Rating.isValidRating("3")); // middle value
+        assertTrue(Rating.isValidRating("-1")); // value representing no rating
     }
 
     @Test
