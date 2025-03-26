@@ -66,6 +66,10 @@ public class TypicalPersons {
             .withStatus("Signed")
             .withAddedTime(LocalDateTime.of(2025, 3, 13, 5, 0, 0))
             .build();
+    public static final Applicant GABRIELLA = new PersonBuilder().withName("Gabriella").withPhone("1234543")
+            .withEmail("ella@example.com").withAddress("1st street")
+            .withAddedTime(LocalDateTime.of(2025, 3, 13, 5, 1, 0))
+            .build();
     public static final Applicant GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
             .withAddedTime(LocalDateTime.of(2025, 3, 13, 6, 0, 0))
@@ -119,6 +123,6 @@ public class TypicalPersons {
     }
 
     public static List<Applicant> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GABRIELLA, GEORGE));
     }
 }
