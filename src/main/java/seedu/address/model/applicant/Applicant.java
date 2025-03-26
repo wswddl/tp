@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javafx.scene.control.Label;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
@@ -23,6 +22,7 @@ public class Applicant {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private String profilePhotoPath;
 
     // Data fields
     private final JobPosition jobPosition;
@@ -45,6 +45,8 @@ public class Applicant {
         this.address = address;
         this.addedTime = addedTime;
         this.tags.addAll(tags);
+        // default profile photo
+        this.profilePhotoPath = "/images/profile_photos/default_profile_photo.png";
     }
 
     public Name getName() {
@@ -74,6 +76,12 @@ public class Applicant {
     public LocalDateTime getAddedTime() {
         return this.addedTime;
     }
+    public String getProfilePhotoPath() {
+        return this.profilePhotoPath;
+    }
+    public void setProfilePhotoPath(String specifiedPath) {
+        this.profilePhotoPath = specifiedPath;
+    }
 
     /**
      * Formatted String of the added time for PersonCard in UI
@@ -82,7 +90,7 @@ public class Applicant {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma d/M/yyyy");
         String formattedTime = this.addedTime.format(formatter)
                 .replace("AM", "a.m.").replace("PM", "p.m.");
-        return formattedTime;
+        return "Added at " + formattedTime;
     }
 
     /**

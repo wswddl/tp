@@ -1,6 +1,12 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +20,7 @@ import seedu.address.model.applicant.Applicant;
 import seedu.address.model.applicant.IdentifierPredicate;
 
 /**
- * Deletes a applicant identified using the specified contact identifier from the address book.
+ * Deletes an applicant identified using the specified contact identifier from the address book.
  */
 public class DeleteCommand extends Command {
 
@@ -23,8 +29,14 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the applicant identified by the contact identifier provided.\n"
             + "Parameters: "
-            + "n/NAME | p/PHONE | e/EMAIL | id/ID [--force]\n"
-            + "Example: " + COMMAND_WORD + " n/John Doe";
+            + PREFIX_NAME + "NAME | "
+            + PREFIX_PHONE + "PHONE | "
+            + PREFIX_EMAIL + "EMAIL | "
+            + PREFIX_ID + "ID | "
+            + PREFIX_STATUS + "STATUS | "
+            + PREFIX_JOB_POSITION + "JOB_POSITION | "
+            + "[--force]\n"
+            + "Example: " + COMMAND_WORD + " n/John Doe --force";
 
     static final String MESSAGE_CONFIRMATION_REQUIRED_MULTIPLE_PERSONS =
             "Are you sure you want to delete all the applicants listed below?\n" + "Type 'yes' to continue\n"
