@@ -22,20 +22,10 @@ public class SummaryCommandParser implements Parser<SummaryCommand> {
 
     @Override
     public SummaryCommand parse(String args) throws ParseException {
-        requireNonNull(args);
+        // Note: There can be no predicates i.e. Summarize all
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, predicateMapping.keySet().toArray(new Prefix[0]));
-
-        if (!argMultimap.areAnyPrefixesPresent(predicateMapping.keySet().toArray(new Prefix[0]))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
-        }
-
         List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
-
-        if (predicates.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
-        }
-
         return new SummaryCommand(predicates);
     }
 }

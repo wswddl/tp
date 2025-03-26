@@ -25,7 +25,7 @@ public class SummaryCommand extends Command {
             + "[" + PREFIX_STATUS + "STATUS]\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_JOB_POSITION + "Senior SWE";
 
-    public static final String MESSAGE_SUCCESS = "Summarized: %1$d Applicants\n %2$s";
+    public static final String MESSAGE_SUCCESS = "Summarized %1$d / %2$d Applicants \n%3$s";
 
     private final List<IdentifierPredicate> predicates;
     /**
@@ -42,12 +42,11 @@ public class SummaryCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        ObservableList<Applicant> applicants = model.getAddressBook().getPersonList();
+
         // Combine all predicates using logical AND (all conditions must be met)
-        model.updateFilteredPersonList(person -> predicates.stream().allMatch(p -> p.test(person)));
-
-        ObservableList<Applicant> filteredList = model.getFilteredPersonList();
-
-        int count = filteredList.size();
+        ObservableList<Applicant> filteredList =
+                applicants.filtered(person -> predicates.stream().allMatch(p -> p.test(person)));
 
         // Count how many Applicants per JobPosition
         Map<JobPosition, Long> jobPositionCountMap = filteredList.stream()
@@ -68,12 +67,13 @@ public class SummaryCommand extends Command {
                 .map(entry -> entry.getKey().toString() + ": " + entry.getValue())
                 .collect(Collectors.joining(", "));
 
-        String statisticsString = "Job Positions -> ["
+        String statisticsString = "Job Positions -> \n["
                 + jobPositionStats
-                + "]; Statuses -> ["
+                + "] \nStatuses -> \n["
                 + statusStats + "]";
 
-        return new CommandResult(String.format(String.format(MESSAGE_SUCCESS, count, statisticsString)));
+        return new CommandResult(String.format(
+                String.format(MESSAGE_SUCCESS, filteredList.size(), applicants.size(), statisticsString)));
     }
 
 }
