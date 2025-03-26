@@ -1,6 +1,7 @@
 package seedu.address.model.applicant;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.ui.UiManager.DEFAULT_PROFILE_PIC;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -46,7 +47,7 @@ public class Applicant {
         this.addedTime = addedTime;
         this.tags.addAll(tags);
         // default profile photo
-        this.profilePhotoPath = "/images/profile_photos/default_profile_photo.png";
+        this.profilePhotoPath = DEFAULT_PROFILE_PIC;
     }
 
     public Name getName() {

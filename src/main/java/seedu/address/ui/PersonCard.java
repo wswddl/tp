@@ -1,11 +1,13 @@
 package seedu.address.ui;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +17,14 @@ import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.model.applicant.Applicant;
+
+
+import javax.imageio.ImageIO;
+
+import static seedu.address.ui.UiManager.CUSTOM_PROFILE_PIC_FOLDER;
+import static seedu.address.ui.UiManager.DEFAULT_PROFILE_PIC;
 
 /**
  * An UI component that displays information of a {@code Applicant}.
@@ -77,25 +86,33 @@ public class PersonCard extends UiPart<Region> {
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         // Make the ImageView Circular
-        Image image = new Image("/images/profile_photos/default_profile_photo.png");
+        System.out.println(applicant.getName() + "    " + applicant.getProfilePhotoPath() + "  before new Image()");
+        File file = new File(applicant.getProfilePhotoPath());
+        Image image;
+        if (file.exists()) {
+            image = new Image(file.toURI().toString());
+        } else {
+            image = new Image(MainApp.class.getResourceAsStream(DEFAULT_PROFILE_PIC));
+        }
+        //File file = new File("./src/main/resources/images/profile_photos/default_profile_photo.png");
+
+
+        //Image image = new Image("data/profileImage/aaaaa.png");
+        //Image image = new Image("./data/profile_photos/Screenshot 2025-03-24 215129_15.png");
+        //Image image = new Image("/images/profile_photos/default_profile_photo.png");
+        //Image image1111 = new Image("/images/profile_photos/default_profile_photo.png");
+        //String imagePath = applicant.getProfilePhotoPath();//"/images/profile_photos/default_profile_photo.png";
+        //Image image = new Image(MainApp.class.getResourceAsStream(imagePath));
         double radius = Math.min(profileImage.getFitWidth(), profileImage.getFitHeight()) / 2;
         Circle clip = new Circle(radius, radius, radius);
         profileImage.setClip(clip);
         profileImage.setImage(image);
-/*
-        profileImage.setFitWidth(profilePicButton.getPrefWidth());  // Set width to button's width
-        profileImage.setFitHeight(profilePicButton.getPrefHeight()); // Set height to button's height
 
-        // Remove text from the button
-        profilePicButton.setText("");
-
-        // Set ImageView in Button (cover the entire button)
-        profilePicButton.setGraphic(profileImage);
-        profilePicButton.setPadding(new Insets(0)); // No padding around the image */
     }
 
     @FXML
     private void handleImageClick() {
+        System.out.println(applicant.getName() + " handling  " + applicant.getProfilePhotoPath());
         FileChooser fileChooser = new FileChooser();
 
         // Set title of file chooser window
@@ -108,12 +125,68 @@ public class PersonCard extends UiPart<Region> {
         // Open file chooser
         File selectedFile = fileChooser.showOpenDialog(new Stage());
 
-        if (selectedFile != null) {
-
-            Image image = new Image(selectedFile.toURI().toString());
-            profileImage.setImage(image);
-
+        // if user didn't select any file
+        if (selectedFile == null) {
+            return;
         }
+
+
+        File savedFileDir = new File(CUSTOM_PROFILE_PIC_FOLDER);
+        if (!savedFileDir.exists()) {
+            savedFileDir.mkdirs(); // Create the directory if it doesn't exist
+        }
+
+        Path sourcePath = selectedFile.toPath();
+        //Path savedFilePath = Paths.get(savedFileDir.getAbsolutePath(), selectedFile.getName());
+        Path savedFilePath = Paths.get(CUSTOM_PROFILE_PIC_FOLDER, selectedFile.getName());
+
+        int copyIndex = 1;
+        String savedFileName = selectedFile.getName();;
+        // If the file already exists, change the name by appending a number
+        while (Files.exists(savedFilePath)) {
+            String fileName = selectedFile.getName();
+            String nameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'));
+            String extension = fileName.substring(fileName.lastIndexOf('.'));
+
+            savedFileName = nameWithoutExtension + "_" + copyIndex++ + extension;
+            savedFilePath = Paths.get(CUSTOM_PROFILE_PIC_FOLDER, savedFileName);
+        }
+
+        // copy the selected picture to profile picture folder
+        // delete the old profile picture if it isn't the default one
+        try {
+            // Copy the file
+            Files.copy(sourcePath, savedFilePath);
+            deleteOldProfilePic();
+            System.out.println("@PersonCard.java File copied successfully to " + savedFilePath);
+        } catch (IOException e) {
+            System.err.println("Error copying file: " + e.getMessage());
+        }
+
+        // update the profile picture
+        Image image = new Image(selectedFile.toURI().toString());
+        profileImage.setImage(image);
+        System.out.println(CUSTOM_PROFILE_PIC_FOLDER + savedFileName);
+        this.applicant.setProfilePhotoPath(CUSTOM_PROFILE_PIC_FOLDER + savedFileName);
+
+    }
+
+    /**
+     * Delete the old profile picture if it isn't the default one.
+     */
+    private void deleteOldProfilePic() {
+        String oldProfilePicPath = applicant.getProfilePhotoPath();
+        if (!oldProfilePicPath.equals(DEFAULT_PROFILE_PIC)) {
+            Path photoPath = Paths.get(oldProfilePicPath);
+
+            try {
+                Files.delete(photoPath);
+                System.out.println("Photo deleted successfully.");
+            } catch (IOException e) {
+                System.err.println("Error deleting photo: " + e.getMessage());
+            }
+        }
+        // else do nothing, don't delete the default profile pic
     }
 
 }
