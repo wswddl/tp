@@ -22,6 +22,7 @@ public class Applicant {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private String profilePhotoPath;
 
     // Data fields
     private final JobPosition jobPosition;
@@ -44,6 +45,8 @@ public class Applicant {
         this.address = address;
         this.addedTime = addedTime;
         this.tags.addAll(tags);
+        // default profile photo
+        this.profilePhotoPath = "/images/profile_photos/default_profile_photo.png";
     }
 
     public Name getName() {
@@ -72,6 +75,12 @@ public class Applicant {
 
     public LocalDateTime getAddedTime() {
         return this.addedTime;
+    }
+    public String getProfilePhotoPath() {
+        return this.profilePhotoPath;
+    }
+    public void setProfilePhotoPath(String specifiedPath) {
+        this.profilePhotoPath = specifiedPath;
     }
 
     /**
