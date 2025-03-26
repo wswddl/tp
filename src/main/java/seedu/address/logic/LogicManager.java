@@ -33,6 +33,8 @@ public class LogicManager implements Logic {
 
     public static final String FILE_OPS_PERMISSION_ERROR_FORMAT =
             "Could not save data to file %s due to insufficient permissions to write to the file or the folder.";
+    
+    public static final String MESSAGE_EXPORT_FAILURE = "Failed to export applicant list.";
 
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
@@ -113,7 +115,7 @@ public class LogicManager implements Logic {
                 });
             }
         } catch (IOException e) {
-            throw new CommandException("Failed to export applicant list.", e);
+            throw new CommandException(MESSAGE_EXPORT_FAILURE, e);
         }
     }
 
