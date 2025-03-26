@@ -1,28 +1,47 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.applicant.Address;
-import seedu.address.model.applicant.Email;
-import seedu.address.model.applicant.JobPosition;
-import seedu.address.model.applicant.Name;
-import seedu.address.model.applicant.Phone;
-import seedu.address.model.applicant.Status;
+import seedu.address.model.applicant.*;
 import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
-
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+
+    /** Mapping of prefixes to their respective predicate constructors. */
+    public static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
+            PREFIX_NAME, NameMatchesKeywordPredicate::new,
+            PREFIX_EMAIL, EmailMatchesKeywordPredicate::new,
+            PREFIX_JOB_POSITION, JobPositionMatchesPredicate::new,
+            PREFIX_STATUS, StatusMatchesPredicate::new
+    );
+
+    /**
+     * Extracts predicates from the given {@code ArgumentMultimap}.
+     *
+     * @param argMultimap The parsed argument multimap.
+     * @return A list of identifier predicates for filtering applicants.
+     */
+    public static List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) {
+        List<IdentifierPredicate> predicates = new ArrayList<>();
+
+        predicateMapping.forEach((prefix, predicateConstructor) ->
+                argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
+        );
+
+        return predicates;
+    }
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
