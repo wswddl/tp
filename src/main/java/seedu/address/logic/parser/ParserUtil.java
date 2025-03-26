@@ -19,6 +19,14 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
+    /**
+     * The order in which prefixes are parsed. This determines the order of
+     * predicates in the final command.
+     */
+    public static final Prefix[] PREFIX_ORDER = {
+            PREFIX_NAME, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS
+    };
+
     /** Mapping of prefixes to their respective predicate constructors. */
     public static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
             PREFIX_NAME, NameMatchesKeywordPredicate::new,
