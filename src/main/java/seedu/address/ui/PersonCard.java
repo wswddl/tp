@@ -157,7 +157,6 @@ public class PersonCard extends UiPart<Region> {
         try {
             // Copy the file
             Files.copy(sourcePath, savedFilePath);
-            deleteOldProfilePic();
             System.out.println("@PersonCard.java File copied successfully to " + savedFilePath);
         } catch (IOException e) {
             System.err.println("Error copying file: " + e.getMessage());
@@ -167,26 +166,9 @@ public class PersonCard extends UiPart<Region> {
         Image image = new Image(selectedFile.toURI().toString());
         profileImage.setImage(image);
         System.out.println(CUSTOM_PROFILE_PIC_FOLDER + savedFileName);
-        this.applicant.setProfilePhotoPath(CUSTOM_PROFILE_PIC_FOLDER + savedFileName);
+        applicant.deleteProfilePic();
+        applicant.setProfilePhotoPath(CUSTOM_PROFILE_PIC_FOLDER + savedFileName);
 
-    }
-
-    /**
-     * Delete the old profile picture if it isn't the default one.
-     */
-    private void deleteOldProfilePic() {
-        String oldProfilePicPath = applicant.getProfilePhotoPath();
-        if (!oldProfilePicPath.equals(DEFAULT_PROFILE_PIC)) {
-            Path photoPath = Paths.get(oldProfilePicPath);
-
-            try {
-                Files.delete(photoPath);
-                System.out.println("Photo deleted successfully.");
-            } catch (IOException e) {
-                System.err.println("Error deleting photo: " + e.getMessage());
-            }
-        }
-        // else do nothing, don't delete the default profile pic
     }
 
 }

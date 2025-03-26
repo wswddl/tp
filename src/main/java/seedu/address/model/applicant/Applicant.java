@@ -3,6 +3,10 @@ package seedu.address.model.applicant;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.ui.UiManager.DEFAULT_PROFILE_PIC;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -113,6 +117,21 @@ public class Applicant {
 
         return otherApplicant != null
                 && otherApplicant.getName().equals(getName());
+    }
+
+    /**
+     * Delete the image file in the profile pictures folder if it is not the default profile picture.
+     */
+    public void deleteProfilePic() {
+        if (!profilePhotoPath.equals(DEFAULT_PROFILE_PIC)) {
+            Path photoPath = Paths.get(profilePhotoPath);
+            try {
+                Files.delete(photoPath);
+            } catch (IOException e) {
+                System.err.println("Error deleting photo: " + e.getMessage());
+            }
+        }
+        // else do nothing, don't delete the default profile pic
     }
 
     /**
