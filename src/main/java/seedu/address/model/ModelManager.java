@@ -119,7 +119,8 @@ public class ModelManager implements Model {
         requireAllNonNull(target, status);
 
         Applicant editedApplicant = new Applicant(target.getName(), target.getPhone(), target.getEmail(),
-                target.getJobPosition(), status, target.getAddress(), target.getAddedTime(), target.getTags());
+                target.getJobPosition(), status, target.getAddress(), target.getAddedTime(), target.getTags(),
+                target.getRating());
         this.setPerson(target, editedApplicant);
 
         return editedApplicant;

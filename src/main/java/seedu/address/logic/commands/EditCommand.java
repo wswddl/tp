@@ -30,6 +30,7 @@ import seedu.address.model.applicant.Email;
 import seedu.address.model.applicant.JobPosition;
 import seedu.address.model.applicant.Name;
 import seedu.address.model.applicant.Phone;
+import seedu.address.model.applicant.Rating;
 import seedu.address.model.applicant.Status;
 import seedu.address.model.tag.Tag;
 
@@ -48,7 +49,6 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_JOB_POSITION + "JOB_POSITION] "
-            + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -107,13 +107,14 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(applicantToEdit.getEmail());
         JobPosition updatedJobPosition = editPersonDescriptor.getJobPosition().orElse(applicantToEdit.getJobPosition());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(applicantToEdit.getAddress());
-        Status updatedStatus = editPersonDescriptor.getStatus().orElse(applicantToEdit.getStatus());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(applicantToEdit.getTags());
-        // addedTime can't & won't be changed
+        // addedTime, status and rating can't be changed using EditCommand
+        Status originalStatus = applicantToEdit.getStatus();
         LocalDateTime originalAddedTime = applicantToEdit.getAddedTime();
+        Rating originalRating = applicantToEdit.getRating();
 
         return new Applicant(updatedName, updatedPhone, updatedEmail, updatedJobPosition,
-                updatedStatus, updatedAddress, originalAddedTime, updatedTags);
+                originalStatus, updatedAddress, originalAddedTime, updatedTags, originalRating);
     }
 
     @Override
@@ -150,7 +151,6 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private JobPosition jobPosition;
-        private Status status;
         private Address address;
         private Set<Tag> tags;
 
@@ -166,7 +166,6 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setJobPosition(toCopy.jobPosition);
-            setStatus(toCopy.status);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
         }
@@ -218,14 +217,6 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setStatus(Status status) {
-            this.status = status;
-        }
-
-        public Optional<Status> getStatus() {
-            return Optional.ofNullable(status);
-        }
-
         /**
          * Sets {@code tags} to this object's {@code tags}. A defensive copy of
          * {@code tags} is used internally.
@@ -259,7 +250,6 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(jobPosition, otherEditPersonDescriptor.jobPosition)
-                    && Objects.equals(status, otherEditPersonDescriptor.status)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
@@ -271,7 +261,6 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("jobPosition", jobPosition)
-                    .add("status", status)
                     .add("address", address)
                     .add("tags", tags)
                     .toString();
