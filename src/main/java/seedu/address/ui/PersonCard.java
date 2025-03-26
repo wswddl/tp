@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
+import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,6 +19,8 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.LogicManager;
 import seedu.address.model.applicant.Applicant;
 
 
@@ -41,7 +44,9 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final Applicant applicant;
+    private final MainWindow mainWindow;
+    private final Logger logger = LogsCenter.getLogger(PersonCard.class);
+    private final Applicant applicant;
 
     @FXML
     private HBox cardPane;
@@ -69,8 +74,9 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Creates a {@code PersonCode} with the given {@code Applicant} and index to display.
      */
-    public PersonCard(Applicant applicant, int displayedIndex) {
+    public PersonCard(MainWindow mainWindow, Applicant applicant, int displayedIndex) {
         super(FXML);
+        this.mainWindow = mainWindow;
         this.applicant = applicant;
         id.setText(displayedIndex + ". ");
         name.setText(applicant.getName().fullName);
@@ -85,34 +91,32 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
-        // Make the ImageView Circular
-        System.out.println(applicant.getName() + "    " + applicant.getProfilePhotoPath() + "  before new Image()");
-        File file = new File(applicant.getProfilePhotoPath());
+        File file = new File(applicant.getProfilePicturePath());
         Image image;
         if (file.exists()) {
             image = new Image(file.toURI().toString());
         } else {
+            // applicant profile picture got corrupted
+            // OR
+            // applicant profile picture is the default one
+            this.applicant.setProfilePicturePath(DEFAULT_PROFILE_PIC);
             image = new Image(MainApp.class.getResourceAsStream(DEFAULT_PROFILE_PIC));
         }
-        //File file = new File("./src/main/resources/images/profile_photos/default_profile_photo.png");
 
-
-        //Image image = new Image("data/profileImage/aaaaa.png");
-        //Image image = new Image("./data/profile_photos/Screenshot 2025-03-24 215129_15.png");
-        //Image image = new Image("/images/profile_photos/default_profile_photo.png");
-        //Image image1111 = new Image("/images/profile_photos/default_profile_photo.png");
-        //String imagePath = applicant.getProfilePhotoPath();//"/images/profile_photos/default_profile_photo.png";
-        //Image image = new Image(MainApp.class.getResourceAsStream(imagePath));
+        // Make the ImageView Circular
         double radius = Math.min(profileImage.getFitWidth(), profileImage.getFitHeight()) / 2;
         Circle clip = new Circle(radius, radius, radius);
         profileImage.setClip(clip);
         profileImage.setImage(image);
 
+        // save changes in the applicant's profile pic path
+        mainWindow.saveAddressBook();
+
     }
 
     @FXML
     private void handleImageClick() {
-        System.out.println(applicant.getName() + " handling  " + applicant.getProfilePhotoPath());
+        System.out.println(applicant.getName() + " handling  " + applicant.getProfilePicturePath());
         FileChooser fileChooser = new FileChooser();
 
         // Set title of file chooser window
@@ -157,18 +161,19 @@ public class PersonCard extends UiPart<Region> {
         try {
             // Copy the file
             Files.copy(sourcePath, savedFilePath);
-            System.out.println("@PersonCard.java File copied successfully to " + savedFilePath);
         } catch (IOException e) {
-            System.err.println("Error copying file: " + e.getMessage());
+            logger.info("An error occurred while saving the applicant's profile picture to the folder");
         }
 
         // update the profile picture
         Image image = new Image(selectedFile.toURI().toString());
         profileImage.setImage(image);
-        System.out.println(CUSTOM_PROFILE_PIC_FOLDER + savedFileName);
-        applicant.deleteProfilePic();
-        applicant.setProfilePhotoPath(CUSTOM_PROFILE_PIC_FOLDER + savedFileName);
 
+        applicant.deleteProfilePic();
+        applicant.setProfilePicturePath(CUSTOM_PROFILE_PIC_FOLDER + savedFileName);
+
+        // save changes in the applicant's profile pic path
+        mainWindow.saveAddressBook();
     }
 
 }

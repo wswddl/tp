@@ -27,7 +27,7 @@ public class Applicant {
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private String profilePhotoPath;
+    private String profilePicturePath;
 
     // Data fields
     private final JobPosition jobPosition;
@@ -51,7 +51,16 @@ public class Applicant {
         this.addedTime = addedTime;
         this.tags.addAll(tags);
         // default profile photo
-        this.profilePhotoPath = DEFAULT_PROFILE_PIC;
+        this.profilePicturePath = DEFAULT_PROFILE_PIC;
+    }
+
+    /**
+     * Same constructor as above but required to specify profile photo path.
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags, String profilePicturePath) {
+        this(name, phone, email, jobPosition, status, address, addedTime, tags);
+        this.profilePicturePath = profilePicturePath;
     }
 
     public Name getName() {
@@ -81,11 +90,11 @@ public class Applicant {
     public LocalDateTime getAddedTime() {
         return this.addedTime;
     }
-    public String getProfilePhotoPath() {
-        return this.profilePhotoPath;
+    public String getProfilePicturePath() {
+        return this.profilePicturePath;
     }
-    public void setProfilePhotoPath(String specifiedPath) {
-        this.profilePhotoPath = specifiedPath;
+    public void setProfilePicturePath(String specifiedPath) {
+        this.profilePicturePath = specifiedPath;
     }
 
     /**
@@ -123,8 +132,8 @@ public class Applicant {
      * Delete the image file in the profile pictures folder if it is not the default profile picture.
      */
     public void deleteProfilePic() {
-        if (!profilePhotoPath.equals(DEFAULT_PROFILE_PIC)) {
-            Path photoPath = Paths.get(profilePhotoPath);
+        if (!profilePicturePath.equals(DEFAULT_PROFILE_PIC)) {
+            Path photoPath = Paths.get(profilePicturePath);
             try {
                 Files.delete(photoPath);
             } catch (IOException e) {

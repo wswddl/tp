@@ -111,9 +111,10 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(applicantToEdit.getTags());
         // addedTime can't & won't be changed
         LocalDateTime originalAddedTime = applicantToEdit.getAddedTime();
+        String profilePicturePath = applicantToEdit.getProfilePicturePath();
 
         return new Applicant(updatedName, updatedPhone, updatedEmail, updatedJobPosition,
-                updatedStatus, updatedAddress, originalAddedTime, updatedTags);
+                updatedStatus, updatedAddress, originalAddedTime, updatedTags, profilePicturePath);
     }
 
     @Override
