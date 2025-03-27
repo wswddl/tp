@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.applicant.AfterDatePredicate;
 import seedu.address.model.applicant.BeforeDatePredicate;
 import seedu.address.model.applicant.Email;
 import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
@@ -108,16 +109,15 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             predicates.add(predicate);
         }
         if (argMultimap.getValue(PREFIX_BEFORE).isPresent()) {
-            System.out.println("hello");
             String beforeDateString = argMultimap.getValue(PREFIX_BEFORE).get();
             LocalDateTime validBeforeDate = ParserUtil.parseBeforeDate(beforeDateString);
-            predicate = new BeforeDatePredicate(validBeforeDate.toString());
+            predicate = new BeforeDatePredicate(validBeforeDate);
             predicates.add(predicate);
         }
         if (argMultimap.getValue(PREFIX_AFTER).isPresent()) {
             String afterDateString = argMultimap.getValue(PREFIX_AFTER).get();
             LocalDateTime validAfterDate = ParserUtil.parseAfterDate(afterDateString);
-            predicate = new BeforeDatePredicate(validAfterDate.toString());
+            predicate = new AfterDatePredicate(validAfterDate);
             predicates.add(predicate);
         }
         return new DeleteCommand(predicates, null, isForceDelete);

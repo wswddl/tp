@@ -7,16 +7,16 @@ import java.time.LocalDateTime;
  * is after the specified date.
  */
 public class AfterDatePredicate extends IdentifierPredicate {
-    private final String afterDate;
+    private final LocalDateTime afterDate;
 
-    public AfterDatePredicate(String afterDate) {
-        super(afterDate);
+    public AfterDatePredicate(LocalDateTime afterDate) {
+        super(afterDate.toString());
         this.afterDate = afterDate;
     }
 
     @Override
     public boolean test(Applicant applicant) {
-        return applicant.getAddedTime().isAfter(LocalDateTime.parse(afterDate));
+        return applicant.getAddedTime().isAfter(afterDate);
     }
 
     @Override

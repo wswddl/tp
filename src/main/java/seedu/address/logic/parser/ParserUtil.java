@@ -141,7 +141,7 @@ public class ParserUtil {
         requireNonNull(beforeDate);
         String trimmedDate = beforeDate.trim();
         try {
-            return LocalDateTime.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE);
+            return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
         } catch (DateTimeParseException e) {
             throw new ParseException("Invalid date format. Please use YYYY-MM-DD.");
         }
@@ -157,7 +157,7 @@ public class ParserUtil {
         requireNonNull(afterDate);
         String trimmedDate = afterDate.trim();
         try {
-            return LocalDateTime.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE);
+            return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
         } catch (DateTimeParseException e) {
             throw new ParseException("Invalid date format. Please use YYYY-MM-DD.");
         }
