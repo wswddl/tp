@@ -4,13 +4,19 @@
     "name" : "Alice Pauline",
     "phone" : "94351253",
     "email" : "alice@example.com",
+    "jobPosition" : "Frontend Engineer",
+    "status" : "Resume Screening",
     "address" : "123, Jurong West Ave 6, #08-111",
+    "rating" : "-1",
     "tags" : [ "friends" ]
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
     "email" : "johnd@example.com",
+    "jobPosition" : "Senior Frontend Engineer",
+    "status" : "Technical Interview Round 1",
     "address" : "311, Clementi Ave 2, #02-25",
+    "rating" : "4",
     "tags" : [ "owesMoney", "friends" ]
   }, {
     "name" : "Carl Kurz",

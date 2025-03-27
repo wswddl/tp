@@ -27,7 +27,6 @@ public class Applicant {
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private String profilePicturePath;
 
     // Data fields
     private final JobPosition jobPosition;
@@ -35,13 +34,17 @@ public class Applicant {
     private final Address address;
     private final LocalDateTime addedTime;
     private final Set<Tag> tags = new HashSet<>();
+    private final Rating rating;
+    private String profilePicturePath;
 
     /**
-     * Every field must be present and not null.
+     * Constructor of Applicant.
+     * Every field must be present and not null, except {@code profilePicturePath}.
      */
     public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
-                     Address address, LocalDateTime addedTime, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags);
+                     Address address, LocalDateTime addedTime, Set<Tag> tags,
+                     Rating rating, String profilePicturePath) {
+        requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags, rating);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -50,17 +53,39 @@ public class Applicant {
         this.address = address;
         this.addedTime = addedTime;
         this.tags.addAll(tags);
-        // default profile photo
-        this.profilePicturePath = DEFAULT_PROFILE_PIC;
+        this.rating = rating;
+        if (profilePicturePath == null) {
+            this.profilePicturePath = DEFAULT_PROFILE_PIC;
+        } else {
+            this.profilePicturePath = profilePicturePath;
+        }
     }
 
     /**
-     * Same constructor as above but required to specify profile photo path.
+     * Constructor of Applicant with no profile picture and assigned rating
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags) {
+        this(name, phone, email, jobPosition, status, address, addedTime, tags,
+                new Rating("-1"), null);
+    }
+
+    /**
+     * Constructor of Applicant with assigned rating but no profile picture
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags, Rating rating) {
+        this(name, phone, email, jobPosition, status, address, addedTime, tags,
+                rating, null);
+    }
+
+    /**
+     * Constructor of Applicant with profile picture but no assigned rating
      */
     public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
                      Address address, LocalDateTime addedTime, Set<Tag> tags, String profilePicturePath) {
-        this(name, phone, email, jobPosition, status, address, addedTime, tags);
-        this.profilePicturePath = profilePicturePath;
+        this(name, phone, email, jobPosition, status, address, addedTime, tags,
+                new Rating("-1"), profilePicturePath);
     }
 
     public Name getName() {
@@ -115,6 +140,10 @@ public class Applicant {
         return Collections.unmodifiableSet(tags);
     }
 
+    public Rating getRating() {
+        return rating;
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -165,13 +194,14 @@ public class Applicant {
                 && jobPosition.equals(otherApplicant.jobPosition)
                 && status.equals(otherApplicant.status)
                 && address.equals(otherApplicant.address)
-                && tags.equals(otherApplicant.tags);
+                && tags.equals(otherApplicant.tags)
+                && rating.equals((otherApplicant.rating));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, jobPosition, status, address, tags);
+        return Objects.hash(name, phone, email, jobPosition, status, address, tags, rating);
     }
 
     @Override
@@ -184,6 +214,7 @@ public class Applicant {
                 .add("status", status)
                 .add("address", address)
                 .add("tags", tags)
+                .add("rating", rating)
                 .toString();
     }
 
