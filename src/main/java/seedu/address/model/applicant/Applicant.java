@@ -38,36 +38,12 @@ public class Applicant {
     private String profilePicturePath;
 
     /**
-     * Constructor of Applicant without rating.
+     * Constructor of Applicant.
      * Every field must be present and not null, except {@code profilePicturePath}.
      */
     public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
                      Address address, LocalDateTime addedTime, Set<Tag> tags,
-                     String profilePicturePath) {
-        requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.jobPosition = jobPosition;
-        this.status = status;
-        this.address = address;
-        this.addedTime = addedTime;
-        this.tags.addAll(tags);
-        this.rating = new Rating("-1");
-        if (profilePicturePath == null) {
-            this.profilePicturePath = DEFAULT_PROFILE_PIC;
-        } else {
-            this.profilePicturePath = profilePicturePath;
-        }
-    }
-
-    /**
-     * Constructor of Applicant with rating.
-     * Every field must be present and not null, except {@code profilePicturePath}.
-     */
-    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
-                     Address address, LocalDateTime addedTime, Set<Tag> tags,
-                     String profilePicturePath, Rating rating) {
+                     Rating rating, String profilePicturePath) {
         requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags, rating);
         this.name = name;
         this.phone = phone;
@@ -85,6 +61,32 @@ public class Applicant {
         }
     }
 
+    /**
+     * Constructor of Applicant with no profile picture and assigned rating
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags) {
+        this(name, phone, email, jobPosition, status, address, addedTime, tags,
+                new Rating("-1"), null);
+    }
+
+    /**
+     * Constructor of Applicant with assigned rating but no profile picture
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags, Rating rating) {
+        this(name, phone, email, jobPosition, status, address, addedTime, tags,
+                rating, null);
+    }
+
+    /**
+     * Constructor of Applicant with profile picture but no assigned rating
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags, String profilePicturePath) {
+        this(name, phone, email, jobPosition, status, address, addedTime, tags,
+                new Rating("-1"), profilePicturePath);
+    }
 
     public Name getName() {
         return name;

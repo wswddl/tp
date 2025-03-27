@@ -138,7 +138,7 @@ public class PersonBuilder {
     }
 
     public Applicant build() {
-        return new Applicant(name, phone, email, jobPosition, status, address, addedTime, tags, rating);
+        return new Applicant(name, phone, email, jobPosition, status, address, addedTime, tags, rating, null);
     }
 
 }
