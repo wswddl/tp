@@ -35,6 +35,7 @@ class JsonAdaptedApplicant {
     private final String address;
     private final LocalDateTime addedTime;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String profilePicturePath;
 
     /**
      * Constructs a {@code JsonAdaptedApplicant} with the given applicant details.
@@ -44,7 +45,8 @@ class JsonAdaptedApplicant {
                                 @JsonProperty("email") String email, @JsonProperty("jobPosition") String jobPosition,
                                 @JsonProperty("status") String status, @JsonProperty("address") String address,
                                 @JsonProperty("addedTime") LocalDateTime addedTime,
-                                @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                                @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                                @JsonProperty("profilePicturePath") String profilePicturePath) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -55,6 +57,7 @@ class JsonAdaptedApplicant {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.profilePicturePath = profilePicturePath;
     }
 
     /**
@@ -72,6 +75,8 @@ class JsonAdaptedApplicant {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+
+        this.profilePicturePath = source.getProfilePicturePath();
     }
 
     /**
@@ -139,9 +144,14 @@ class JsonAdaptedApplicant {
         }
         final LocalDateTime modelAddedTime = addedTime;
 
+        if (profilePicturePath == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "ProfilePicturePath"));
+        }
+        final String modelProfilePicturePath = profilePicturePath;
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Applicant(modelName, modelPhone, modelEmail, modelJobPosition, modelStatus, modelAddress,
-                modelAddedTime, modelTags);
+                modelAddedTime, modelTags, modelProfilePicturePath);
     }
 
 }

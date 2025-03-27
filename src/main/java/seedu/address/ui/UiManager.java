@@ -18,10 +18,11 @@ import seedu.address.logic.Logic;
 public class UiManager implements Ui {
 
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
+    public static final String DEFAULT_PROFILE_PIC = "/images/profile_photos/default_profile_photo.png";
+    public static final String CUSTOM_PROFILE_PIC_FOLDER = "./data/profile_photos/";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
-
     private Logic logic;
     private MainWindow mainWindow;
 
