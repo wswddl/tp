@@ -9,6 +9,11 @@ import java.time.LocalDateTime;
 public class BeforeDatePredicate extends IdentifierPredicate {
     private final LocalDateTime beforeDate;
 
+    /**
+     * Constructs a {@code BeforeDatePredicate} with the given date.
+     *
+     * @param beforeDate The cutoff date. Applicants with an application date before this will be matched.
+     */
     public BeforeDatePredicate(LocalDateTime beforeDate) {
         super(beforeDate.toString());
         this.beforeDate = beforeDate;

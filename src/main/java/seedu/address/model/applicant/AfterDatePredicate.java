@@ -9,6 +9,11 @@ import java.time.LocalDateTime;
 public class AfterDatePredicate extends IdentifierPredicate {
     private final LocalDateTime afterDate;
 
+    /**
+     * Constructs a {@code AfterDatePredicate} with the given date.
+     *
+     * @param afterDate The cutoff date. Applicants with an application date after this will be matched.
+     */
     public AfterDatePredicate(LocalDateTime afterDate) {
         super(afterDate.toString());
         this.afterDate = afterDate;

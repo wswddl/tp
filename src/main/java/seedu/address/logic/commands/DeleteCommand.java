@@ -54,6 +54,11 @@ public class DeleteCommand extends Command {
     private boolean isForceDelete;
     private final Index targetIndex;
 
+    /**
+     * @param predicates     The predicates used to identify the {@code Applicant} to be deleted.
+     * @param targetIndex    The index in the last shown list used to identify the {@code Applicant} to be deleted.
+     * @param isForceDelete  The flag to specify whether it is force deletion or not.
+     */
     public DeleteCommand(List<IdentifierPredicate> predicates, Index targetIndex, boolean isForceDelete) {
         this.predicates = predicates;
         this.targetIndex = targetIndex;

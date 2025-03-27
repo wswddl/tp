@@ -14,6 +14,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
@@ -37,6 +39,15 @@ import seedu.address.model.applicant.StatusMatchesPredicate;
  * Parses input arguments and creates a new DeleteCommand object
  */
 public class DeleteCommandParser implements Parser<DeleteCommand> {
+
+    /** Mapping of prefixes to their respective predicate constructors. */
+    private static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
+            PREFIX_NAME, NameMatchesKeywordPredicate::new,
+            PREFIX_PHONE, PhoneMatchesKeywordPredicate::new,
+            PREFIX_EMAIL, EmailMatchesKeywordPredicate::new,
+            PREFIX_JOB_POSITION, JobPositionMatchesPredicate::new,
+            PREFIX_STATUS, StatusMatchesPredicate::new
+    );
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand
@@ -70,44 +81,46 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
-        IdentifierPredicate predicate;
-        List<IdentifierPredicate> predicates = new ArrayList<>();
-
         // If Index is provided, perform delete solely on the index
         if (argMultimap.getValue(PREFIX_ID).isPresent()) {
             Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_ID).get());
             return new DeleteCommand(null, index, isForceDelete); // Use index-based constructor
         }
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            String nameString = argMultimap.getValue(PREFIX_NAME).get();
-            Name validName = ParserUtil.parseName(nameString);
-            predicate = new NameMatchesKeywordPredicate(validName.fullName);
-            predicates.add(predicate);
-        }
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            String phoneString = argMultimap.getValue(PREFIX_PHONE).get();
-            Phone validPhone = ParserUtil.parsePhone(phoneString);
-            predicate = new PhoneMatchesKeywordPredicate(validPhone.value);
-            predicates.add(predicate);
-        }
-        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            String emailString = argMultimap.getValue(PREFIX_EMAIL).get();
-            Email validEmail = ParserUtil.parseEmail(emailString);
-            predicate = new EmailMatchesKeywordPredicate(validEmail.value);
-            predicates.add(predicate);
-        }
-        if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
-            String statusString = argMultimap.getValue(PREFIX_STATUS).get();
-            Status validStatus = ParserUtil.parseStatus(statusString);
-            predicate = new StatusMatchesPredicate(validStatus.value);
-            predicates.add(predicate);
-        }
-        if (argMultimap.getValue(PREFIX_JOB_POSITION).isPresent()) {
-            String jobPositionString = argMultimap.getValue(PREFIX_JOB_POSITION).get();
-            JobPosition validJobPosition = ParserUtil.parseJobPosition(jobPositionString);
-            predicate = new JobPositionMatchesPredicate(validJobPosition.jobPosition);
-            predicates.add(predicate);
-        }
+
+        IdentifierPredicate predicate;
+        List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
+
+
+//        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+//            String nameString = argMultimap.getValue(PREFIX_NAME).get();
+//            Name validName = ParserUtil.parseName(nameString);
+//            predicate = new NameMatchesKeywordPredicate(validName.fullName);
+//            predicates.add(predicate);
+//        }
+//        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+//            String phoneString = argMultimap.getValue(PREFIX_PHONE).get();
+//            Phone validPhone = ParserUtil.parsePhone(phoneString);
+//            predicate = new PhoneMatchesKeywordPredicate(validPhone.value);
+//            predicates.add(predicate);
+//        }
+//        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+//            String emailString = argMultimap.getValue(PREFIX_EMAIL).get();
+//            Email validEmail = ParserUtil.parseEmail(emailString);
+//            predicate = new EmailMatchesKeywordPredicate(validEmail.value);
+//            predicates.add(predicate);
+//        }
+//        if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
+//            String statusString = argMultimap.getValue(PREFIX_STATUS).get();
+//            Status validStatus = ParserUtil.parseStatus(statusString);
+//            predicate = new StatusMatchesPredicate(validStatus.value);
+//            predicates.add(predicate);
+//        }
+//        if (argMultimap.getValue(PREFIX_JOB_POSITION).isPresent()) {
+//            String jobPositionString = argMultimap.getValue(PREFIX_JOB_POSITION).get();
+//            JobPosition validJobPosition = ParserUtil.parseJobPosition(jobPositionString);
+//            predicate = new JobPositionMatchesPredicate(validJobPosition.jobPosition);
+//            predicates.add(predicate);
+//        }
         if (argMultimap.getValue(PREFIX_BEFORE).isPresent()) {
             String beforeDateString = argMultimap.getValue(PREFIX_BEFORE).get();
             LocalDateTime validBeforeDate = ParserUtil.parseBeforeDate(beforeDateString);
@@ -129,5 +142,21 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     private static int numOfPrefixesPresent(ArgumentMultimap argMultimap, Prefix... prefixes) {
         return (int) Stream.of(prefixes).filter(prefix -> argMultimap.getValue(prefix).isPresent()).count();
+    }
+
+    /**
+     * Extracts predicates from the given {@code ArgumentMultimap}.
+     *
+     * @param argMultimap The parsed argument multimap.
+     * @return A list of identifier predicates for filtering applicants.
+     */
+    private List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) {
+        List<IdentifierPredicate> predicates = new ArrayList<>();
+
+        predicateMapping.forEach((prefix, predicateConstructor) ->
+                argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
+        );
+
+        return predicates;
     }
 }
