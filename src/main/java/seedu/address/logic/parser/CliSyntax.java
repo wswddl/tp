@@ -16,5 +16,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDED_TIME = new Prefix("time/");
     public static final Prefix PREFIX_ID = new Prefix("id/");
     public static final Prefix PREFIX_RATING = new Prefix("r/");
-
+    public static final Prefix PREFIX_BEFORE = new Prefix("bfr/");
+    public static final Prefix PREFIX_AFTER = new Prefix("aft/");
 }

@@ -1,11 +1,17 @@
 package seedu.address.logic;
 
+import com.opencsv.CSVWriter;
+
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import javafx.stage.FileChooser;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
@@ -27,6 +33,8 @@ public class LogicManager implements Logic {
 
     public static final String FILE_OPS_PERMISSION_ERROR_FORMAT =
             "Could not save data to file %s due to insufficient permissions to write to the file or the folder.";
+    
+    public static final String MESSAGE_EXPORT_FAILURE = "Failed to export applicant list.";
 
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
@@ -72,6 +80,12 @@ public class LogicManager implements Logic {
             }
         }
 
+        saveAddressBook();
+
+        return commandResult;
+    }
+
+    public void saveAddressBook() throws CommandException {
         try {
             storage.saveAddressBook(model.getAddressBook());
         } catch (AccessDeniedException e) {
@@ -79,9 +93,36 @@ public class LogicManager implements Logic {
         } catch (IOException ioe) {
             throw new CommandException(String.format(FILE_OPS_ERROR_FORMAT, ioe.getMessage()), ioe);
         }
-
-        return commandResult;
     }
+
+    @Override
+    public Command parseCommand(String commandText) throws ParseException {
+        return addressBookParser.parseCommand(commandText);
+    }
+
+
+    @Override
+    public void exportCsv(File file) throws CommandException {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
+            // Header row
+            writer.writeNext(new String[] { "Name", "Email", "Phone", "Job Position", "Status", "Tags" });
+    
+            // Write each applicant
+            for (Applicant a : model.getFilteredPersonList()) {
+                writer.writeNext(new String[] {
+                        a.getName().fullName,
+                        a.getEmail().value,
+                        a.getPhone().value,
+                        a.getJobPosition().jobPosition,
+                        a.getStatus().value,
+                        a.getTags().stream().map(tag -> tag.tagName).collect(Collectors.joining(";"))
+                });
+            }
+        } catch (IOException e) {
+            throw new CommandException(MESSAGE_EXPORT_FAILURE, e);
+        }
+    }
+
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {

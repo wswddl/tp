@@ -93,6 +93,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code key} must exist in the address book.
      */
     public void removePerson(Applicant key) {
+        // Before removing from the list, delete the profile picture in the folder
+        key.deleteProfilePic();
+
         persons.remove(key);
     }
 

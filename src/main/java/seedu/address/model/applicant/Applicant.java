@@ -1,7 +1,12 @@
 package seedu.address.model.applicant;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.ui.UiManager.DEFAULT_PROFILE_PIC;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -13,7 +18,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Applicant in the address book.
+ * Represents an Applicant in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Applicant {
@@ -30,13 +35,15 @@ public class Applicant {
     private final LocalDateTime addedTime;
     private final Set<Tag> tags = new HashSet<>();
     private final Rating rating;
+    private String profilePicturePath;
 
     /**
      * Constructor of Applicant without rating.
-     * Every field must be present and not null.
+     * Every field must be present and not null, except {@code profilePicturePath}.
      */
     public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
-                     Address address, LocalDateTime addedTime, Set<Tag> tags) {
+                     Address address, LocalDateTime addedTime, Set<Tag> tags,
+                     String profilePicturePath) {
         requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags);
         this.name = name;
         this.phone = phone;
@@ -47,14 +54,20 @@ public class Applicant {
         this.addedTime = addedTime;
         this.tags.addAll(tags);
         this.rating = new Rating("-1");
+        if (profilePicturePath == null) {
+            this.profilePicturePath = DEFAULT_PROFILE_PIC;
+        } else {
+            this.profilePicturePath = profilePicturePath;
+        }
     }
 
     /**
      * Constructor of Applicant with rating.
-     * Every field must be present and not null.
+     * Every field must be present and not null, except {@code profilePicturePath}.
      */
     public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
-                     Address address, LocalDateTime addedTime, Set<Tag> tags, Rating rating) {
+                     Address address, LocalDateTime addedTime, Set<Tag> tags,
+                     String profilePicturePath, Rating rating) {
         requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags, rating);
         this.name = name;
         this.phone = phone;
@@ -65,7 +78,13 @@ public class Applicant {
         this.addedTime = addedTime;
         this.tags.addAll(tags);
         this.rating = rating;
+        if (profilePicturePath == null) {
+            this.profilePicturePath = DEFAULT_PROFILE_PIC;
+        } else {
+            this.profilePicturePath = profilePicturePath;
+        }
     }
+
 
     public Name getName() {
         return name;
@@ -93,6 +112,12 @@ public class Applicant {
 
     public LocalDateTime getAddedTime() {
         return this.addedTime;
+    }
+    public String getProfilePicturePath() {
+        return this.profilePicturePath;
+    }
+    public void setProfilePicturePath(String specifiedPath) {
+        this.profilePicturePath = specifiedPath;
     }
 
     /**
@@ -128,6 +153,21 @@ public class Applicant {
 
         return otherApplicant != null
                 && otherApplicant.getName().equals(getName());
+    }
+
+    /**
+     * Delete the image file in the profile pictures folder if it is not the default profile picture.
+     */
+    public void deleteProfilePic() {
+        if (!profilePicturePath.equals(DEFAULT_PROFILE_PIC)) {
+            Path photoPath = Paths.get(profilePicturePath);
+            try {
+                Files.delete(photoPath);
+            } catch (IOException e) {
+                System.err.println("Error deleting photo: " + e.getMessage());
+            }
+        }
+        // else do nothing, don't delete the default profile pic
     }
 
     /**

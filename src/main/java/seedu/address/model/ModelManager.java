@@ -120,7 +120,7 @@ public class ModelManager implements Model {
 
         Applicant editedApplicant = new Applicant(target.getName(), target.getPhone(), target.getEmail(),
                 target.getJobPosition(), status, target.getAddress(), target.getAddedTime(), target.getTags(),
-                target.getRating());
+                target.getRating(), target.getProfilePicturePath());
         this.setPerson(target, editedApplicant);
 
         return editedApplicant;
@@ -132,7 +132,7 @@ public class ModelManager implements Model {
 
         Applicant editedApplicant = new Applicant(target.getName(), target.getPhone(), target.getEmail(),
                 target.getJobPosition(), target.getStatus(), target.getAddress(), target.getAddedTime(),
-                target.getTags(), rating);
+                target.getTags(), rating, target.getProfilePicturePath());
         this.setPerson(target, editedApplicant);
 
         return editedApplicant;

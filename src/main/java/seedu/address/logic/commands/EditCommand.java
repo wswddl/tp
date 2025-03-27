@@ -111,9 +111,10 @@ public class EditCommand extends Command {
         Rating updatedRating = editPersonDescriptor.getRating().orElse(applicantToEdit.getRating());
         // addedTime can't and won't be changed using EditCommand
         LocalDateTime originalAddedTime = applicantToEdit.getAddedTime();
+        String profilePicturePath = applicantToEdit.getProfilePicturePath();
 
         return new Applicant(updatedName, updatedPhone, updatedEmail, updatedJobPosition,
-                updatedStatus, updatedAddress, originalAddedTime, updatedTags, updatedRating);
+                updatedStatus, updatedAddress, originalAddedTime, updatedTags, updatedRating, profilePicturePath);
     }
 
     @Override
