@@ -79,11 +79,15 @@ public class UniquePersonList implements Iterable<Applicant> {
     }
 
     /**
-     * Removes the equivalent applicant from the list.
+     * Removes the equivalent applicant from the list and delete their profile picture in the save folder
      * The applicant must exist in the list.
      */
     public void remove(Applicant toRemove) {
         requireNonNull(toRemove);
+
+        // Before removing from the list, delete the profile picture in the folder
+        toRemove.deleteProfilePic();
+
         if (!internalList.remove(toRemove)) {
             throw new PersonNotFoundException();
         }
