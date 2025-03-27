@@ -7,6 +7,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import java.util.*;
 import java.util.function.Function;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -152,6 +161,38 @@ public class ParserUtil {
             throw new ParseException(Status.MESSAGE_CONSTRAINTS);
         }
         return new Status(trimmedStatus);
+    }
+
+    /**
+     * Parses a {@code String beforeDate} into a {@code LocalDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code beforeDate} is invalid.
+     */
+    public static LocalDateTime parseBeforeDate(String beforeDate) throws ParseException {
+        requireNonNull(beforeDate);
+        String trimmedDate = beforeDate.trim();
+        try {
+            return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Invalid date format. Please use YYYY-MM-DD.");
+        }
+    }
+
+    /**
+     * Parses a {@code String afterDate} into a {@code LocalDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code afterDate} is invalid.
+     */
+    public static LocalDateTime parseAfterDate(String afterDate) throws ParseException {
+        requireNonNull(afterDate);
+        String trimmedDate = afterDate.trim();
+        try {
+            return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Invalid date format. Please use YYYY-MM-DD.");
+        }
     }
 
     /**
