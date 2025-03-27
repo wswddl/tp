@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
@@ -9,11 +11,18 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.applicant.AfterDatePredicate;
+import seedu.address.model.applicant.BeforeDatePredicate;
 import seedu.address.model.applicant.Email;
 import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
 import seedu.address.model.applicant.IdentifierPredicate;
@@ -30,6 +39,15 @@ import seedu.address.model.applicant.StatusMatchesPredicate;
  * Parses input arguments and creates a new DeleteCommand object
  */
 public class DeleteCommandParser implements Parser<DeleteCommand> {
+
+    /** Mapping of prefixes to their respective predicate constructors. */
+    private static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
+            PREFIX_NAME, NameMatchesKeywordPredicate::new,
+            PREFIX_PHONE, PhoneMatchesKeywordPredicate::new,
+            PREFIX_EMAIL, EmailMatchesKeywordPredicate::new,
+            PREFIX_JOB_POSITION, JobPositionMatchesPredicate::new,
+            PREFIX_STATUS, StatusMatchesPredicate::new
+    );
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand
@@ -49,62 +67,96 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
-
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ID,
-                        PREFIX_STATUS , PREFIX_JOB_POSITION);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_ID, PREFIX_STATUS, PREFIX_JOB_POSITION, PREFIX_BEFORE, PREFIX_AFTER);
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ID,
-                PREFIX_STATUS, PREFIX_JOB_POSITION);
+                PREFIX_STATUS, PREFIX_JOB_POSITION, PREFIX_BEFORE, PREFIX_AFTER);
 
-        // Exact one contact identifier needs to be provided
-        List<Boolean> presentFlags = List.of(
-                argMultimap.getValue(PREFIX_NAME).isPresent(),
-                argMultimap.getValue(PREFIX_PHONE).isPresent(),
-                argMultimap.getValue(PREFIX_EMAIL).isPresent(),
-                argMultimap.getValue(PREFIX_ID).isPresent(),
-                argMultimap.getValue(PREFIX_STATUS).isPresent(),
-                argMultimap.getValue(PREFIX_JOB_POSITION).isPresent()
+        int numOfPrefixesPresentOtherThanId = numOfPrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_STATUS, PREFIX_JOB_POSITION, PREFIX_BEFORE, PREFIX_AFTER);
+        // Allow ONLY id or any combination of other identifiers
+        if ((numOfPrefixesPresentOtherThanId > 0 && argMultimap.getValue(PREFIX_ID).isPresent())
+            || (numOfPrefixesPresentOtherThanId == 0 && argMultimap.getValue(PREFIX_ID).isEmpty())) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+
+        // If Index is provided, perform delete solely on the index
+        if (argMultimap.getValue(PREFIX_ID).isPresent()) {
+            Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_ID).get());
+            return new DeleteCommand(null, index, isForceDelete); // Use index-based constructor
+        }
+
+        IdentifierPredicate predicate;
+        List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
+
+
+//        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+//            String nameString = argMultimap.getValue(PREFIX_NAME).get();
+//            Name validName = ParserUtil.parseName(nameString);
+//            predicate = new NameMatchesKeywordPredicate(validName.fullName);
+//            predicates.add(predicate);
+//        }
+//        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+//            String phoneString = argMultimap.getValue(PREFIX_PHONE).get();
+//            Phone validPhone = ParserUtil.parsePhone(phoneString);
+//            predicate = new PhoneMatchesKeywordPredicate(validPhone.value);
+//            predicates.add(predicate);
+//        }
+//        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+//            String emailString = argMultimap.getValue(PREFIX_EMAIL).get();
+//            Email validEmail = ParserUtil.parseEmail(emailString);
+//            predicate = new EmailMatchesKeywordPredicate(validEmail.value);
+//            predicates.add(predicate);
+//        }
+//        if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
+//            String statusString = argMultimap.getValue(PREFIX_STATUS).get();
+//            Status validStatus = ParserUtil.parseStatus(statusString);
+//            predicate = new StatusMatchesPredicate(validStatus.value);
+//            predicates.add(predicate);
+//        }
+//        if (argMultimap.getValue(PREFIX_JOB_POSITION).isPresent()) {
+//            String jobPositionString = argMultimap.getValue(PREFIX_JOB_POSITION).get();
+//            JobPosition validJobPosition = ParserUtil.parseJobPosition(jobPositionString);
+//            predicate = new JobPositionMatchesPredicate(validJobPosition.jobPosition);
+//            predicates.add(predicate);
+//        }
+        if (argMultimap.getValue(PREFIX_BEFORE).isPresent()) {
+            String beforeDateString = argMultimap.getValue(PREFIX_BEFORE).get();
+            LocalDateTime validBeforeDate = ParserUtil.parseBeforeDate(beforeDateString);
+            predicate = new BeforeDatePredicate(validBeforeDate);
+            predicates.add(predicate);
+        }
+        if (argMultimap.getValue(PREFIX_AFTER).isPresent()) {
+            String afterDateString = argMultimap.getValue(PREFIX_AFTER).get();
+            LocalDateTime validAfterDate = ParserUtil.parseAfterDate(afterDateString);
+            predicate = new AfterDatePredicate(validAfterDate);
+            predicates.add(predicate);
+        }
+        return new DeleteCommand(predicates, null, isForceDelete);
+    }
+
+    /**
+     * Counts the number of prefixes that have values in the given {@code ArgumentMultimap}.
+     * i.e. number of prefixes provided in the argument.
+     */
+    private static int numOfPrefixesPresent(ArgumentMultimap argMultimap, Prefix... prefixes) {
+        return (int) Stream.of(prefixes).filter(prefix -> argMultimap.getValue(prefix).isPresent()).count();
+    }
+
+    /**
+     * Extracts predicates from the given {@code ArgumentMultimap}.
+     *
+     * @param argMultimap The parsed argument multimap.
+     * @return A list of identifier predicates for filtering applicants.
+     */
+    private List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) {
+        List<IdentifierPredicate> predicates = new ArrayList<>();
+
+        predicateMapping.forEach((prefix, predicateConstructor) ->
+                argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
         );
 
-        // todo: might need to change this
-        long count = presentFlags.stream().filter(b -> b).count();
-        if (count != 1) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-        }
-
-        IdentifierPredicate predicate = null;
-
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            String nameString = argMultimap.getValue(PREFIX_NAME).get();
-            Name validName = ParserUtil.parseName(nameString);
-            predicate = new NameMatchesKeywordPredicate(validName.fullName);
-            return new DeleteCommand(predicate, isForceDelete);
-        } else if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            String phoneString = argMultimap.getValue(PREFIX_PHONE).get();
-            Phone validPhone = ParserUtil.parsePhone(phoneString);
-            predicate = new PhoneMatchesKeywordPredicate(validPhone.value);
-            return new DeleteCommand(predicate, isForceDelete);
-        } else if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            String emailString = argMultimap.getValue(PREFIX_EMAIL).get();
-            Email validEmail = ParserUtil.parseEmail(emailString);
-            predicate = new EmailMatchesKeywordPredicate(validEmail.value);
-            return new DeleteCommand(predicate, isForceDelete);
-        } else if (argMultimap.getValue(PREFIX_ID).isPresent()) {
-            Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_ID).get());
-            return new DeleteCommand(index, isForceDelete); // Use index-based constructor
-        } else if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
-            String statusString = argMultimap.getValue(PREFIX_STATUS).get();
-            Status validStatus = ParserUtil.parseStatus(statusString);
-            predicate = new StatusMatchesPredicate(validStatus.value);
-            return new DeleteCommand(predicate, isForceDelete);
-        } else if (argMultimap.getValue(PREFIX_JOB_POSITION).isPresent()) {
-            String jobPositionString = argMultimap.getValue(PREFIX_JOB_POSITION).get();
-            JobPosition validJobPosition = ParserUtil.parseJobPosition(jobPositionString);
-            predicate = new JobPositionMatchesPredicate(validJobPosition.jobPosition);
-            return new DeleteCommand(predicate, isForceDelete);
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-        }
+        return predicates;
     }
 }

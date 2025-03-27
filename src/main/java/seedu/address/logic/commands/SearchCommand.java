@@ -13,7 +13,7 @@ import seedu.address.model.applicant.IdentifierPredicate;
 
 /**
  * Finds and lists all applicants in the address book that match the given criteria.
- * Keyword matching is case insensitive, exact match needed
+ * Keyword matching is case-insensitive, exact match needed
  */
 public class SearchCommand extends Command {
 
