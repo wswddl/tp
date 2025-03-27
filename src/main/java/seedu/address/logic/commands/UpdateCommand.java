@@ -25,7 +25,7 @@ public class UpdateCommand extends Command {
     public static final String MESSAGE_NO_MATCHES = "No applicant matches provided keyword!";
     public static final String MESSAGE_MULTIPLE_MATCHES = "%1$d persons matched keyword. Please be more specific!";
 
-    private static final String MESSAGE_UPDATE_STATUS_SUCCESS = "Updated status of: %1$s";
+    public static final String MESSAGE_UPDATE_STATUS_SUCCESS = "Updated status of: %1$s";
 
     private final IdentifierPredicate predicate;
     private final Index targetIndex;

@@ -23,6 +23,7 @@ public class PersonBuilder {
 
     public static final String DEFAULT_STATUS = "Resume Screening";
     public static final LocalDateTime DEFAULT_ADDED_TIME = LocalDateTime.of(2031, 1, 1, 00, 30, 00);
+    public static final String DEFAULT_RATING = "-1";
 
     private Name name;
     private Phone phone;
@@ -32,6 +33,7 @@ public class PersonBuilder {
     private Status status;
     private LocalDateTime addedTime;
     private Set<Tag> tags;
+    private Rating rating;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -45,6 +47,7 @@ public class PersonBuilder {
         status = new Status(DEFAULT_STATUS);
         addedTime = DEFAULT_ADDED_TIME;
         tags = new HashSet<>();
+        rating = new Rating(DEFAULT_RATING);
     }
 
     /**
@@ -59,6 +62,7 @@ public class PersonBuilder {
         status = applicantToCopy.getStatus();
         addedTime = applicantToCopy.getAddedTime();
         tags = new HashSet<>(applicantToCopy.getTags());
+        rating = applicantToCopy.getRating();
     }
 
     /**
@@ -125,8 +129,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Rating} of the {@code Applicant} that we are building.
+     */
+    public PersonBuilder withRating(String rating) {
+        this.rating = new Rating(rating);
+        return this;
+    }
+
     public Applicant build() {
-        return new Applicant(name, phone, email, jobPosition, status, address, addedTime, tags);
+        return new Applicant(name, phone, email, jobPosition, status, address, addedTime, tags, rating);
     }
 
 }

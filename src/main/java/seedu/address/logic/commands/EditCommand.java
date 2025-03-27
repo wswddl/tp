@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -106,15 +105,15 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(applicantToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(applicantToEdit.getEmail());
         JobPosition updatedJobPosition = editPersonDescriptor.getJobPosition().orElse(applicantToEdit.getJobPosition());
+        Status updatedStatus = editPersonDescriptor.getStatus().orElse(applicantToEdit.getStatus());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(applicantToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(applicantToEdit.getTags());
-        // addedTime, status and rating can't be changed using EditCommand
-        Status originalStatus = applicantToEdit.getStatus();
+        Rating updatedRating = editPersonDescriptor.getRating().orElse(applicantToEdit.getRating());
+        // addedTime can't and won't be changed using EditCommand
         LocalDateTime originalAddedTime = applicantToEdit.getAddedTime();
-        Rating originalRating = applicantToEdit.getRating();
 
         return new Applicant(updatedName, updatedPhone, updatedEmail, updatedJobPosition,
-                originalStatus, updatedAddress, originalAddedTime, updatedTags, originalRating);
+                updatedStatus, updatedAddress, originalAddedTime, updatedTags, updatedRating);
     }
 
     @Override
@@ -151,8 +150,10 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private JobPosition jobPosition;
+        private Status status;
         private Address address;
         private Set<Tag> tags;
+        private Rating rating;
 
         public EditPersonDescriptor() {
         }
@@ -166,8 +167,10 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setJobPosition(toCopy.jobPosition);
+            setStatus(toCopy.status);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setRating(toCopy.rating);
         }
 
         /**
@@ -209,6 +212,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(jobPosition);
         }
 
+        public void setStatus(Status status) {
+            this.status = status;
+        }
+
+        public Optional<Status> getStatus() {
+            return Optional.ofNullable(status);
+        }
+
         public void setAddress(Address address) {
             this.address = address;
         }
@@ -234,6 +245,14 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        public void setRating(Rating rating) {
+            this.rating = rating;
+        }
+
+        public Optional<Rating> getRating() {
+            return Optional.ofNullable(rating);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -250,8 +269,10 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(jobPosition, otherEditPersonDescriptor.jobPosition)
+                    && Objects.equals(status, otherEditPersonDescriptor.status)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(rating, otherEditPersonDescriptor.rating);
         }
 
         @Override
@@ -261,8 +282,10 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("jobPosition", jobPosition)
+                    .add("status", status)
                     .add("address", address)
                     .add("tags", tags)
+                    .add("rating", rating)
                     .toString();
         }
     }

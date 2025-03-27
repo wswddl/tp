@@ -36,6 +36,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setStatus(applicant.getStatus());
         descriptor.setAddress(applicant.getAddress());
         descriptor.setTags(applicant.getTags());
+        descriptor.setRating(applicant.getRating());
     }
 
     /**
@@ -93,6 +94,14 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Rating} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withRating(String rating) {
+        descriptor.setRating(new Rating(rating));
         return this;
     }
 

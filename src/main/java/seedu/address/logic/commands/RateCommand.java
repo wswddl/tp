@@ -25,7 +25,7 @@ public class RateCommand extends Command {
     public static final String MESSAGE_NO_MATCHES = "No applicant matches provided keyword!";
     public static final String MESSAGE_MULTIPLE_MATCHES = "%1$d persons matched keyword. Please be more specific!";
 
-    private static final String MESSAGE_ASSIGN_RATING_SUCCESS = "Assigned a rating of %1$s to: %2$s";
+    public static final String MESSAGE_ASSIGN_RATING_SUCCESS = "Assigned a rating of %1$s to: %2$s";
 
     private final IdentifierPredicate predicate;
     private final Index targetIndex;
@@ -100,7 +100,19 @@ public class RateCommand extends Command {
             return false;
         }
 
-        return predicate.equals(otherRateCommand.predicate);
+        // check if both RateCommand instances are of the same identifier type
+        if (this.targetIndex == null && otherRateCommand.targetIndex != null) {
+            return false;
+        }
+        if (this.targetIndex != null && otherRateCommand.targetIndex == null) {
+            return false;
+        }
+
+        if (targetIndex == null) {
+            return predicate.equals(otherRateCommand.predicate) && rating.equals(otherRateCommand.rating);
+        } else {
+            return targetIndex.equals(otherRateCommand.targetIndex) && rating.equals(otherRateCommand.rating);
+        }
     }
 
     @Override
