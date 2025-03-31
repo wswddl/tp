@@ -114,19 +114,6 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st applicant to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd applicant to be `Betsy Crower` and clears all existing tags.
 
-### Exporting applicant data: `export`
-
-Allow users to export the candidate data into a CSV file
-
-Format: `export [FILE-NAME]`
-
-* Filename is the name of the CSV file to be generated
-* The exported data includes all applicants in the list. Each row represents one 
-  applicant and includes fields such as : name, email, phone number,
-  job position, status, and tags.
-
-Examples:
-* `export applicants_data.csv` Export the current applicant data into a file named applicants_data.csv and download for the user.
 
 ### Searching applicants: `search`
 
@@ -215,28 +202,6 @@ Examples:
   ![sort command before](images/sortCommandByNameBefore.png)
   ![sort command after](images/sortCommandByNameAfter.png)
 
-### Summarising applicants: `summary`
-Summarize all the details of applicants. (Filtered by identifiers)
-
-Format: `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
-
-* Having no identifiers will summarize all applicants
-* The filter is case-insensitive. e.g. `hans` will match `Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Only applicants that match all provided identifiers are returned (i.e. `AND` search).<br>
-  e.g. `summary s/Rejected a/Bishan` summarizes applicants with the status "Rejected" and the address "Bishan".
-
-Examples:
-* `summary` sorts all the applicants
-* `summary j/Software Engineer` returns
-```commandline
-Summarized 22 / 45 Applicants 
-Job Positions -> 
-[Software Engineer: 1] 
-Statuses -> 
-[Online Assessment: 5, Round 1: 7, Resume Screening: 3, Rejected: 3, Accepted: 2, Final interview: 2]
-```
-
 
 ### Assigning a rating of 1 to 5 to an applicant: `rate`
 
@@ -261,6 +226,32 @@ Examples:
   ![rate command before](images/rateCommand_before.png)
   ![rate command after](images/rateCommand_after.png)
 
+
+
+### Summarising applicants: `summary`
+Summarize all the applicants' details. (Filtered by identifiers)
+
+Format: `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
+
+* Having no identifiers will summarize all applicants
+* The filter is case-insensitive. e.g. `hans` will match `Hans`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only applicants that match all provided identifiers are returned (i.e. `AND` search).<br>
+  e.g. `summary s/Rejected a/Bishan` summarizes applicants with the status "Rejected" and the address "Bishan".
+
+Examples:
+* `summary` summarizes all the applicants
+* `summary j/Software Engineer` returns
+```commandline
+Summarized 22 / 45 Applicants 
+Job Positions -> 
+[Software Engineer: 1] 
+Statuses -> 
+[Online Assessment: 5, Round 1: 7, Resume Screening: 3, Rejected: 3, Accepted: 2, Final interview: 2]
+```
+
+
+
 ### Adding/Changing an Applicant's Profile Picture
 
 Update the applicant's **profile picture** through the GUI.
@@ -272,12 +263,27 @@ Update the applicant's **profile picture** through the GUI.
 4. The selected image will be set as the applicant's profile picture.
 
 #### Notes:
-* If no image is selected, **no changes** will be made to the profile picture.
+* If no image is selected, **no change** will be made to the profile picture.
 * The supported image formats are **JPG, JPEG, PNG, GIF**.
 * The image will be automatically resized to fit the profile display.
 
 #### Example:
 ![edit applicant photo](images/editApplicantPhoto.gif)
+
+
+### Exporting applicant data: `export`
+
+Allow users to export the candidate data into a CSV file
+
+Format: `export [FILE-NAME]`
+
+* Filename is the name of the CSV file to be generated
+* The exported data includes all applicants in the list. Each row represents one
+  applicant and includes fields such as : name, email, phone number,
+  job position, status, and tags.
+
+Examples:
+* `export applicants_data.csv` Export the current applicant data into a file named applicants_data.csv and download for the user.
 
 
 
