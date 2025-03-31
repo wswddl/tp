@@ -672,6 +672,28 @@ Expected: No applicant is deleted. Error message is shown.
    2. Test case: `search x/unknown`  
       Expected: Error message shown due to unrecognized prefix `x/`.
 
+### Sorting Applicants
+
+1. Sort by Name, Email, Added Time, Job Position, or Status
+
+    1. Test case: `sort n/`
+       Expected: Applicant list has been sorted successfully based on Name.
+    2. Test case: `sort e/`
+       Expected: Applicant list has been sorted successfully based on Email Address.
+    3. Test case: `sort time/`
+       Expected: Applicant list has been sorted successfully based on Added Time.
+    4. Test case: `sort n/`
+       Expected: Applicant list has been sorted successfully based on Job Position.
+    5. Test case: `sort s/`
+       Expected: Applicant list has been sorted successfully based on Application Status.
+
+2. Invalid sorting criteria
+
+    1. Test case: `sort`
+       Expected: Error message shown indicating that sorting criteria field must be specified
+    2. Test case: `sort zzz/`
+       Expected: Error message shown due to unrecognized criteria `zzz/`.
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files
