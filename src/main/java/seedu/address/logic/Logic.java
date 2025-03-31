@@ -1,10 +1,12 @@
 package seedu.address.logic;
 
+import java.io.File;
 import java.nio.file.Path;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -24,6 +26,11 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
+     * Save the applicant's data in storage
+     */
+    void saveAddressBook()  throws CommandException;
+
+    /**
      * Returns the AddressBook.
      *
      * @see seedu.address.model.Model#getAddressBook()
@@ -32,6 +39,10 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Applicant> getFilteredPersonList();
+
+    Command parseCommand(String commandText) throws ParseException;
+
+    void exportCsv(File file) throws CommandException;
 
     /**
      * Returns the user prefs' address book file path.

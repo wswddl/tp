@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.applicant.Applicant;
+import seedu.address.model.applicant.Rating;
 import seedu.address.model.applicant.Status;
 
 /**
@@ -80,6 +81,8 @@ public interface Model {
     void setPerson(Applicant target, Applicant editedApplicant);
 
     Applicant setStatus(Applicant target, Status status);
+
+    Applicant setRating(Applicant target, Rating rating);
 
     // Added for Applicant sorting
     void sortPersons(Prefix prefix);

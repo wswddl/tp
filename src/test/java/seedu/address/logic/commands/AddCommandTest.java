@@ -24,6 +24,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.applicant.Applicant;
+import seedu.address.model.applicant.Rating;
 import seedu.address.model.applicant.Status;
 import seedu.address.testutil.PersonBuilder;
 
@@ -172,6 +173,11 @@ public class AddCommandTest {
 
         @Override
         public int getFilteredPersonListSize() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Applicant setRating(Applicant applicant, Rating rating) {
             throw new AssertionError("This method should not be called.");
         }
     }

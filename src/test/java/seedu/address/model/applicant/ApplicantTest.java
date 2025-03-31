@@ -92,6 +92,10 @@ public class ApplicantTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different rating -> returns false
+        editedAlice = new PersonBuilder(ALICE).withRating(VALID_RATING_ASSIGNED).build();
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
@@ -99,7 +103,8 @@ public class ApplicantTest {
         String expected = Applicant.class.getCanonicalName() + "{name=" + ALICE.getName()
                 + ", phone=" + ALICE.getPhone() + ", email=" + ALICE.getEmail()
                 + ", jobPosition=" + ALICE.getJobPosition() + ", status=" + ALICE.getStatus()
-                + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags() + "}";
+                + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
+                + ", rating=" + ALICE.getRating() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }

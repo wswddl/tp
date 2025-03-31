@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -30,6 +29,7 @@ import seedu.address.model.applicant.Email;
 import seedu.address.model.applicant.JobPosition;
 import seedu.address.model.applicant.Name;
 import seedu.address.model.applicant.Phone;
+import seedu.address.model.applicant.Rating;
 import seedu.address.model.applicant.Status;
 import seedu.address.model.tag.Tag;
 
@@ -48,7 +48,6 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_JOB_POSITION + "JOB_POSITION] "
-            + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -106,14 +105,16 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(applicantToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(applicantToEdit.getEmail());
         JobPosition updatedJobPosition = editPersonDescriptor.getJobPosition().orElse(applicantToEdit.getJobPosition());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(applicantToEdit.getAddress());
         Status updatedStatus = editPersonDescriptor.getStatus().orElse(applicantToEdit.getStatus());
+        Address updatedAddress = editPersonDescriptor.getAddress().orElse(applicantToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(applicantToEdit.getTags());
-        // addedTime can't & won't be changed
+        Rating updatedRating = editPersonDescriptor.getRating().orElse(applicantToEdit.getRating());
+        // addedTime can't and won't be changed using EditCommand
         LocalDateTime originalAddedTime = applicantToEdit.getAddedTime();
+        String profilePicturePath = applicantToEdit.getProfilePicturePath();
 
         return new Applicant(updatedName, updatedPhone, updatedEmail, updatedJobPosition,
-                updatedStatus, updatedAddress, originalAddedTime, updatedTags);
+                updatedStatus, updatedAddress, originalAddedTime, updatedTags, updatedRating, profilePicturePath);
     }
 
     @Override
@@ -153,6 +154,7 @@ public class EditCommand extends Command {
         private Status status;
         private Address address;
         private Set<Tag> tags;
+        private Rating rating;
 
         public EditPersonDescriptor() {
         }
@@ -169,6 +171,7 @@ public class EditCommand extends Command {
             setStatus(toCopy.status);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setRating(toCopy.rating);
         }
 
         /**
@@ -210,20 +213,20 @@ public class EditCommand extends Command {
             return Optional.ofNullable(jobPosition);
         }
 
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
-        }
-
         public void setStatus(Status status) {
             this.status = status;
         }
 
         public Optional<Status> getStatus() {
             return Optional.ofNullable(status);
+        }
+
+        public void setAddress(Address address) {
+            this.address = address;
+        }
+
+        public Optional<Address> getAddress() {
+            return Optional.ofNullable(address);
         }
 
         /**
@@ -241,6 +244,14 @@ public class EditCommand extends Command {
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        public void setRating(Rating rating) {
+            this.rating = rating;
+        }
+
+        public Optional<Rating> getRating() {
+            return Optional.ofNullable(rating);
         }
 
         @Override
@@ -261,7 +272,8 @@ public class EditCommand extends Command {
                     && Objects.equals(jobPosition, otherEditPersonDescriptor.jobPosition)
                     && Objects.equals(status, otherEditPersonDescriptor.status)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(rating, otherEditPersonDescriptor.rating);
         }
 
         @Override
@@ -274,6 +286,7 @@ public class EditCommand extends Command {
                     .add("status", status)
                     .add("address", address)
                     .add("tags", tags)
+                    .add("rating", rating)
                     .toString();
         }
     }

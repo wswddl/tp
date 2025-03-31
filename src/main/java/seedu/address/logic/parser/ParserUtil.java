@@ -1,20 +1,21 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.applicant.Address;
-import seedu.address.model.applicant.Email;
-import seedu.address.model.applicant.JobPosition;
-import seedu.address.model.applicant.Name;
-import seedu.address.model.applicant.Phone;
-import seedu.address.model.applicant.Status;
+import seedu.address.model.applicant.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -23,6 +24,38 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+
+    /**
+     * The order in which prefixes are parsed. This determines the order of
+     * predicates in the final command.
+     */
+    public static final Prefix[] PREFIX_ORDER = {
+            PREFIX_NAME, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS
+    };
+
+    /** Mapping of prefixes to their respective predicate constructors. */
+    public static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
+            PREFIX_NAME, NameMatchesKeywordPredicate::new,
+            PREFIX_EMAIL, EmailMatchesKeywordPredicate::new,
+            PREFIX_JOB_POSITION, JobPositionMatchesPredicate::new,
+            PREFIX_STATUS, StatusMatchesPredicate::new
+    );
+
+    /**
+     * Extracts predicates from the given {@code ArgumentMultimap}.
+     *
+     * @param argMultimap The parsed argument multimap.
+     * @return A list of identifier predicates for filtering applicants.
+     */
+    public static List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) {
+        List<IdentifierPredicate> predicates = new ArrayList<>();
+
+        predicateMapping.forEach((prefix, predicateConstructor) ->
+                argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
+        );
+
+        return predicates;
+    }
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -128,6 +161,38 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String beforeDate} into a {@code LocalDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code beforeDate} is invalid.
+     */
+    public static LocalDateTime parseBeforeDate(String beforeDate) throws ParseException {
+        requireNonNull(beforeDate);
+        String trimmedDate = beforeDate.trim();
+        try {
+            return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Invalid date format. Please use YYYY-MM-DD.");
+        }
+    }
+
+    /**
+     * Parses a {@code String afterDate} into a {@code LocalDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code afterDate} is invalid.
+     */
+    public static LocalDateTime parseAfterDate(String afterDate) throws ParseException {
+        requireNonNull(afterDate);
+        String trimmedDate = afterDate.trim();
+        try {
+            return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Invalid date format. Please use YYYY-MM-DD.");
+        }
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -152,5 +217,20 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String rating} into a {@code Rating}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code rating} is invalid.
+     */
+    public static Rating parseRating(String rating) throws ParseException {
+        requireNonNull(rating);
+        String trimmedRating = rating.trim();
+        if (!Rating.isValidRating(trimmedRating)) {
+            throw new ParseException(Rating.MESSAGE_CONSTRAINTS);
+        }
+        return new Rating(trimmedRating);
     }
 }
