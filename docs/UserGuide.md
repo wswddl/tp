@@ -237,6 +237,29 @@ Statuses ->
 [Online Assessment: 5, Round 1: 7, Resume Screening: 3, Rejected: 3, Accepted: 2, Final interview: 2]
 ```
 
+### Assigning a rating of 1 to 5 to an applicant: `rate`
+
+Assign a rating of 1 to 5 to the specified applicant from the applicant records, possibly based on their suitability for the position.
+
+Format: `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`
+
+* Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then assigns the provided `RATING` to them.
+* The `IDENTIFIER_TYPE` can be one of the following:
+    * `n/` – Name
+    * `e/` – Email
+    * `p/` – Phone number
+    * `id/` – The index of the applicant in the last shown list
+* The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
+* The `RATING` should be an integer from 1 to 5, decimal values are not accepted.
+
+Examples:
+* `rate n/Amy Lee r/5` assigns a rating of 5 / 5 to the applicant with the name "Amy Lee".
+* `rate e/alexy@example.com r/3` assigns a rating of 3 / 5 to the applicant with the email "alexy@example.com".
+* `rate id/3 r/2` assigns a rating of 2 / 5 to the 3rd applicant in the last shown list.
+* `rate n/Amy Lee r/5` assigns a rating of 1 / 5 to the applicant with the phone number "+6592345678".
+  ![rate command before](images/rateCommand_before.png)
+  ![rate command after](images/rateCommand_after.png)
+
 
 ### Clearing all entries: `clear`
 
@@ -289,13 +312,17 @@ _Details coming soon ..._
 
 | Action      | Format, Examples                                                                                                                                                                                                                      |
 |-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**    | `help`                                                                                                                                                                                                                                |
 | **Add**     | `add n/NAME p/PHONE_NUMBER e/EMAIL j/JOB_POSITION s/STATUS a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com j/Frontend Engineer s/Online Assessment a/123, Clementi Rd, 1234665 t/friend t/SQLExpert` |
-| **Clear**   | `clear`                                                                                                                                                                                                                               |
-| **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
+| **List**    | `list`                                                                                                                                                                                                                                |
 | **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
 | **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
 | **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`                                                                                                                                               |
+| **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
+| **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                                       |
 | **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
 | **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
-| **List**    | `list`                                                                                                                                                                                                                                |
-| **Help**    | `help`                                                                                                                                                                                                                                |
+| **Rate**    | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                   |
+| **Clear**   | `clear`                                                                                                                                                                                                                               |
+| **Exit**    | `exit`                                                                                                                                                                                                                                |
+
