@@ -23,7 +23,7 @@ import seedu.address.model.applicant.exceptions.PersonNotFoundException;
  * An applicant is considered unique by comparing using {@code Applicant#isSamePerson(Applicant)}.
  * As such, adding and updating of persons uses {@code Applicant#isSamePerson(Applicant)}
  * for equality so as to ensure that the applicant being added or updated is unique in terms of
- * identity in the UniquePersonList.
+ * identity in the UniqueApplicantList.
  *
  * However, the removal of an applicant uses {@code Applicant#equals(Object)} so as to ensure that
  * the applicant with exactly the same fields will be removed.
@@ -32,7 +32,7 @@ import seedu.address.model.applicant.exceptions.PersonNotFoundException;
  *
  * @see Applicant#isSamePerson(Applicant)
  */
-public class UniquePersonList implements Iterable<Applicant> {
+public class UniqueApplicantList implements Iterable<Applicant> {
 
     private final ObservableList<Applicant> internalList = FXCollections.observableArrayList();
     private final ObservableList<Applicant> internalUnmodifiableList =
@@ -93,7 +93,7 @@ public class UniquePersonList implements Iterable<Applicant> {
         }
     }
 
-    public void setPersons(UniquePersonList replacement) {
+    public void setPersons(UniqueApplicantList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -186,12 +186,12 @@ public class UniquePersonList implements Iterable<Applicant> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof UniquePersonList)) {
+        if (!(other instanceof UniqueApplicantList)) {
             return false;
         }
 
-        UniquePersonList otherUniquePersonList = (UniquePersonList) other;
-        return internalList.equals(otherUniquePersonList.internalList);
+        UniqueApplicantList otherUniqueApplicantList = (UniqueApplicantList) other;
+        return internalList.equals(otherUniqueApplicantList.internalList);
     }
 
     @Override

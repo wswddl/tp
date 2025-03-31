@@ -18,11 +18,11 @@ RecruitTrack is a **desktop app for managing contacts, optimized for use via a  
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-W09-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your RecruitTrack.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar recruittrack.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -114,19 +114,38 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st applicant to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd applicant to be `Betsy Crower` and clears all existing tags.
 
-### Exporting applicant data: `export`
+### Exporting Applicant Data: `export`
 
-Allow users to export the candidate data into a CSV file
+Allows users to export the currently **displayed** applicant data into a CSV (Comma-Separated Values) file.
 
 Format: `export [FILE-NAME]`
 
-* Filename is the name of the CSV file to be generated
-* The exported data includes all applicants in the list. Each row represents one 
-  applicant and includes fields such as : name, email, phone number,
-  job position, status, and tags.
+Parameters:
+- `FILE-NAME`: The name of the CSV file to be created. It can include a relative folder path (e.g., `data/export.csv`), but the folder must already exist.
+- File extension `.csv` is recommended for proper formatting.
+
+The exported file will contain **all applicants currently visible in the UI list**. These applicants may be the result of any command that filters the list, such as `list`, `search`, or `filter`.
+
+Each row in the CSV file represents a single applicant and includes the following fields:
+
+| Field         | Description                        |
+|---------------|------------------------------------|
+| Name          | Full name of the applicant         |
+| Email         | Email address                      |
+| Phone         | Contact number                     |
+| Job Position  | The job role applied for           |
+| Status        | Current application status         |
+| Tags          | Any tags associated with applicant |
+
+Tags are exported as a single comma-separated string in the last column.
 
 Examples:
-* `export applicants_data.csv` Export the current applicant data into a file named applicants_data.csv and download for the user.
+* `export applicants_data.csv`  
+  → Exports the currently displayed list of applicants into a file named `applicants_data.csv` in the working directory.
+
+* `export data/recruittrack_list.csv`  
+  → Exports to a file inside the `data/` folder. The folder must already exist.
+
 
 ### Searching applicants: `search`
 
@@ -134,14 +153,17 @@ Searches applicants whose names contain any of the given keywords.
 
 Format: `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
 
-* The search is case-insensitive. e.g. `hans` will match `Hans`
+Behavior :
+* The search is **case-insensitive**. e.g. `hans` will match `Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Only applicants that match all provided criteria are returned (i.e. `AND` search).<br>
+* Only applicants that match all provided criteria are returned (i.e. logical `AND` search, applicant must match **all** specified field values to appear in the results).<br>
   e.g. `search n/John e/john@example.com` searches by name and email
-
+  
 Examples:
-* `search e/john@example.com` returns `John Doe (john@example.com)`
-* `search j/Software Engineer` returns `Alex Yeoh (Software Engineer)`<br>
+- `search e/john@example.com` returns all applicants with that exact email (case-insensitive match).
+- `search j/Software Engineer s/Interviewing` returns all applicants applying for "Software Engineer" and currently in the "Interviewing" stage.
+- `search n/Alice j/Product Manager s/Hired` lists applicants named Alice who applied for Product Manager and are already hired.
+- `search p/98764321` returns applicants whose phone numbers are "98764321".
 
 ### Deleting an applicant: `delete`
 
@@ -150,19 +172,22 @@ Deletes the specified applicant from the applicant records, including all associ
 Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 
 * Deletes the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`.
-* The `IDENTIFIER_TYPE` can be one of the following:
+* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the last shown list
+or any combination of the following:
     * `n/` – Name
     * `e/` – Email
     * `p/` – Phone number
-    * `id/` – The ID in the last shown list
+    * `bfr/` - Date added (before the specified date)
+    * `aft/` - Date added (after the specified date).
+    * `j/` - Job Position
+    * `s/` - Status
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
 * The `--force` flag (optional) bypasses confirmation prompts and deletes the applicant immediately.
 
 Examples:
-* `delete n/John Doe` deletes the applicant with the name "John Doe".
-* `delete e/johndoe@example.com` deletes the applicant with the email "johndoe@example.com".
+* `delete n/John Doe e/johndoe@example.com` deletes the applicant with the name "John Doe" and email "johndoe@example.com".
 * `delete id/3 --force` deletes the 3rd applicant in the last shown list without confirmation.
-* `delete p/12345678` deletes the applicant with the phone number "+6512345678".
+* `delete p/12345678` deletes the applicant with the phone number "12345678".
   ![delete command](images/deleteCommand.png)
   ![delete confirmation](images/deleteConfirmation.png)
 
@@ -180,6 +205,8 @@ Format: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS`
     * `id/` – The index of the applicant in the last shown list
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
 * The `STATUS` should contain only alphanumeric characters and spaces.
+
+Note: The date specified after `/bfr` and/or `/aft` must be in YYYY-MM-DD format.
 
 Examples:
 * `update n/John Doe s/Interview Scheduled` updates the status of the applicant with the name "John Doe" to "Interview Scheduled".
@@ -210,8 +237,34 @@ Examples:
   ![sort command before](images/sortCommandByNameBefore.png)
   ![sort command after](images/sortCommandByNameAfter.png)
 
+
+### Assigning a rating of 1 to 5 to an applicant: `rate`
+
+Assign a rating of 1 to 5 to the specified applicant from the applicant records, possibly based on their suitability for the position.
+
+Format: `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`
+
+* Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then assigns the provided `RATING` to them.
+* The `IDENTIFIER_TYPE` can be one of the following:
+    * `n/` – Name
+    * `e/` – Email
+    * `p/` – Phone number
+    * `id/` – The index of the applicant in the last shown list
+* The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
+* The `RATING` should be an integer from 1 to 5, decimal values are not accepted.
+
+Examples:
+* `rate n/Amy Lee r/5` assigns a rating of 5 / 5 to the applicant with the name "Amy Lee".
+* `rate e/alexy@example.com r/3` assigns a rating of 3 / 5 to the applicant with the email "alexy@example.com".
+* `rate id/3 r/2` assigns a rating of 2 / 5 to the 3rd applicant in the last shown list.
+* `rate n/Amy Lee r/5` assigns a rating of 1 / 5 to the applicant with the phone number "+6592345678".
+  ![rate command before](images/rateCommand_before.png)
+  ![rate command after](images/rateCommand_after.png)
+
+
+
 ### Summarising applicants: `summary`
-Summarize all the details of applicants. (Filtered by identifiers)
+Summarize all the applicants' details. (Filtered by identifiers)
 
 Format: `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
 
@@ -222,7 +275,7 @@ Format: `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
   e.g. `summary s/Rejected a/Bishan` summarizes applicants with the status "Rejected" and the address "Bishan".
 
 Examples:
-* `summary` sorts all the applicants
+* `summary` summarizes all the applicants
 * `summary j/Software Engineer` returns
 ```commandline
 Summarized 22 / 45 Applicants 
@@ -231,6 +284,42 @@ Job Positions ->
 Statuses -> 
 [Online Assessment: 5, Round 1: 7, Resume Screening: 3, Rejected: 3, Accepted: 2, Final interview: 2]
 ```
+
+
+
+### Adding/Changing an Applicant's Profile Picture
+
+Update the applicant's **profile picture** through the GUI.
+
+#### Steps:
+1. Click on the applicant’s **profile picture** in the GUI.
+2. A file selection window will pop up.
+3. Choose an image file from your computer and confirm your selection.
+4. The selected image will be set as the applicant's profile picture.
+
+#### Notes:
+* If no image is selected, **no change** will be made to the profile picture.
+* The supported image formats are **JPG, JPEG, PNG, GIF**.
+* The image will be automatically resized to fit the profile display.
+
+#### Example:
+![edit applicant photo](images/editApplicantPhoto.gif)
+
+
+### Exporting applicant data: `export`
+
+Allow users to export the candidate data into a CSV file
+
+Format: `export [FILE-NAME]`
+
+* Filename is the name of the CSV file to be generated
+* The exported data includes all applicants in the list. Each row represents one
+  applicant and includes fields such as : name, email, phone number,
+  job position, status, and tags.
+
+Examples:
+* `export applicants_data.csv` Export the current applicant data into a file named applicants_data.csv and download for the user.
+
 
 
 ### Clearing all entries: `clear`
@@ -247,17 +336,17 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+RecruitTrack data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+RecruitTrack data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, RecruitTrack will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the RecruitTrack to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ### Archiving data files `[coming in v2.0]`
@@ -269,7 +358,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous RecruitTrack home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -284,13 +373,17 @@ _Details coming soon ..._
 
 | Action      | Format, Examples                                                                                                                                                                                                                      |
 |-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**    | `help`                                                                                                                                                                                                                                |
 | **Add**     | `add n/NAME p/PHONE_NUMBER e/EMAIL j/JOB_POSITION s/STATUS a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com j/Frontend Engineer s/Online Assessment a/123, Clementi Rd, 1234665 t/friend t/SQLExpert` |
-| **Clear**   | `clear`                                                                                                                                                                                                                               |
-| **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
+| **List**    | `list`                                                                                                                                                                                                                                |
 | **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
 | **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
 | **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`                                                                                                                                               |
+| **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
+| **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                                       |
 | **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
 | **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
-| **List**    | `list`                                                                                                                                                                                                                                |
-| **Help**    | `help`                                                                                                                                                                                                                                |
+| **Rate**    | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                   |
+| **Clear**   | `clear`                                                                                                                                                                                                                               |
+| **Exit**    | `exit`                                                                                                                                                                                                                                |
+

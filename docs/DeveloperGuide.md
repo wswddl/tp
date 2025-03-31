@@ -35,7 +35,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -50,7 +50,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete id/1 --force`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
@@ -67,16 +67,26 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is defined in [`Ui.java`](https://github.com/AY2425S2-CS2103T-W09-1/tp/blob/master/src/main/java/seedu/address/ui/Ui.java), and implemented by [`UiManager`](https://github.com/AY2425S2-CS2103T-W09-1/tp/blob/master/src/main/java/seedu/address/ui/UiManager.java).
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
+
+**Structure**:
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+- `CommandBox`: Accepts user input commands.
+- `ResultDisplay`: Shows feedback for executed commands.
+- `PersonListPanel`: Displays a list of person objects (each representing a candidate).
+- `StatusBarFooter`: Shows save location information.
+- `HelpWindow`: A separate pop-up window with a user guide link.
 
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
+
+The main controller [`UiManager`](https://github.com/se-edu/addressbook-level3/blob/master/src/main/java/seedu/address/ui/UiManager.java) initializes these UI parts through `MainWindow`, binds them to model data from `Logic`, and handles fatal errors.
+
+**Interactions**:
 The `UI` component,
-
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
@@ -84,7 +94,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -116,30 +126,30 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="750" />
 
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the address book data i.e., all `Applicant` objects (which are contained in a `UniqueApplicantList` object).
+* stores the currently 'selected' `Applicant` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Applicant>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Applicant` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Applicant` needing their own `Tag` objects.<br>
 
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
+<puml src="diagrams/BetterModelClassDiagram.puml" width="600" />
 
 </box>
 
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -176,7 +186,7 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th applicant in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete id/5 --force` command to delete the 5th applicant in the address book without confirmation. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete id/5 --force` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
@@ -246,7 +256,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the applicant being deleted).
+  * Pros: Will use less memory (e.g. for `delete`, just save the applicant(s) being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
@@ -333,34 +343,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `RecruitTrack` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: UC01 - Delete a applicant**
+**Use case: UC01 - Add an applicant**
 
 **MSS:**
 
-1.  User requests to list applicants
-2.  RecruitTrack shows a list of applicants
-3.  User requests to delete a specific applicant in the list
-4.  RecruitTrack deletes the applicant
-
-    Use case ends.
-
-**Extensions:**
-
-* 2a. The list is empty.
-
-  Use case ends.
-
-* 3a. The given index is invalid.
-
-    * 3a1. RecruitTrack shows an error message.
-
-      Use case resumes from step 2.
-
-**Use case: UC02 - Add a applicant**
-
-**MSS:**
-
-1.  User requests to add a applicant by providing the details
+1.  User requests to add an applicant by providing the details
 2.  RecruitTrack adds the applicant with the details into the list
 
     Use case ends.
@@ -375,14 +362,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 1b1. RecruitTrack shows an error message.
 
-**Use case: UC03 - Edit a applicant**
+<br>
+
+**Use case: UC02 - Delete an applicant**
 
 **MSS:**
 
 1.  User requests to list applicants
 2.  RecruitTrack shows a list of applicants
-3.  User requests to edit a specific applicant in the list and provides the new details for that applicant
-4.  RecruitTrack edit the applicant's details
+3.  User requests to delete a specific applicant
+4.  RecruitTrack deletes the applicant
 
     Use case ends.
 
@@ -392,7 +381,32 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 3a. There is no matching applicant given the user's request.
+
+    * 3a1. RecruitTrack shows an error message.
+
+      Use case resumes from step 2.
+
+<br>
+
+**Use case: UC03 - Edit an applicant**
+
+**MSS:**
+
+1.  User requests to list applicants
+2.  RecruitTrack shows a list of applicants
+3.  User requests to edit a specific applicant in the list and provides the new details for that applicant
+4.  RecruitTrack edits the applicant's details
+
+    Use case ends.
+
+**Extensions:**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. There is no matching applicant given the user's request.
 
     * 3a1. RecruitTrack shows an error message.
 
@@ -404,12 +418,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
-**Use case: UC04 - Find a applicant**
+<br>
+
+**Use case: UC04 - Update an applicant**
+
+* Similar to UC03 except the user can only update some information of the applicant.
+
+<br>
+
+**Use case: UC05 - Search an applicant**
 
 **MSS:**
 
-1.  User requests to find a applicant by providing the applicant's details.
-2.  RecruitTrack find applicants with the given details.
+1.  User requests to search an applicant by providing the applicant's details.
+2.  RecruitTrack finds applicants with the given details.
 
     Use case ends.
 
@@ -418,6 +440,88 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. The list is empty.
 
   Use case ends.
+
+<br>
+
+**Use case: UC06 - Rate an applicant**
+
+**MSS:**
+
+1.  User requests to list applicants
+2.  RecruitTrack shows a list of applicants
+3.  User requests to rate an applicant by providing the applicant's details and rating number
+4.  RecruitTrack rates applicants with the given details
+
+    Use case ends.
+
+**Extensions:**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3b. There is no matching applicant given the user's request.
+
+    * 3b1. RecruitTrack shows an error message.
+
+      Use case resumes from step 2.
+
+<br>
+
+**Use case: UC07 - Summarize the applicant records without filter**
+
+**MSS:**
+
+1.  User requests to summarize the applicant records without specifying any filter
+2.  RecruitTrack output the summary of all the applicants' details
+
+<br>
+
+**Use case: UC08 - Summarize the applicant records with filter**
+
+**MSS:**
+
+1.  User requests to summarize the applicant records and specify the filters
+2.  RecruitTrack output the summary of all applicants that meet the specified filters
+
+<br>
+
+**Use case: UC09 - Export the applicants data**
+
+**MSS:**
+
+1.  User requests to export the applicants data
+2.  RecruitTrack requests the user to specify the location to save the exported data
+3.  RecruitTrack save the exported data in the specify location
+
+**Extensions:**
+
+* 2a. User didn't specify the save location.
+  
+    * 2a1. Export is cancelled.
+
+    Use case ends.
+
+<br>
+
+**Use case: UC10 - Add applicant's profile picture**
+
+**MSS:**
+
+1.  User requests to change an applicant's profile picture.
+2.  RecruitTrack requests the user to select an image.
+3.  RecruitTrack update the applicant's profile picture with the selected image.
+
+    Use case ends.
+
+**Extensions:**
+
+* 2a. User didn't select an image.
+
+    * 2a1. No change is made to the applicant's profile picture.
+    
+    Use case ends.
+
 
 ### Non-Functional Requirements
 1. Should run on any mainstream OS (Windows, macOS, Linux) with Java 17 or above installed.
@@ -476,22 +580,97 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a applicant
+### Deleting an Applicant
+1. Force Deleting an Applicant Using Different Identifiers (ID, Email, Phone, etc.)
 
-1. Deleting a applicant while all applicants are being shown
+   1. Test case: delete id/1 --force<br>
+       Expected: The first applicant is deleted from the list. Details of the deleted applicant are shown in the message.
+   2. Test case: delete n/John Doe e/johndoe@example.com --force<br>
+ Expected: Applicant named "John Doe" with email "johndoe@example.com" is deleted from the list. Details of the deleted applicant are shown in the message.
+   3. Test case: delete p/98765432 --force<br>
+Expected: Applicant with phone number "98765432" is deleted from the list. Details of the deleted applicant are shown in the message. 
+   4. Test case: delete bfr/2024-01-01 aft/2024-06-01 --force<br>
+Expected: All applicants added after June 1, 2024 and before Jan 1, 2024, are deleted. Details of the deleted applicants are shown in the message. 
+   5. Test case: delete j/Software Engineer s/Rejected --force<br>
+Expected: All applicants with the job position "Software Engineer" and the status "Rejected" are deleted. Details of the deleted applicants are shown in the message.
 
-   1. Prerequisites: List all applicants using the `list` command. Multiple applicants in the list.
+2. Deleting an Applicant without the --force Flag
+   1. Test case: delete id/3<br>
+Expected: Confirmation message will be displayed (assuming there are at least 3 applicants in the applicant records)
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+3. Deleting an Applicant That Does Not Exist
+   1. Prerequisites: Ensure no applicants match the given identifiers. 
+   2. Test cases:
+      1. Test case: delete id/0 --force<br>
+      Expected: No applicant is deleted. Error message is shown. 
+      2. Test case: delete n/Nonexistent Applicant --force<br>
+Expected: No applicant is deleted. Error message is shown.
 
-   1. Test case: `delete 0`<br>
-      Expected: No applicant is deleted. Error details shown in the status message. Status bar remains the same.
+4. _{ more test cases …​ }_
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+### Exporting Applicant Data
 
-1. _{ more test cases …​ }_
+1. Exporting list of all applicants
+
+   1. Test case: `export applicants.csv`  
+      Expected: A CSV file named `applicants.csv` is created in the home directory. It contains details of all currently displayed applicants.
+   2. Test case: `export export_folder/candidates.csv`  
+      Expected: The file `candidates.csv` is created inside the `export_folder` directory (must exist beforehand).
+
+2. Exporting an Empty List
+
+   1. Prerequisites: Ensure the displayed list is empty (e.g., after searching for a non-existent applicant).
+   2. Test case: `export empty.csv`  
+      Expected: A CSV file is created, but it only contains the header row. A message indicating zero applicants exported is shown.
+
+3. Invalid Export File Names
+
+   1. Test case: `export`  
+      Expected: Error message is shown indicating that the file name is missing.
+   2. Test case: `export invalid/file\name.csv`  
+      Expected: Error message is shown due to invalid file path (OS-dependent).
+   3. Test case: `export /root/protected.csv` (Linux/macOS) or `export C:\Windows\System32\protected.csv` (Windows)  
+      Expected: Error message is shown due to insufficient permissions.
+
+4. Overwriting an Existing File
+
+   1. Prerequisite: Make sure a file with the same name already exists.
+   2. Test case: `export applicants.csv`  
+      Expected: The existing file is overwritten with new content. Message confirms successful export.
+
+### Searching Applicants
+
+1. Searching by Name, Email, Phone, Job Position, or Status
+
+   1. Test case: `search n/Alice`  
+      Expected: All applicants with names containing "Alice" (case-insensitive, partial match supported) are listed.
+   2. Test case: `search e/example.com`  
+      Expected: All applicants with emails that contain "example.com" are shown.
+   3. Test case: `search p/9123`  
+      Expected: All applicants with phone numbers containing "9123" are displayed.
+   4. Test case: `search j/SWE`  
+      Expected: All applicants applying for positions with "SWE" in the title are shown.
+   5. Test case: `search s/Interviewing`  
+      Expected: All applicants currently in the "Interviewing" status are shown.
+
+2. Searching by Multiple Fields
+
+   1. Test case: `search n/John j/Software`  
+      Expected: Applicants whose name contains "John" **and** job position contains "Software" are shown.
+   2. Test case: `search s/Rejected p/123`  
+      Expected: Applicants whose status is "Rejected" and phone number contains "123" are shown.
+
+3. Search with No Results
+
+   1. Test case: `search n/NotExist`  
+      Expected: "0 applicants listed!" message shown. Displayed list is empty.
+
+4. Invalid Search Commands
+
+   1. Test case: `search`  
+      Expected: Error message shown indicating that at least one field must be specified.
+   2. Test case: `search x/unknown`  
+      Expected: Error message shown due to unrecognized prefix `x/`.
 
 ### Saving data
 
