@@ -150,19 +150,22 @@ Deletes the specified applicant from the applicant records, including all associ
 Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 
 * Deletes the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`.
-* The `IDENTIFIER_TYPE` can be one of the following:
+* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the last shown list
+or any combination of the following:
     * `n/` – Name
     * `e/` – Email
     * `p/` – Phone number
-    * `id/` – The ID in the last shown list
+    * `bfr/` - Date added (before the specified date)
+    * `aft/` - Date added (after the specified date).
+    * `j/` - Job Position
+    * `s/` - Status
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
 * The `--force` flag (optional) bypasses confirmation prompts and deletes the applicant immediately.
 
 Examples:
-* `delete n/John Doe` deletes the applicant with the name "John Doe".
-* `delete e/johndoe@example.com` deletes the applicant with the email "johndoe@example.com".
+* `delete n/John Doe e/johndoe@example.com` deletes the applicant with the name "John Doe" and email "johndoe@example.com".
 * `delete id/3 --force` deletes the 3rd applicant in the last shown list without confirmation.
-* `delete p/12345678` deletes the applicant with the phone number "+6512345678".
+* `delete p/12345678` deletes the applicant with the phone number "12345678".
   ![delete command](images/deleteCommand.png)
   ![delete confirmation](images/deleteConfirmation.png)
 
@@ -180,6 +183,8 @@ Format: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS`
     * `id/` – The index of the applicant in the last shown list
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
 * The `STATUS` should contain only alphanumeric characters and spaces.
+
+Note: The date specified after `/bfr` and/or `/aft` must be in YYYY-MM-DD format.
 
 Examples:
 * `update n/John Doe s/Interview Scheduled` updates the status of the applicant with the name "John Doe" to "Interview Scheduled".
