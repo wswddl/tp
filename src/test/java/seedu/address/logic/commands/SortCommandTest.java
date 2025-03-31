@@ -12,8 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CRITERIA_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDED_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class SortCommandTest {
@@ -58,7 +61,58 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByUnknownCriteria_doNothing() {
+    public void execute_sortByJobPosition_success() {
+        Prefix prefix = PREFIX_JOB_POSITION;
+        try {
+            SortCommand sortCommand = new SortCommand(prefix);
+            String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, sortCommand.getCriteria());
+
+            Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+            expectedModel.sortPersons(prefix);
+
+            assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        } catch (CommandException e) {
+            fail();
+        }
+
+    }
+
+    @Test
+    public void execute_sortByStatus_success() {
+        Prefix prefix = PREFIX_STATUS;
+        try {
+            SortCommand sortCommand = new SortCommand(prefix);
+            String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, sortCommand.getCriteria());
+
+            Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+            expectedModel.sortPersons(prefix);
+
+            assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        } catch (CommandException e) {
+            fail();
+        }
+
+    }
+
+    @Test
+    public void execute_sortByAddedTime_success() {
+        Prefix prefix = PREFIX_ADDED_TIME;
+        try {
+            SortCommand sortCommand = new SortCommand(prefix);
+            String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, sortCommand.getCriteria());
+
+            Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+            expectedModel.sortPersons(prefix);
+
+            assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+        } catch (CommandException e) {
+            fail();
+        }
+
+    }
+
+    @Test
+    public void execute_sortByUnknownCriteria_throwCommandException() {
         // Undefined prefix
         Prefix prefix = new Prefix("z/");
         try {

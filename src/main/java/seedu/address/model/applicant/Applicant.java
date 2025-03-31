@@ -1,7 +1,12 @@
 package seedu.address.model.applicant;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.ui.UiManager.DEFAULT_PROFILE_PIC;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -9,12 +14,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javafx.scene.control.Label;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Applicant in the address book.
+ * Represents an Applicant in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Applicant {
@@ -30,13 +34,17 @@ public class Applicant {
     private final Address address;
     private final LocalDateTime addedTime;
     private final Set<Tag> tags = new HashSet<>();
+    private final Rating rating;
+    private String profilePicturePath;
 
     /**
-     * Every field must be present and not null.
+     * Constructor of Applicant.
+     * Every field must be present and not null, except {@code profilePicturePath}.
      */
     public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
-                     Address address, LocalDateTime addedTime, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags);
+                     Address address, LocalDateTime addedTime, Set<Tag> tags,
+                     Rating rating, String profilePicturePath) {
+        requireAllNonNull(name, phone, email, jobPosition, status, address, addedTime, tags, rating);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -45,6 +53,39 @@ public class Applicant {
         this.address = address;
         this.addedTime = addedTime;
         this.tags.addAll(tags);
+        this.rating = rating;
+        if (profilePicturePath == null) {
+            this.profilePicturePath = DEFAULT_PROFILE_PIC;
+        } else {
+            this.profilePicturePath = profilePicturePath;
+        }
+    }
+
+    /**
+     * Constructor of Applicant with no profile picture and assigned rating
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags) {
+        this(name, phone, email, jobPosition, status, address, addedTime, tags,
+                new Rating("-1"), null);
+    }
+
+    /**
+     * Constructor of Applicant with assigned rating but no profile picture
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags, Rating rating) {
+        this(name, phone, email, jobPosition, status, address, addedTime, tags,
+                rating, null);
+    }
+
+    /**
+     * Constructor of Applicant with profile picture but no assigned rating
+     */
+    public Applicant(Name name, Phone phone, Email email, JobPosition jobPosition, Status status,
+                     Address address, LocalDateTime addedTime, Set<Tag> tags, String profilePicturePath) {
+        this(name, phone, email, jobPosition, status, address, addedTime, tags,
+                new Rating("-1"), profilePicturePath);
     }
 
     public Name getName() {
@@ -74,6 +115,12 @@ public class Applicant {
     public LocalDateTime getAddedTime() {
         return this.addedTime;
     }
+    public String getProfilePicturePath() {
+        return this.profilePicturePath;
+    }
+    public void setProfilePicturePath(String specifiedPath) {
+        this.profilePicturePath = specifiedPath;
+    }
 
     /**
      * Formatted String of the added time for PersonCard in UI
@@ -82,7 +129,7 @@ public class Applicant {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma d/M/yyyy");
         String formattedTime = this.addedTime.format(formatter)
                 .replace("AM", "a.m.").replace("PM", "p.m.");
-        return formattedTime;
+        return "Added at " + formattedTime;
     }
 
     /**
@@ -91,6 +138,10 @@ public class Applicant {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Rating getRating() {
+        return rating;
     }
 
     /**
@@ -104,6 +155,21 @@ public class Applicant {
 
         return otherApplicant != null
                 && otherApplicant.getName().equals(getName());
+    }
+
+    /**
+     * Delete the image file in the profile pictures folder if it is not the default profile picture.
+     */
+    public void deleteProfilePic() {
+        if (!profilePicturePath.equals(DEFAULT_PROFILE_PIC)) {
+            Path photoPath = Paths.get(profilePicturePath);
+            try {
+                Files.delete(photoPath);
+            } catch (IOException e) {
+                System.err.println("Error deleting photo: " + e.getMessage());
+            }
+        }
+        // else do nothing, don't delete the default profile pic
     }
 
     /**
@@ -128,13 +194,14 @@ public class Applicant {
                 && jobPosition.equals(otherApplicant.jobPosition)
                 && status.equals(otherApplicant.status)
                 && address.equals(otherApplicant.address)
-                && tags.equals(otherApplicant.tags);
+                && tags.equals(otherApplicant.tags)
+                && rating.equals((otherApplicant.rating));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, jobPosition, status, address, tags);
+        return Objects.hash(name, phone, email, jobPosition, status, address, tags, rating);
     }
 
     @Override
@@ -147,6 +214,7 @@ public class Applicant {
                 .add("status", status)
                 .add("address", address)
                 .add("tags", tags)
+                .add("rating", rating)
                 .toString();
     }
 

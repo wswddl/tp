@@ -17,6 +17,7 @@ import seedu.address.model.applicant.Email;
 import seedu.address.model.applicant.JobPosition;
 import seedu.address.model.applicant.Name;
 import seedu.address.model.applicant.Phone;
+import seedu.address.model.applicant.Rating;
 import seedu.address.model.applicant.Status;
 import seedu.address.model.tag.Tag;
 
@@ -35,6 +36,8 @@ class JsonAdaptedApplicant {
     private final String address;
     private final LocalDateTime addedTime;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String rating;
+    private final String profilePicturePath;
 
     /**
      * Constructs a {@code JsonAdaptedApplicant} with the given applicant details.
@@ -44,7 +47,9 @@ class JsonAdaptedApplicant {
                                 @JsonProperty("email") String email, @JsonProperty("jobPosition") String jobPosition,
                                 @JsonProperty("status") String status, @JsonProperty("address") String address,
                                 @JsonProperty("addedTime") LocalDateTime addedTime,
-                                @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                                @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                                @JsonProperty("rating") String rating,
+                                @JsonProperty("profilePicturePath") String profilePicturePath) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -55,6 +60,8 @@ class JsonAdaptedApplicant {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.rating = rating;
+        this.profilePicturePath = profilePicturePath;
     }
 
     /**
@@ -68,10 +75,13 @@ class JsonAdaptedApplicant {
         status = source.getStatus().value;
         address = source.getAddress().value;
         addedTime = source.getAddedTime();
+        rating = source.getRating().value;
+        profilePicturePath = source.getProfilePicturePath();
 
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+
     }
 
     /**
@@ -139,9 +149,22 @@ class JsonAdaptedApplicant {
         }
         final LocalDateTime modelAddedTime = addedTime;
 
+        if (profilePicturePath == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "ProfilePicturePath"));
+        }
+        final String modelProfilePicturePath = profilePicturePath;
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
+
+        if (rating == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Rating.class.getSimpleName()));
+        }
+        if (!Rating.isValidRating(rating)) {
+            throw new IllegalValueException(Rating.MESSAGE_CONSTRAINTS);
+        }
+        final Rating modelRating = new Rating(rating);
         return new Applicant(modelName, modelPhone, modelEmail, modelJobPosition, modelStatus, modelAddress,
-                modelAddedTime, modelTags);
+                modelAddedTime, modelTags, modelRating, modelProfilePicturePath);
     }
 
 }

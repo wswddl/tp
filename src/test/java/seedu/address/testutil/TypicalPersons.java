@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,23 +9,6 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.applicant.Applicant;
-
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDED_TIME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDED_TIME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_JOB_POSITION_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_JOB_POSITION_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 /**
  * A utility class containing a list of {@code Applicant} objects to be used in tests.
@@ -37,6 +22,7 @@ public class TypicalPersons {
             .withJobPosition("Frontend Engineer")
             .withStatus("Resume Screening")
             .withAddedTime(LocalDateTime.of(2025, 3, 13, 00, 00, 00))
+            .withRating("-1")
             .build();
     public static final Applicant BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
@@ -45,6 +31,7 @@ public class TypicalPersons {
             .withJobPosition("Senior Frontend Engineer")
             .withStatus("Technical Interview Round 1")
             .withAddedTime(LocalDateTime.of(2025, 3, 13, 1, 0, 0))
+            .withRating("4")
             .build();
     public static final Applicant CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
@@ -65,6 +52,10 @@ public class TypicalPersons {
             .withJobPosition("UI UX")
             .withStatus("Signed")
             .withAddedTime(LocalDateTime.of(2025, 3, 13, 5, 0, 0))
+            .build();
+    public static final Applicant GABRIELLA = new PersonBuilder().withName("Gabriella").withPhone("1234543")
+            .withEmail("ella@example.com").withAddress("1st street")
+            .withAddedTime(LocalDateTime.of(2025, 3, 13, 5, 1, 0))
             .build();
     public static final Applicant GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
@@ -92,6 +83,7 @@ public class TypicalPersons {
             .withAddress(VALID_ADDRESS_AMY)
             .withAddedTime(VALID_ADDED_TIME_AMY)
             .withTags(VALID_TAG_FRIEND)
+            .withRating(VALID_RATING_UNASSIGNED)
             .build();
     public static final Applicant BOB = new PersonBuilder()
             .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -101,6 +93,7 @@ public class TypicalPersons {
             .withAddress(VALID_ADDRESS_BOB)
             .withAddedTime(VALID_ADDED_TIME_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .withRating(VALID_RATING_UNASSIGNED)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
@@ -119,6 +112,6 @@ public class TypicalPersons {
     }
 
     public static List<Applicant> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GABRIELLA, GEORGE));
     }
 }

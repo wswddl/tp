@@ -67,7 +67,7 @@ RecruitTrack is a **desktop app for managing contacts, optimized for use via a  
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+### Viewing help: `help`
 
 Shows a message explaining how to access the help page.
 
@@ -91,13 +91,13 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com j/Frontend Engineer s/Online Assessment a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com j/Backend Intern s/Offered a/Raffles Hall p/1234567 t/criminal`
 
-### Listing all applicants : `list`
+### Listing all applicants: `list`
 
 Shows a list of all applicants in the applicant records.
 
 Format: `list`
 
-### Editing an applicant : `edit`
+### Editing an applicant: `edit`
 
 Edits an existing applicant in the Applicant Records.
 
@@ -114,7 +114,21 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st applicant to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd applicant to be `Betsy Crower` and clears all existing tags.
 
-### Locating applicants by name: `search`
+### Exporting applicant data: `export`
+
+Allow users to export the candidate data into a CSV file
+
+Format: `export [FILE-NAME]`
+
+* Filename is the name of the CSV file to be generated
+* The exported data includes all applicants in the list. Each row represents one 
+  applicant and includes fields such as : name, email, phone number,
+  job position, status, and tags.
+
+Examples:
+* `export applicants_data.csv` Export the current applicant data into a file named applicants_data.csv and download for the user.
+
+### Searching applicants: `search`
 
 Searches applicants whose names contain any of the given keywords.
 
@@ -129,30 +143,58 @@ Examples:
 * `search e/john@example.com` returns `John Doe (john@example.com)`
 * `search j/Software Engineer` returns `Alex Yeoh (Software Engineer)`<br>
 
-### Deleting an applicant : `delete`
+### Deleting an applicant: `delete`
 
 Deletes the specified applicant from the applicant records, including all associated application details.
 
 Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 
 * Deletes the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`.
-* The `IDENTIFIER_TYPE` can be one of the following:
+* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the last shown list
+or any combination of the following:
     * `n/` – Name
     * `e/` – Email
     * `p/` – Phone number
-    * `id/` – The ID in the last shown list
+    * `bfr/` - Date added (before the specified date)
+    * `aft/` - Date added (after the specified date).
+    * `j/` - Job Position
+    * `s/` - Status
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
 * The `--force` flag (optional) bypasses confirmation prompts and deletes the applicant immediately.
 
 Examples:
-* `delete n/John Doe` deletes the applicant with the name "John Doe".
-* `delete e/johndoe@example.com` deletes the applicant with the email "johndoe@example.com".
+* `delete n/John Doe e/johndoe@example.com` deletes the applicant with the name "John Doe" and email "johndoe@example.com".
 * `delete id/3 --force` deletes the 3rd applicant in the last shown list without confirmation.
-* `delete p/12345678` deletes the applicant with the phone number "+6512345678".
+* `delete p/12345678` deletes the applicant with the phone number "12345678".
   ![delete command](images/deleteCommand.png)
   ![delete confirmation](images/deleteConfirmation.png)
 
-### Sorting applicant list : `sort`
+### Updating the application status of an applicant: `update`
+
+Updates the status of the specified applicant from the applicant records.
+
+Format: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS`
+
+* Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then updates their application status to the provided `STATUS`.
+* The `IDENTIFIER_TYPE` can be one of the following:
+    * `n/` – Name
+    * `e/` – Email
+    * `p/` – Phone number
+    * `id/` – The index of the applicant in the last shown list
+* The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
+* The `STATUS` should contain only alphanumeric characters and spaces.
+
+Note: The date specified after `/bfr` and/or `/aft` must be in YYYY-MM-DD format.
+
+Examples:
+* `update n/John Doe s/Interview Scheduled` updates the status of the applicant with the name "John Doe" to "Interview Scheduled".
+* `update e/johndoe@example.com s/Pending Review` updates the status of the applicant with the email "johndoe@example.com" to "Pending Review".
+* `update id/3 s/Offer Accepted` updates the status of the 3rd applicant in the last shown list to "Offer Accepted".
+* `update p/12345678 s/Failed` updates the status of the applicant with the phone number "+6512345678" to "Failed".
+  ![update command before](images/updateCommand_before.png)
+  ![update command after](images/updateCommand_after.png)
+
+### Sorting applicant list: `sort`
 
 Sort the applicant list based on the criteria.
 
@@ -173,13 +215,36 @@ Examples:
   ![sort command before](images/sortCommandByNameBefore.png)
   ![sort command after](images/sortCommandByNameAfter.png)
 
-### Clearing all entries : `clear`
+### Summarising applicants: `summary`
+Summarize all the details of applicants. (Filtered by identifiers)
+
+Format: `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
+
+* Having no identifiers will summarize all applicants
+* The filter is case-insensitive. e.g. `hans` will match `Hans`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only applicants that match all provided identifiers are returned (i.e. `AND` search).<br>
+  e.g. `summary s/Rejected a/Bishan` summarizes applicants with the status "Rejected" and the address "Bishan".
+
+Examples:
+* `summary` sorts all the applicants
+* `summary j/Software Engineer` returns
+```commandline
+Summarized 22 / 45 Applicants 
+Job Positions -> 
+[Software Engineer: 1] 
+Statuses -> 
+[Online Assessment: 5, Round 1: 7, Resume Screening: 3, Rejected: 3, Accepted: 2, Final interview: 2]
+```
+
+
+### Clearing all entries: `clear`
 
 Clears all entries from the applicant records.
 
 Format: `clear`
 
-### Exiting the program : `exit`
+### Exiting the program: `exit`
 
 Exits the program.
 
@@ -222,13 +287,15 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Search**   | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`
-**Sort**   | `sort CRITERIA/`<br> e.g., `sort n/`
-**List**   | `list`
-**Help**   | `help`
+| Action      | Format, Examples                                                                                                                                                                                                                      |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**     | `add n/NAME p/PHONE_NUMBER e/EMAIL j/JOB_POSITION s/STATUS a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com j/Frontend Engineer s/Online Assessment a/123, Clementi Rd, 1234665 t/friend t/SQLExpert` |
+| **Clear**   | `clear`                                                                                                                                                                                                                               |
+| **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
+| **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
+| **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
+| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`                                                                                                                                               |
+| **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
+| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
+| **List**    | `list`                                                                                                                                                                                                                                |
+| **Help**    | `help`                                                                                                                                                                                                                                |

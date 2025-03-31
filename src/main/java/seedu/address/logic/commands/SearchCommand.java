@@ -13,13 +13,23 @@ import seedu.address.model.applicant.IdentifierPredicate;
 
 /**
  * Finds and lists all applicants in the address book that match the given criteria.
- * Keyword matching is case insensitive, exact match needed
+ * Keyword matching is case-insensitive, exact match needed
  */
 public class SearchCommand extends Command {
 
+    /**
+     * Command word to trigger the search functionality in the application.
+     */
     public static final String COMMAND_WORD = "search";
 
+    /**
+     * Message displayed when no applicants match the search criteria.
+     */
     public static final String MESSAGE_NO_RESULT = "Error: No applicants found.";
+
+    /**
+     * Usage message displayed when the user provides an incorrect format for the search command.
+     */
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Searches for applicants based on specified criteria.\n"
             + "Parameters: [" + CliSyntax.PREFIX_NAME + "NAME] "
@@ -29,6 +39,10 @@ public class SearchCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + CliSyntax.PREFIX_NAME + "John "
             + CliSyntax.PREFIX_EMAIL + "john@example.com";
 
+    /**
+     * The list of predicates used to filter the applicant list.
+     * Each predicate corresponds to a specific search criterion (e.g., name, email).
+     */
     private final List<IdentifierPredicate> predicates;
 
     /**
@@ -80,7 +94,35 @@ public class SearchCommand extends Command {
         }
 
         SearchCommand otherSearchCommand = (SearchCommand) other;
-        return predicates.equals(otherSearchCommand.predicates);
+
+        List<IdentifierPredicate> otherPredicates = otherSearchCommand.predicates;
+        if (predicates.size() != otherPredicates.size()) {
+            return false;
+        }
+    
+        for (int i = 0; i < predicates.size(); i++) {
+            IdentifierPredicate thisPredicate = predicates.get(i);
+            IdentifierPredicate thatPredicate = otherPredicates.get(i);
+    
+            if (!thisPredicate.equals(thatPredicate)) {
+                return false;
+            }
+        }
+    
+        return true;
+    }
+
+    /**
+     * Returns the hash code value for this {@code SearchCommand}.
+     * The hash code is computed based on the list of predicates,
+     * ensuring that two {@code SearchCommand} objects with the same predicates
+     * will return the same hash code.
+     *
+     * @return the hash code value for this command.
+     */
+    @Override
+    public int hashCode() {
+        return predicates.hashCode();
     }
 
     /**

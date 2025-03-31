@@ -50,7 +50,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete id/1 --force`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
@@ -90,9 +90,9 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("summary j/SWE")` API call as an example.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
+<puml src="diagrams/SummarySequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
 <box type="info" seamless>
 
@@ -101,9 +101,9 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a applicant).<br>
+1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `SummaryCommandParser`) and uses it to parse the command.
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `SummaryCommand`) which is executed by the `LogicManager`.
+1. The command can communicate with the `Model` when it is executed (e.g. to summarize applicants).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
@@ -176,7 +176,7 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th applicant in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete id/5 --force` command to delete the 5th applicant in the address book without confirmation. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete id/5 --force` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
@@ -246,7 +246,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the applicant being deleted).
+  * Pros: Will use less memory (e.g. for `delete`, just save the applicant(s) being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
@@ -333,13 +333,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `RecruitTrack` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: UC01 - Delete a applicant**
+**Use case: UC01 - Delete an applicant**
 
 **MSS:**
 
 1.  User requests to list applicants
 2.  RecruitTrack shows a list of applicants
-3.  User requests to delete a specific applicant in the list
+3.  User requests to delete a specific applicant
 4.  RecruitTrack deletes the applicant
 
     Use case ends.
@@ -350,17 +350,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 3a. There is no matching applicant given the user's request.
 
     * 3a1. RecruitTrack shows an error message.
 
       Use case resumes from step 2.
 
-**Use case: UC02 - Add a applicant**
+**Use case: UC02 - Add an applicant**
 
 **MSS:**
 
-1.  User requests to add a applicant by providing the details
+1.  User requests to add an applicant by providing the details
 2.  RecruitTrack adds the applicant with the details into the list
 
     Use case ends.
@@ -375,7 +375,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 1b1. RecruitTrack shows an error message.
 
-**Use case: UC03 - Edit a applicant**
+**Use case: UC03 - Edit an applicant**
 
 **MSS:**
 
@@ -404,11 +404,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
-**Use case: UC04 - Find a applicant**
+**Use case: UC04 - Find an applicant**
 
 **MSS:**
 
-1.  User requests to find a applicant by providing the applicant's details.
+1.  User requests to find an applicant by providing the applicant's details.
 2.  RecruitTrack find applicants with the given details.
 
     Use case ends.
@@ -476,22 +476,33 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a applicant
+### Deleting an Applicant
+1. Force Deleting an Applicant Using Different Identifiers (ID, Email, Phone, etc.)
 
-1. Deleting a applicant while all applicants are being shown
+   1. Test case: delete id/1 --force<br>
+       Expected: The first applicant is deleted from the list. Details of the deleted applicant are shown in the message.
+   2. Test case: delete n/John Doe e/johndoe@example.com --force<br>
+ Expected: Applicant named "John Doe" with email "johndoe@example.com" is deleted from the list. Details of the deleted applicant are shown in the message.
+   3. Test case: delete p/98765432 --force<br>
+Expected: Applicant with phone number "98765432" is deleted from the list. Details of the deleted applicant are shown in the message. 
+   4. Test case: delete bfr/2024-01-01 aft/2024-06-01 --force<br>
+Expected: All applicants added after June 1, 2024 and before Jan 1, 2024, are deleted. Details of the deleted applicants are shown in the message. 
+   5. Test case: delete j/Software Engineer s/Rejected --force<br>
+Expected: All applicants with the job position "Software Engineer" and the status "Rejected" are deleted. Details of the deleted applicants are shown in the message.
 
-   1. Prerequisites: List all applicants using the `list` command. Multiple applicants in the list.
+2. Deleting an Applicant without the --force Flag
+   1. Test case: delete id/3<br>
+Expected: Confirmation message will be displayed (assuming there are at least 3 applicants in the applicant records)
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+3. Deleting an Applicant That Does Not Exist
+   1. Prerequisites: Ensure no applicants match the given identifiers. 
+   2. Test cases:
+      1. Test case: delete id/0 --force<br>
+      Expected: No applicant is deleted. Error message is shown. 
+      2. Test case: delete n/Nonexistent Applicant --force<br>
+Expected: No applicant is deleted. Error message is shown.
 
-   1. Test case: `delete 0`<br>
-      Expected: No applicant is deleted. Error details shown in the status message. Status bar remains the same.
-
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
+4. _{ more test cases …​ }_
 
 ### Saving data
 

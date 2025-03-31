@@ -32,8 +32,11 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(applicant.getName());
         descriptor.setPhone(applicant.getPhone());
         descriptor.setEmail(applicant.getEmail());
+        descriptor.setJobPosition(applicant.getJobPosition());
+        descriptor.setStatus(applicant.getStatus());
         descriptor.setAddress(applicant.getAddress());
         descriptor.setTags(applicant.getTags());
+        descriptor.setRating(applicant.getRating());
     }
 
     /**
@@ -61,6 +64,22 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code JobPosition} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withJobPosition(String jobPosition) {
+        descriptor.setJobPosition(new JobPosition(jobPosition));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Status} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withStatus(String status) {
+        descriptor.setStatus(new Status(status));
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
@@ -75,6 +94,14 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Rating} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withRating(String rating) {
+        descriptor.setRating(new Rating(rating));
         return this;
     }
 

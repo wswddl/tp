@@ -3,12 +3,21 @@
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "alice@example.com",
+    "jobPosition": "Assistant",
+    "status" : "Passed",
     "address": "123, Jurong West Ave 6, #08-111",
-    "tags": [ "friends" ]
+    "addedTime": "2025-03-27T01:54:03.5175834",
+    "tags": [ "friends" ],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
-    "address": "4th street"
+    "jobPosition": "Assistant",
+    "status" : "Passed",
+    "address": "4th street",
+    "addedTime": "2025-03-27T01:54:03.5175834",
+    "tags": [],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
   } ]
 }
