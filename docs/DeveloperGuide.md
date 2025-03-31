@@ -35,7 +35,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,16 +67,26 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is defined in [`Ui.java`](https://github.com/AY2425S2-CS2103T-W09-1/tp/blob/master/src/main/java/seedu/address/ui/Ui.java), and implemented by [`UiManager`](https://github.com/AY2425S2-CS2103T-W09-1/tp/blob/master/src/main/java/seedu/address/ui/UiManager.java).
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
+
+**Structure**:
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+- `CommandBox`: Accepts user input commands.
+- `ResultDisplay`: Shows feedback for executed commands.
+- `PersonListPanel`: Displays a list of person objects (each representing a candidate).
+- `StatusBarFooter`: Shows save location information.
+- `HelpWindow`: A separate pop-up window with a user guide link.
 
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
+
+The main controller [`UiManager`](https://github.com/se-edu/addressbook-level3/blob/master/src/main/java/seedu/address/ui/UiManager.java) initializes these UI parts through `MainWindow`, binds them to model data from `Logic`, and handles fatal errors.
+
+**Interactions**:
 The `UI` component,
-
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
@@ -84,7 +94,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -116,7 +126,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="750" />
 
@@ -139,7 +149,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -597,6 +607,70 @@ Expected: Confirmation message will be displayed (assuming there are at least 3 
 Expected: No applicant is deleted. Error message is shown.
 
 4. _{ more test cases …​ }_
+
+### Exporting Applicant Data
+
+1. Exporting list of all applicants
+
+   1. Test case: `export applicants.csv`  
+      Expected: A CSV file named `applicants.csv` is created in the home directory. It contains details of all currently displayed applicants.
+   2. Test case: `export export_folder/candidates.csv`  
+      Expected: The file `candidates.csv` is created inside the `export_folder` directory (must exist beforehand).
+
+2. Exporting an Empty List
+
+   1. Prerequisites: Ensure the displayed list is empty (e.g., after searching for a non-existent applicant).
+   2. Test case: `export empty.csv`  
+      Expected: A CSV file is created, but it only contains the header row. A message indicating zero applicants exported is shown.
+
+3. Invalid Export File Names
+
+   1. Test case: `export`  
+      Expected: Error message is shown indicating that the file name is missing.
+   2. Test case: `export invalid/file\name.csv`  
+      Expected: Error message is shown due to invalid file path (OS-dependent).
+   3. Test case: `export /root/protected.csv` (Linux/macOS) or `export C:\Windows\System32\protected.csv` (Windows)  
+      Expected: Error message is shown due to insufficient permissions.
+
+4. Overwriting an Existing File
+
+   1. Prerequisite: Make sure a file with the same name already exists.
+   2. Test case: `export applicants.csv`  
+      Expected: The existing file is overwritten with new content. Message confirms successful export.
+
+### Searching Applicants
+
+1. Searching by Name, Email, Phone, Job Position, or Status
+
+   1. Test case: `search n/Alice`  
+      Expected: All applicants with names containing "Alice" (case-insensitive, partial match supported) are listed.
+   2. Test case: `search e/example.com`  
+      Expected: All applicants with emails that contain "example.com" are shown.
+   3. Test case: `search p/9123`  
+      Expected: All applicants with phone numbers containing "9123" are displayed.
+   4. Test case: `search j/SWE`  
+      Expected: All applicants applying for positions with "SWE" in the title are shown.
+   5. Test case: `search s/Interviewing`  
+      Expected: All applicants currently in the "Interviewing" status are shown.
+
+2. Searching by Multiple Fields
+
+   1. Test case: `search n/John j/Software`  
+      Expected: Applicants whose name contains "John" **and** job position contains "Software" are shown.
+   2. Test case: `search s/Rejected p/123`  
+      Expected: Applicants whose status is "Rejected" and phone number contains "123" are shown.
+
+3. Search with No Results
+
+   1. Test case: `search n/NotExist`  
+      Expected: "0 applicants listed!" message shown. Displayed list is empty.
+
+4. Invalid Search Commands
+
+   1. Test case: `search`  
+      Expected: Error message shown indicating that at least one field must be specified.
+   2. Test case: `search x/unknown`  
+      Expected: Error message shown due to unrecognized prefix `x/`.
 
 ### Saving data
 
