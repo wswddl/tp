@@ -175,7 +175,7 @@ public class PersonCard extends UiPart<Region> {
     private void handleImageClick() {
         File selectedFile = this.chooseProfilePicture();
 
-        // check if user has selected a file
+        // check if user did NOT select a file
         if (selectedFile == null) {
             return;
         }
@@ -224,7 +224,7 @@ public class PersonCard extends UiPart<Region> {
 
         // Restrict to image file types
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
 
         // open file chooser and return the selected file
         return fileChooser.showOpenDialog(new Stage());
