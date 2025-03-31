@@ -237,6 +237,24 @@ Statuses ->
 [Online Assessment: 5, Round 1: 7, Resume Screening: 3, Rejected: 3, Accepted: 2, Final interview: 2]
 ```
 
+### Adding/Changing an Applicant's Profile Picture
+
+Update the applicant's **profile picture** through the GUI.
+
+#### Steps:
+1. Click on the applicant’s **profile picture** in the GUI.
+2. A file selection window will pop up.
+3. Choose an image file from your computer and confirm your selection.
+4. The selected image will be set as the applicant's profile picture.
+
+#### Notes:
+* If no image is selected, **no changes** will be made to the profile picture.
+* The supported image formats are **JPG, JPEG, PNG, GIF**.
+* The image will be automatically resized to fit the profile display.
+
+#### Example:
+![edit applicant photo](images/editApplicantPhoto.gif)
+
 
 ### Clearing all entries: `clear`
 
