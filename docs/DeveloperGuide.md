@@ -514,6 +514,70 @@ Expected: No applicant is deleted. Error message is shown.
 
 4. _{ more test cases …​ }_
 
+### Exporting Applicant Data
+
+1. Exporting list of all applicants
+
+   1. Test case: `export applicants.csv`  
+      Expected: A CSV file named `applicants.csv` is created in the home directory. It contains details of all currently displayed applicants.
+   2. Test case: `export export_folder/candidates.csv`  
+      Expected: The file `candidates.csv` is created inside the `export_folder` directory (must exist beforehand).
+
+2. Exporting an Empty List
+
+   1. Prerequisites: Ensure the displayed list is empty (e.g., after searching for a non-existent applicant).
+   2. Test case: `export empty.csv`  
+      Expected: A CSV file is created, but it only contains the header row. A message indicating zero applicants exported is shown.
+
+3. Invalid Export File Names
+
+   1. Test case: `export`  
+      Expected: Error message is shown indicating that the file name is missing.
+   2. Test case: `export invalid/file\name.csv`  
+      Expected: Error message is shown due to invalid file path (OS-dependent).
+   3. Test case: `export /root/protected.csv` (Linux/macOS) or `export C:\Windows\System32\protected.csv` (Windows)  
+      Expected: Error message is shown due to insufficient permissions.
+
+4. Overwriting an Existing File
+
+   1. Prerequisite: Make sure a file with the same name already exists.
+   2. Test case: `export applicants.csv`  
+      Expected: The existing file is overwritten with new content. Message confirms successful export.
+
+### Searching Applicants
+
+1. Searching by Name, Email, Phone, Job Position, or Status
+
+   1. Test case: `search n/Alice`  
+      Expected: All applicants with names containing "Alice" (case-insensitive, partial match supported) are listed.
+   2. Test case: `search e/example.com`  
+      Expected: All applicants with emails that contain "example.com" are shown.
+   3. Test case: `search p/9123`  
+      Expected: All applicants with phone numbers containing "9123" are displayed.
+   4. Test case: `search j/SWE`  
+      Expected: All applicants applying for positions with "SWE" in the title are shown.
+   5. Test case: `search s/Interviewing`  
+      Expected: All applicants currently in the "Interviewing" status are shown.
+
+2. Searching by Multiple Fields
+
+   1. Test case: `search n/John j/Software`  
+      Expected: Applicants whose name contains "John" **and** job position contains "Software" are shown.
+   2. Test case: `search s/Rejected p/123`  
+      Expected: Applicants whose status is "Rejected" and phone number contains "123" are shown.
+
+3. Search with No Results
+
+   1. Test case: `search n/NotExist`  
+      Expected: "0 applicants listed!" message shown. Displayed list is empty.
+
+4. Invalid Search Commands
+
+   1. Test case: `search`  
+      Expected: Error message shown indicating that at least one field must be specified.
+   2. Test case: `search x/unknown`  
+      Expected: Error message shown due to unrecognized prefix `x/`.
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files
