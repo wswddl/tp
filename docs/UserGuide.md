@@ -76,6 +76,7 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
+
 ### Adding an applicant: `add`
 
 Adds an applicant to the applicant records.
@@ -97,6 +98,8 @@ Shows a list of all applicants in the applicant records.
 
 Format: `list`
 
+
+
 ### Editing an applicant: `edit`
 
 Edits an existing applicant in the Applicant Records.
@@ -114,37 +117,6 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st applicant to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd applicant to be `Betsy Crower` and clears all existing tags.
 
-### Exporting Applicant Data: `export`
-
-Allows users to export the currently **displayed** applicant data into a CSV (Comma-Separated Values) file.
-
-Format: `export [FILE-NAME]`
-
-Parameters:
-- `FILE-NAME`: The name of the CSV file to be created. It can include a relative folder path (e.g., `data/export.csv`), but the folder must already exist.
-- File extension `.csv` is recommended for proper formatting.
-
-The exported file will contain **all applicants currently visible in the UI list**. These applicants may be the result of any command that filters the list, such as `list`, `search`, or `filter`.
-
-Each row in the CSV file represents a single applicant and includes the following fields:
-
-| Field         | Description                        |
-|---------------|------------------------------------|
-| Name          | Full name of the applicant         |
-| Email         | Email address                      |
-| Phone         | Contact number                     |
-| Job Position  | The job role applied for           |
-| Status        | Current application status         |
-| Tags          | Any tags associated with applicant |
-
-Tags are exported as a single comma-separated string in the last column.
-
-Examples:
-* `export applicants_data.csv`  
-  → Exports the currently displayed list of applicants into a file named `applicants_data.csv` in the working directory.
-
-* `export data/recruittrack_list.csv`  
-  → Exports to a file inside the `data/` folder. The folder must already exist.
 
 
 ### Searching applicants: `search`
@@ -164,6 +136,8 @@ Examples:
 - `search j/Software Engineer s/Interviewing` returns all applicants applying for "Software Engineer" and currently in the "Interviewing" stage.
 - `search n/Alice j/Product Manager s/Hired` lists applicants named Alice who applied for Product Manager and are already hired.
 - `search p/98764321` returns applicants whose phone numbers are "98764321".
+
+
 
 ### Deleting an applicant: `delete`
 
@@ -191,6 +165,8 @@ Examples:
   ![delete command](images/deleteCommand.png)
   ![delete confirmation](images/deleteConfirmation.png)
 
+
+  
 ### Updating the application status of an applicant: `update`
 
 Updates the status of the specified applicant from the applicant records.
@@ -216,6 +192,9 @@ Examples:
   ![update command before](images/updateCommand_before.png)
   ![update command after](images/updateCommand_after.png)
 
+
+
+
 ### Sorting applicant list: `sort`
 
 Sort the applicant list based on the criteria.
@@ -236,6 +215,7 @@ Examples:
 * `sort n/` sorts the list by name.
   ![sort command before](images/sortCommandByNameBefore.png)
   ![sort command after](images/sortCommandByNameAfter.png)
+
 
 
 ### Assigning a rating of 1 to 5 to an applicant: `rate`
@@ -306,19 +286,38 @@ Update the applicant's **profile picture** through the GUI.
 ![edit applicant photo](images/editApplicantPhoto.gif)
 
 
-### Exporting applicant data: `export`
 
-Allow users to export the candidate data into a CSV file
+### Exporting Applicant Data: `export`
+
+Allows users to export the currently **displayed** applicant data into a CSV (Comma-Separated Values) file.
 
 Format: `export [FILE-NAME]`
 
-* Filename is the name of the CSV file to be generated
-* The exported data includes all applicants in the list. Each row represents one
-  applicant and includes fields such as : name, email, phone number,
-  job position, status, and tags.
+Parameters:
+- `FILE-NAME`: The name of the CSV file to be created. It can include a relative folder path (e.g., `data/export.csv`), but the folder must already exist.
+- File extension `.csv` is recommended for proper formatting.
+
+The exported file will contain **all applicants currently visible in the UI list**. These applicants may be the result of any command that filters the list, such as `list`, `search`, or `filter`.
+
+Each row in the CSV file represents a single applicant and includes the following fields:
+
+| Field         | Description                        |
+|---------------|------------------------------------|
+| Name          | Full name of the applicant         |
+| Email         | Email address                      |
+| Phone         | Contact number                     |
+| Job Position  | The job role applied for           |
+| Status        | Current application status         |
+| Tags          | Any tags associated with applicant |
+
+Tags are exported as a single comma-separated string in the last column.
 
 Examples:
-* `export applicants_data.csv` Export the current applicant data into a file named applicants_data.csv and download for the user.
+* `export applicants_data.csv`  
+  → Exports the currently displayed list of applicants into a file named `applicants_data.csv` in the working directory.
+
+* `export data/recruittrack_list.csv`  
+  → Exports to a file inside the `data/` folder. The folder must already exist.
 
 
 
@@ -328,11 +327,15 @@ Clears all entries from the applicant records.
 
 Format: `clear`
 
+
+
 ### Exiting the program: `exit`
 
 Exits the program.
 
 Format: `exit`
+
+
 
 ### Saving the data
 
