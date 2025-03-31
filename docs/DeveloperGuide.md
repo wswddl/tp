@@ -693,6 +693,8 @@ Expected: No applicant is deleted. Error message is shown.
        Expected: Error message shown indicating that sorting criteria field must be specified
     2. Test case: `sort zzz/`
        Expected: Error message shown due to unrecognized criteria `zzz/`.
+    3. Test case: `sort n/ e/`
+       Expected: Error message shown indicating that only one criterion can be specified.
 
 ### Saving data
 
