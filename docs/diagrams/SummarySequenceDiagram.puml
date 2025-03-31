@@ -1,0 +1,70 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":SummaryCommandParser" as SummaryCommandParser LOGIC_COLOR
+participant "s:SummaryCommand" as SummaryCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("summary j/SWE")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("summary j/SWE")
+activate AddressBookParser
+
+create SummaryCommandParser
+AddressBookParser -> SummaryCommandParser
+activate SummaryCommandParser
+
+SummaryCommandParser --> AddressBookParser
+deactivate SummaryCommandParser
+
+AddressBookParser -> SummaryCommandParser : parse("j/SWE")
+activate SummaryCommandParser
+
+create SummaryCommand
+SummaryCommandParser -> SummaryCommand
+activate SummaryCommand
+
+SummaryCommand --> SummaryCommandParser :
+deactivate SummaryCommand
+
+SummaryCommandParser --> AddressBookParser : s
+deactivate SummaryCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+SummaryCommandParser -[hidden]-> AddressBookParser
+destroy SummaryCommandParser
+
+AddressBookParser --> LogicManager : s
+deactivate AddressBookParser
+
+LogicManager -> SummaryCommand : execute(m)
+activate SummaryCommand
+
+SummaryCommand -> Model : getAddressBook()
+activate Model
+
+Model --> SummaryCommand
+deactivate Model
+
+create CommandResult
+SummaryCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> SummaryCommand
+deactivate CommandResult
+
+SummaryCommand --> LogicManager : r
+deactivate SummaryCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

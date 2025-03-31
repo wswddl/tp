@@ -13,6 +13,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.applicant.Applicant;
+import seedu.address.model.applicant.Rating;
 import seedu.address.model.applicant.Status;
 
 /**
@@ -119,7 +120,19 @@ public class ModelManager implements Model {
 
         Applicant editedApplicant = new Applicant(target.getName(), target.getPhone(), target.getEmail(),
                 target.getJobPosition(), status, target.getAddress(), target.getAddedTime(), target.getTags(),
-                target.getProfilePicturePath());
+                target.getRating(), target.getProfilePicturePath());
+        this.setPerson(target, editedApplicant);
+
+        return editedApplicant;
+    }
+
+    @Override
+    public Applicant setRating(Applicant target, Rating rating) {
+        requireAllNonNull(target, rating);
+
+        Applicant editedApplicant = new Applicant(target.getName(), target.getPhone(), target.getEmail(),
+                target.getJobPosition(), target.getStatus(), target.getAddress(), target.getAddedTime(),
+                target.getTags(), rating, target.getProfilePicturePath());
         this.setPerson(target, editedApplicant);
 
         return editedApplicant;

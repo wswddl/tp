@@ -71,6 +71,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
+    private Label rating;
+    @FXML
     private ImageView profileImageView;
 
     private PersonCard(Applicant applicant, int displayedIndex) {
@@ -84,6 +86,7 @@ public class PersonCard extends UiPart<Region> {
         jobPosition.setText(applicant.getJobPosition().jobPosition);
         status.setText(applicant.getStatus().value);
         addedTime.setText(applicant.getFormattedAddedTime());
+        rating.setText("Rating: " + applicant.getRating().toString());
 
         applicant.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
@@ -91,7 +94,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Factory method to create a {@code PersonCode} with the given {@code Applicant} and index to display.
+     * Factory method to create a {@code PersonCard} with the given {@code Applicant} and index to display.
      */
     public static PersonCard createPersonCard(MainWindow mainWindow, Applicant applicant, int displayedIndex) {
         PersonCard personCard = new PersonCard(applicant, displayedIndex);
