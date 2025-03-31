@@ -10,12 +10,16 @@ UniqueTagList -[hidden]down- UniquePersonList
 UniqueTagList -[hidden]down- UniquePersonList
 
 UniqueTagList -right-> "*" Tag
-UniquePersonList -right-> Person
+UniquePersonList -right-> Applicant
 
-Person -up-> "*" Tag
+Applicant -up-> "*" Tag
 
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
+Applicant *--> Name
+Applicant *--> Phone
+Applicant *--> Email
+Applicant *--> JobPosition
+Applicant *--> Address
+Applicant *--> Status
+Applicant *--> Rating
+Applicant *--> LocalDateTime
 @enduml
