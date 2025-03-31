@@ -188,6 +188,7 @@ public class Applicant {
         }
 
         Applicant otherApplicant = (Applicant) other;
+        // don't compare the added time
         return name.equals(otherApplicant.name)
                 && phone.equals(otherApplicant.phone)
                 && email.equals(otherApplicant.email)
@@ -195,7 +196,8 @@ public class Applicant {
                 && status.equals(otherApplicant.status)
                 && address.equals(otherApplicant.address)
                 && tags.equals(otherApplicant.tags)
-                && rating.equals((otherApplicant.rating));
+                && rating.equals((otherApplicant.rating))
+                && profilePicturePath.equals(otherApplicant.profilePicturePath);
     }
 
     @Override
