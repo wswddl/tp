@@ -333,7 +333,28 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `RecruitTrack` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: UC01 - Delete an applicant**
+**Use case: UC01 - Add an applicant**
+
+**MSS:**
+
+1.  User requests to add an applicant by providing the details
+2.  RecruitTrack adds the applicant with the details into the list
+
+    Use case ends.
+
+**Extensions:**
+
+* 1a. The details don't follow the correct format.
+
+    * 1a1. RecruitTrack shows an error message.
+
+* 1b. Lacks mandatory details.
+
+    * 1b1. RecruitTrack shows an error message.
+
+<br>
+
+**Use case: UC02 - Delete an applicant**
 
 **MSS:**
 
@@ -356,24 +377,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
-**Use case: UC02 - Add an applicant**
-
-**MSS:**
-
-1.  User requests to add an applicant by providing the details
-2.  RecruitTrack adds the applicant with the details into the list
-
-    Use case ends.
-
-**Extensions:**
-
-* 1a. The details don't follow the correct format.
-
-    * 1a1. RecruitTrack shows an error message.
-
-* 1b. Lacks mandatory details.
-
-    * 1b1. RecruitTrack shows an error message.
+<br>
 
 **Use case: UC03 - Edit an applicant**
 
@@ -382,7 +386,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to list applicants
 2.  RecruitTrack shows a list of applicants
 3.  User requests to edit a specific applicant in the list and provides the new details for that applicant
-4.  RecruitTrack edit the applicant's details
+4.  RecruitTrack edits the applicant's details
 
     Use case ends.
 
@@ -392,7 +396,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 3a. There is no matching applicant given the user's request.
 
     * 3a1. RecruitTrack shows an error message.
 
@@ -404,12 +408,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
-**Use case: UC04 - Find an applicant**
+<br>
+
+**Use case: UC04 - Update an applicant**
+
+* Similar to UC03 except the user can only update some information of the applicant.
+
+<br>
+
+**Use case: UC05 - Search an applicant**
 
 **MSS:**
 
-1.  User requests to find an applicant by providing the applicant's details.
-2.  RecruitTrack find applicants with the given details.
+1.  User requests to search an applicant by providing the applicant's details.
+2.  RecruitTrack finds applicants with the given details.
 
     Use case ends.
 
@@ -418,6 +430,88 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. The list is empty.
 
   Use case ends.
+
+<br>
+
+**Use case: UC06 - Rate an applicant**
+
+**MSS:**
+
+1.  User requests to list applicants
+2.  RecruitTrack shows a list of applicants
+3.  User requests to rate an applicant by providing the applicant's details and rating number
+4.  RecruitTrack rates applicants with the given details
+
+    Use case ends.
+
+**Extensions:**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3b. There is no matching applicant given the user's request.
+
+    * 3b1. RecruitTrack shows an error message.
+
+      Use case resumes from step 2.
+
+<br>
+
+**Use case: UC07 - Summarize the applicant records without filter**
+
+**MSS:**
+
+1.  User requests to summarize the applicant records without specifying any filter
+2.  RecruitTrack output the summary of all the applicants' details
+
+<br>
+
+**Use case: UC08 - Summarize the applicant records with filter**
+
+**MSS:**
+
+1.  User requests to summarize the applicant records and specify the filters
+2.  RecruitTrack output the summary of all applicants that meet the specified filters
+
+<br>
+
+**Use case: UC09 - Export the applicants data**
+
+**MSS:**
+
+1.  User requests to export the applicants data
+2.  RecruitTrack requests the user to specify the location to save the exported data
+3.  RecruitTrack save the exported data in the specify location
+
+**Extensions:**
+
+* 2a. User didn't specify the save location.
+  
+    * 2a1. Export is cancelled.
+
+    Use case ends.
+
+<br>
+
+**Use case: UC10 - Add applicant's profile picture**
+
+**MSS:**
+
+1.  User requests to change an applicant's profile picture.
+2.  RecruitTrack requests the user to select an image.
+3.  RecruitTrack update the applicant's profile picture with the selected image.
+
+    Use case ends.
+
+**Extensions:**
+
+* 2a. User didn't select an image.
+
+    * 2a1. No change is made to the applicant's profile picture.
+    
+    Use case ends.
+
 
 ### Non-Functional Requirements
 1. Should run on any mainstream OS (Windows, macOS, Linux) with Java 17 or above installed.
