@@ -173,6 +173,13 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Returns true if the given command is an ExportCommand.
+     */
+    private boolean isExportCommand(Command command) {
+        return command instanceof ExportCommand;
+    }
+
+    /**
      * Executes the command and returns the result.
      *
      * @see seedu.address.logic.Logic#execute(String)
@@ -181,9 +188,9 @@ public class MainWindow extends UiPart<Stage> {
         try {
             Command command = logic.parseCommand(commandText);
 
-            if (command instanceof ExportCommand) {
+            if (isExportCommand(command)) {
                 return handleExportCommand((ExportCommand) command);
-            }
+            }            
     
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
@@ -205,6 +212,13 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Saves the current state of the address book to the storage.
+     * <p>
+     * Displays an error message in the result display if saving fails.
+     * This method is typically invoked after user operations that may
+     * modify the data and require persistence.
+     */
     public void saveAddressBook() {
         try {
             logic.saveAddressBook();
@@ -212,16 +226,6 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("An error occurred while saving the applicant's data");
             resultDisplay.setFeedbackToUser(e.getMessage());
         }
-    }
-    /**
-     * Displays an information alert indicating export success.
-     */
-    private void showExportSuccessPopup(File file) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Export Successful");
-        alert.setHeaderText(null);
-        alert.setContentText("CSV exported to: " + file.getAbsolutePath());
-        alert.showAndWait();
     }
 
     /**
@@ -245,7 +249,6 @@ public class MainWindow extends UiPart<Stage> {
 
             logic.exportCsv(file);
             resultDisplay.setFeedbackToUser("Exported applicant list to: " + file.getName());
-            showExportSuccessPopup(file);
 
             return new CommandResult("Export completed.");
         } else {
