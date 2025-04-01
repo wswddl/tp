@@ -64,6 +64,13 @@ public class RateCommand extends Command {
         }
     }
 
+    /**
+     * Rates a single applicant based on an identifier predicate.
+     * If zero or multiple matches are found, shows an appropriate message.
+     *
+     * @param model The model containing the list of applicants.
+     * @return A {@code CommandResult} describing the result.
+     */
     public CommandResult rateByPredicate(Model model) {
         model.updateFilteredPersonList(predicate);
         int numberOfMatches = model.getFilteredPersonListSize();
@@ -77,6 +84,13 @@ public class RateCommand extends Command {
         return new CommandResult(String.format(MESSAGE_ASSIGN_RATING_SUCCESS, rating.toString(), Messages.format(updatedApplicant)));
     }
 
+    /**
+     * Rates an applicant by their index in the current filtered list.
+     *
+     * @param model The model containing the list of applicants.
+     * @return A {@code CommandResult} describing the result.
+     * @throws CommandException If the index is out of bounds.
+     */
     public CommandResult rateByIndex(Model model) throws CommandException {
         List<Applicant> lastShownList = model.getFilteredPersonList();
 
@@ -89,6 +103,12 @@ public class RateCommand extends Command {
         return new CommandResult(String.format(MESSAGE_ASSIGN_RATING_SUCCESS, rating.toString(), Messages.format(updatedApplicant)));
     }
 
+    /**
+     * Checks whether this command is equal to another command.
+     *
+     * @param other The other object to compare with.
+     * @return True if both commands are equal based on their target and rating.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -115,6 +135,9 @@ public class RateCommand extends Command {
         }
     }
 
+    /**
+     * Returns a string representation of the command for debugging.
+     */
     @Override
     public String toString() {
         if (targetIndex == null) {

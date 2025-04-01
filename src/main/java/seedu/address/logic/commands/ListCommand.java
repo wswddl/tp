@@ -14,7 +14,12 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all persons";
 
-
+    /**
+     * Executes the list command by updating the model to show all applicants.
+     *
+     * @param model The application's model containing the filtered applicant list.
+     * @return A {@code CommandResult} indicating the list was shown.
+     */
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
