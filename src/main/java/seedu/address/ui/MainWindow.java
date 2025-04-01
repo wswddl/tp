@@ -173,6 +173,13 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Returns true if the given command is an ExportCommand.
+     */
+    private boolean isExportCommand(Command command) {
+        return command instanceof ExportCommand;
+    }
+
+    /**
      * Executes the command and returns the result.
      *
      * @see seedu.address.logic.Logic#execute(String)
@@ -181,9 +188,9 @@ public class MainWindow extends UiPart<Stage> {
         try {
             Command command = logic.parseCommand(commandText);
     
-            if (command instanceof ExportCommand) {
+            if (isExportCommand(command)) {
                 return handleExportCommand((ExportCommand) command);
-            }
+            }            
     
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
@@ -213,6 +220,7 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
         }
     }
+    
     /**
      * Displays an information alert indicating export success.
      */
