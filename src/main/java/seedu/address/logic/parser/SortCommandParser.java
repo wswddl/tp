@@ -19,7 +19,8 @@ public class SortCommandParser implements Parser<SortCommand> {
     public SortCommand parse(String args) throws ParseException {
         try {
             String input = args.trim();
-            return new SortCommand(new Prefix(input));
+            Prefix p = new Prefix(input);
+            return new SortCommand(p);
 
         } catch (CommandException e) {
             throw new ParseException(e.getMessage());
