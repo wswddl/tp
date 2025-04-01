@@ -228,18 +228,6 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
-
-    /**
-     * Displays an information alert indicating export success.
-     */
-    private void showExportSuccessPopup(File file) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Export Successful");
-        alert.setHeaderText(null);
-        alert.setContentText("CSV exported to: " + file.getAbsolutePath());
-        alert.showAndWait();
-    }
-
     /**
      * Handles execution of the export command with file chooser.
      */
@@ -261,7 +249,6 @@ public class MainWindow extends UiPart<Stage> {
 
             logic.exportCsv(file);
             resultDisplay.setFeedbackToUser("Exported applicant list to: " + file.getName());
-            showExportSuccessPopup(file);
 
             return new CommandResult("Export completed.");
         } else {
