@@ -42,8 +42,6 @@ public interface Logic {
 
     Command parseCommand(String commandText) throws ParseException;
 
-    void exportCsv(File file) throws CommandException;
-
     /**
      * Returns the user prefs' address book file path.
      */
