@@ -23,16 +23,11 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.applicant.AfterDatePredicate;
 import seedu.address.model.applicant.BeforeDatePredicate;
-import seedu.address.model.applicant.Email;
 import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
 import seedu.address.model.applicant.IdentifierPredicate;
-import seedu.address.model.applicant.JobPosition;
 import seedu.address.model.applicant.JobPositionMatchesPredicate;
-import seedu.address.model.applicant.Name;
 import seedu.address.model.applicant.NameMatchesKeywordPredicate;
-import seedu.address.model.applicant.Phone;
 import seedu.address.model.applicant.PhoneMatchesKeywordPredicate;
-import seedu.address.model.applicant.Status;
 import seedu.address.model.applicant.StatusMatchesPredicate;
 
 /**
@@ -90,37 +85,6 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         IdentifierPredicate predicate;
         List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
 
-
-//        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-//            String nameString = argMultimap.getValue(PREFIX_NAME).get();
-//            Name validName = ParserUtil.parseName(nameString);
-//            predicate = new NameMatchesKeywordPredicate(validName.fullName);
-//            predicates.add(predicate);
-//        }
-//        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-//            String phoneString = argMultimap.getValue(PREFIX_PHONE).get();
-//            Phone validPhone = ParserUtil.parsePhone(phoneString);
-//            predicate = new PhoneMatchesKeywordPredicate(validPhone.value);
-//            predicates.add(predicate);
-//        }
-//        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-//            String emailString = argMultimap.getValue(PREFIX_EMAIL).get();
-//            Email validEmail = ParserUtil.parseEmail(emailString);
-//            predicate = new EmailMatchesKeywordPredicate(validEmail.value);
-//            predicates.add(predicate);
-//        }
-//        if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
-//            String statusString = argMultimap.getValue(PREFIX_STATUS).get();
-//            Status validStatus = ParserUtil.parseStatus(statusString);
-//            predicate = new StatusMatchesPredicate(validStatus.value);
-//            predicates.add(predicate);
-//        }
-//        if (argMultimap.getValue(PREFIX_JOB_POSITION).isPresent()) {
-//            String jobPositionString = argMultimap.getValue(PREFIX_JOB_POSITION).get();
-//            JobPosition validJobPosition = ParserUtil.parseJobPosition(jobPositionString);
-//            predicate = new JobPositionMatchesPredicate(validJobPosition.jobPosition);
-//            predicates.add(predicate);
-//        }
         if (argMultimap.getValue(PREFIX_BEFORE).isPresent()) {
             String beforeDateString = argMultimap.getValue(PREFIX_BEFORE).get();
             LocalDateTime validBeforeDate = ParserUtil.parseBeforeDate(beforeDateString);
