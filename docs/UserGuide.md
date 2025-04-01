@@ -102,12 +102,15 @@ Type in the command box:
 
 **Example**:
 ```bash
-add n/Lucas p/91234567 e/lucas@design.com j/UX Designer s/Interview t/Creative t/Portfolio
+add n/Alex Yeoh p/91237654 e/alexy@example.com a/34, Chartwell Drive j/Data Analyst s/Interview Scheduled t/Recommended
 ```
 
-[//]: # (![Adding Lucas]&#40;images/add-example.png "Adding a new UX designer to your pipeline"&#41;)
-
 💡 **Pro Tip**: Tags help you categorize candidates for easy searching later!
+
+Command Input:\
+<img title="addCommand" alt="Command Input" src="/images/addCommand_before.png"><br/><br/>
+Result:\
+<img title="addCommand" alt="Result" src="/images/addCommand_after.png"><br/><br/>
 
 ### ✏️ Editing Details
 **Command**:  
@@ -115,9 +118,14 @@ add n/Lucas p/91234567 e/lucas@design.com j/UX Designer s/Interview t/Creative t
 
 **Example**:
 ```bash
-edit 2 p/98765432 s/Technical\ Interview
+edit 4 j/Data Scientist p/91238765
 ```
-Updates phone number and status for candidate #2.
+Updates phone number and job position for candidate #4.
+
+Command Input:\
+<img title="editCommand" alt="Command Input" src="/images/editCommand_before.png"><br/><br/>
+Result:\
+<img title="editCommand" alt="Result" src="/images/editCommand_after.png"><br/><br/>
 
 ### 🗑️ Removing Applicants
 **Command**:  
@@ -125,11 +133,14 @@ Updates phone number and status for candidate #2.
 
 **Example**:
 ```bash
-delete id/3 --force
+delete n/Alex Yeoh --force
 ```
-Skips confirmation for quick removal.
+💡 **Pro Tip**: Adding `--force` skips confirmation for quick removal.
 
-[//]: # (![Delete Warning]&#40;images/delete-warning.png "We double-check before saying goodbye"&#41;)
+Command Input:\
+<img title="deleteCommand" alt="Command Input" src="/images/deleteCommand_before.png"><br/><br/>
+Result:\
+<img title="deleteCommand" alt="Result" src="/images/deleteCommand_after.png"><br/><br/>
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
@@ -152,8 +163,13 @@ Move candidates through your pipeline:
 
 **Example**:
 ```bash
-update id/5 s/Interview
+update n/John Doe s/Job Offered
 ```
+
+Command Input:\
+<img title="updateCommand" alt="Command Input" src="/images/updateCommand_before.png"><br/><br/>
+Result:\
+<img title="updateCommand" alt="Result" src="/images/updateCommand_after.png"><br/><br/>
 
 ### ⭐ Rating Candidates
 Give 1-5 star ratings:
@@ -167,7 +183,11 @@ rate id/2 r/4
 ```
 Now candidate #2 has a shiny 4-star rating!
 
-[//]: # (![Rating Display]&#40;images/rating-display.png "Stars help you remember top candidates"&#41;)
+Command Input:\
+<img title="rateCommand" alt="Command Input" src="/images/rateCommand_before.png"><br/><br/>
+Result:\
+<img title="rateCommand" alt="Result" src="/images/rateCommand_after.png"><br/><br/>
+
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
@@ -189,9 +209,14 @@ Find candidates by any detail:
 
 **Example**:
 ```bash
-search j/Developer s/Interview
+search j/Frontend SWE
 ```
-Shows all developers currently in interviews.
+Shows all frontend developers.
+
+Command Input:\
+<img title="searchCommand" alt="Command Input" src="/images/searchCommand_before.png"><br/><br/>
+Result:\
+<img title="searchCommand" alt="Result" src="/images/searchCommand_after.png"><br/><br/>
 
 ### 🔄 Sorting Your View
 Organize by what matters most:
@@ -206,9 +231,14 @@ Organize by what matters most:
 
 **Example**:
 ```bash
-sort time/
+sort n/
 ```
-Shows newest applicants first.
+Shows applicants in alphabetical order.
+
+Command Input:\
+<img title="sortCommand" alt="Command Input" src="/images/sortCommand_before.png"><br/><br/>
+Result:\
+<img title="sortCommand" alt="Result" src="/images/sortCommand_after.png"><br/><br/>
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
@@ -244,6 +274,8 @@ Current Status:
 - Screening: 12
 - Interview: 8
 ```
+
+<img title="summary" alt="summary" src="/images/summary.png"><br/><br/>
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
