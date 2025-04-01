@@ -38,6 +38,14 @@ public class SummaryCommand extends Command {
         this.predicates  = predicates;
     }
 
+    /**
+     * Executes the summary command, optionally filtering the applicant list,
+     * and producing statistics grouped by job position and application status.
+     *
+     * @param model The application's model.
+     * @return A {@code CommandResult} with formatted summary data.
+     * @throws CommandException If the command cannot be executed.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
