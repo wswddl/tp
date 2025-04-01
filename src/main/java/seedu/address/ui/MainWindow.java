@@ -212,6 +212,13 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Saves the current state of the address book to the storage.
+     * <p>
+     * Displays an error message in the result display if saving fails.
+     * This method is typically invoked after user operations that may
+     * modify the data and require persistence.
+     */
     public void saveAddressBook() {
         try {
             logic.saveAddressBook();
@@ -220,7 +227,8 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
         }
     }
-    
+
+
     /**
      * Displays an information alert indicating export success.
      */
