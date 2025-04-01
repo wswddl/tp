@@ -11,13 +11,11 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import javafx.stage.FileChooser;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -25,7 +23,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.applicant.Applicant;
 import seedu.address.storage.Storage;
-import seedu.address.ui.MainWindow;
 
 /**
  * The main LogicManager of the app.
@@ -98,15 +95,7 @@ public class LogicManager implements Logic {
 
     @Override
     public Command parseCommand(String commandText) throws ParseException {
-
-        if (pendingCommand == null) {
-            return addressBookParser.parseCommand(commandText);
-        }
-        // if there is a pending command awaiting confirmation
-        // no need to parse
-
-        return pendingCommand;
-
+        return addressBookParser.parseCommand(commandText);
     }
 
 

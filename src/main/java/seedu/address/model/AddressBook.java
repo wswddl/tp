@@ -96,6 +96,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    public void removeAllProfilePicture() {
+        persons.removeAllProfilePicture();
+    }
+
     /**
      * Sort {@code internalList} in {@code AddressBook} based on the prefix.
      * @param prefix is the sorting criteria.

@@ -158,13 +158,15 @@ public class Applicant {
     }
 
     /**
-     * Delete the image file in the profile pictures folder if it is not the default profile picture.
+     * Deletes the image file in the profile pictures folder if it is not the default profile picture.
      */
     public void deleteProfilePic() {
         if (!profilePicturePath.equals(DEFAULT_PROFILE_PIC)) {
             Path photoPath = Paths.get(profilePicturePath);
             try {
                 Files.delete(photoPath);
+                // set it to default profile picture
+                profilePicturePath = DEFAULT_PROFILE_PIC;
             } catch (IOException e) {
                 System.err.println("Error deleting photo: " + e.getMessage());
             }

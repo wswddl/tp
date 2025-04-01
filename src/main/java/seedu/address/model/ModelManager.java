@@ -101,6 +101,10 @@ public class ModelManager implements Model {
         addressBook.removePerson(target);
     }
 
+    public void deleteAllProfilePicture() {
+        addressBook.removeAllProfilePicture();
+    }
+
     @Override
     public void addPerson(Applicant applicant) {
         addressBook.addPerson(applicant);
