@@ -75,6 +75,12 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private ImageView profileImageView;
 
+    /**
+     * Creates a {@code PersonCard} to display the given {@code Applicant}'s information.
+     *
+     * @param applicant The applicant whose information is to be displayed.
+     * @param displayedIndex The index number to be shown beside the applicant's name.
+     */
     private PersonCard(Applicant applicant, int displayedIndex) {
         super(FXML);
 
@@ -165,12 +171,22 @@ public class PersonCard extends UiPart<Region> {
         profileImageView.setViewport(new Rectangle2D(cropX, cropY, squareSize, squareSize));
     }
 
+    /**
+     * Sets a circular clipping mask on the profile image view,
+     * so that the image is displayed as a circle.
+     */
     private void setCircularImageView() {
         double radius = Math.min(profileImageView.getFitWidth(), profileImageView.getFitHeight()) / 2;
         Circle clip = new Circle(radius, radius, radius);
         profileImageView.setClip(clip);
     }
 
+    /**
+     * Handles the logic when the user clicks on the profile image view.
+     * Opens a file chooser to select an image, saves the selected image
+     * to the custom profile picture folder, updates the image display,
+     * and updates the applicant's profile picture path.
+     */
     @FXML
     private void handleImageClick() {
         File selectedFile = this.chooseProfilePicture();
@@ -216,6 +232,12 @@ public class PersonCard extends UiPart<Region> {
         mainWindow.saveAddressBook();
     }
 
+
+    /**
+     * Opens a file chooser dialog for the user to select an image file.
+     *
+     * @return the selected image file, or {@code null} if no file was selected.
+     */
     private File chooseProfilePicture() {
         FileChooser fileChooser = new FileChooser();
 
@@ -230,6 +252,12 @@ public class PersonCard extends UiPart<Region> {
         return fileChooser.showOpenDialog(new Stage());
     }
 
+    /**
+     * Copies the selected profile picture file to the application's profile picture folder.
+     *
+     * @param sourcePath the original path of the selected image file.
+     * @param savedFilePath the destination path to save the copied image.
+     */
     private void saveProfilePicture(Path sourcePath, Path savedFilePath) {
         try {
             // Copy the file
