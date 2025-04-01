@@ -47,13 +47,22 @@ public class AddCommand extends Command {
     private final Applicant toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Applicant}
+     * Creates an {@code AddCommand} to add the specified {@code Applicant}.
+     *
+     * @param applicant The applicant to be added.
      */
     public AddCommand(Applicant applicant) {
         requireNonNull(applicant);
         toAdd = applicant;
     }
 
+    /**
+     * Executes the add command by adding the applicant to the model.
+     *
+     * @param model The model which the command should operate on.
+     * @return A {@code CommandResult} indicating the outcome of the operation.
+     * @throws CommandException If the applicant already exists in the address book.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -66,6 +75,12 @@ public class AddCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
+    /**
+     * Checks if this command is equal to another add command.
+     *
+     * @param other The object to compare to.
+     * @return {@code true} if both are {@code AddCommand} and add the same applicant.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -80,7 +95,12 @@ public class AddCommand extends Command {
         AddCommand otherAddCommand = (AddCommand) other;
         return toAdd.equals(otherAddCommand.toAdd);
     }
-
+    
+    /**
+     * Returns the string representation of this command, primarily for debugging.
+     *
+     * @return A string representation of the AddCommand.
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)

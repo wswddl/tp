@@ -20,7 +20,12 @@ public class CommandResult {
     private final boolean exit;
 
     /**
-     * Constructs a {@code CommandResult} with the specified fields.
+     * Constructs a {@code CommandResult} with the specified feedback message,
+     * help indicator, and exit flag.
+     *
+     * @param feedbackToUser The message to display to the user.
+     * @param showHelp Whether help should be displayed.
+     * @param exit Whether the application should exit.
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
@@ -29,30 +34,48 @@ public class CommandResult {
     }
 
     /**
-     * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
-     * and other fields set to their default value.
+     * Constructs a {@code CommandResult} with only a feedback message.
+     * Help and exit flags are set to {@code false}.
+     *
+     * @param feedbackToUser The message to display to the user.
      */
     public CommandResult(String feedbackToUser) {
         this(feedbackToUser, false, false);
     }
 
+    /**
+     * Returns the feedback message to be shown to the user.
+     */
     public String getFeedbackToUser() {
         return feedbackToUser;
     }
 
+    /**
+     * Returns true if help information should be shown to the user.
+     */
     public boolean isShowHelp() {
         return showHelp;
     }
 
+    /**
+     * Returns true if the application should exit.
+     */
     public boolean isExit() {
         return exit;
     }
 
-    // currently isConfirmation only applies to the deletion command
+    /**
+     * Returns true if this result represents a confirmation request.
+     * <p>
+     * Currently used specifically for deletion confirmation.
+     */
     public boolean isConfirmation() {
         return feedbackToUser.equals(DeleteCommand.MESSAGE_CONFIRMATION_REQUIRED);
     }
 
+    /**
+     * Returns true if this {@code CommandResult} is equal to another object.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -70,11 +93,17 @@ public class CommandResult {
                 && exit == otherCommandResult.exit;
     }
 
+    /**
+     * Returns the hash code for this {@code CommandResult}.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(feedbackToUser, showHelp, exit);
     }
 
+    /**
+     * Returns a string representation of the {@code CommandResult} for debugging.
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)

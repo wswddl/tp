@@ -25,15 +25,31 @@ public class ExportCommand extends Command {
 
     private final String fileName;
 
+    /**
+     * Constructs an {@code ExportCommand} with the given file name.
+     *
+     * @param fileName The name of the CSV file to write to.
+     */
     public ExportCommand(String fileName) {
         this.fileName = fileName;
     }
 
+    /**
+     * Returns the file name specified for the export.
+     *
+     * @return The file name string.
+     */
     public String getFileName() {
         return fileName;
     }
     
-
+    /**
+     * Executes the export command by writing the currently filtered applicant list to a CSV file.
+     *
+     * @param model The application's model containing the applicant list.
+     * @return A {@code CommandResult} indicating success or failure of the export.
+     * @throws CommandException If an I/O error occurs during file writing.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         List<Applicant> applicants = model.getFilteredPersonList();
@@ -58,6 +74,12 @@ public class ExportCommand extends Command {
         }
     }
 
+    /**
+     * Checks whether this command is equal to another.
+     *
+     * @param other The object to compare against.
+     * @return True if both commands export to the same file name.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this

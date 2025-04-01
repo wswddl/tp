@@ -73,6 +73,13 @@ public class EditCommand extends Command {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
+    /**
+     * Executes the command and updates the applicant in the model.
+     *
+     * @param model The application's model.
+     * @return A {@code CommandResult} indicating the outcome.
+     * @throws CommandException If the index is invalid or the edited applicant would duplicate another.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -156,8 +163,7 @@ public class EditCommand extends Command {
         private Set<Tag> tags;
         private Rating rating;
 
-        public EditPersonDescriptor() {
-        }
+        public EditPersonDescriptor() {}
 
         /**
          * Copy constructor. A defensive copy of {@code tags} is used

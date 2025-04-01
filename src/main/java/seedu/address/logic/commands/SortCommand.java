@@ -59,10 +59,19 @@ public class SortCommand extends Command {
 
     }
 
+    /**
+     * Returns a string describing the chosen sorting criteria.
+     */
     public String getCriteria() {
         return criteria;
     }
 
+    /**
+     * Executes the sort command and updates the model's filtered list order.
+     *
+     * @param model The application's model.
+     * @return A {@code CommandResult} indicating successful sorting.
+     */
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
@@ -72,6 +81,9 @@ public class SortCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, this.criteria));
     }
 
+    /**
+     * Returns true if both SortCommands sort by the same prefix.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -87,6 +99,9 @@ public class SortCommand extends Command {
         return prefix.equals(otherSortCommand.prefix);
     }
 
+    /**
+     * Returns a string representation of this command for debugging.
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)
