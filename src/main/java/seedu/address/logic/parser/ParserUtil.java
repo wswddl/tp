@@ -1,21 +1,40 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-
-import java.util.*;
-import java.util.function.Function;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.applicant.*;
+import seedu.address.model.applicant.Address;
+import seedu.address.model.applicant.Email;
+import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
+import seedu.address.model.applicant.IdentifierPredicate;
+import seedu.address.model.applicant.JobPosition;
+import seedu.address.model.applicant.JobPositionMatchesPredicate;
+import seedu.address.model.applicant.Name;
+import seedu.address.model.applicant.NameMatchesKeywordPredicate;
+import seedu.address.model.applicant.Phone;
+import seedu.address.model.applicant.PhoneMatchesKeywordPredicate;
+import seedu.address.model.applicant.Rating;
+import seedu.address.model.applicant.Status;
+import seedu.address.model.applicant.StatusMatchesPredicate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -30,12 +49,15 @@ public class ParserUtil {
      * predicates in the final command.
      */
     public static final Prefix[] PREFIX_ORDER = {
-            PREFIX_NAME, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS
+        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS
     };
 
-    /** Mapping of prefixes to their respective predicate constructors. */
+    /**
+     * Mapping of prefixes to their respective predicate constructors.
+     */
     public static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
             PREFIX_NAME, NameMatchesKeywordPredicate::new,
+            PREFIX_PHONE, PhoneMatchesKeywordPredicate::new,
             PREFIX_EMAIL, EmailMatchesKeywordPredicate::new,
             PREFIX_JOB_POSITION, JobPositionMatchesPredicate::new,
             PREFIX_STATUS, StatusMatchesPredicate::new
@@ -60,6 +82,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {

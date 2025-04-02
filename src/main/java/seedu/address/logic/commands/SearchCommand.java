@@ -1,18 +1,22 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.Model;
 import seedu.address.model.applicant.IdentifierPredicate;
 
 /**
- * Finds and lists all applicants in the address book that match the given criteria.
+ * Finds and lists all applicants in the applicant records that match the given criteria.
  * Keyword matching is case-insensitive, exact match needed
  */
 public class SearchCommand extends Command {
@@ -31,13 +35,14 @@ public class SearchCommand extends Command {
      * Usage message displayed when the user provides an incorrect format for the search command.
      */
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Searches for applicants based on specified criteria.\n"
-            + "Parameters: [" + CliSyntax.PREFIX_NAME + "NAME] "
-            + "[" + CliSyntax.PREFIX_EMAIL + "EMAIL] "
-            + "[" + CliSyntax.PREFIX_JOB_POSITION + "JOB_POSITION] "
-            + "[" + CliSyntax.PREFIX_STATUS + "STATUS]\n"
-            + "Example: " + COMMAND_WORD + " " + CliSyntax.PREFIX_NAME + "John "
-            + CliSyntax.PREFIX_EMAIL + "john@example.com";
+            + ": Searches for applicants who match at least one of the specified criteria (logical OR).\n"
+            + "Parameters: [" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_JOB_POSITION + "JOB_POSITION] "
+            + "[" + PREFIX_STATUS + "STATUS]\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John "
+            + PREFIX_EMAIL + "alice@example.com";
 
     /**
      * The list of predicates used to filter the applicant list.
@@ -66,8 +71,9 @@ public class SearchCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        // Combine all predicates using logical AND (all conditions must be met)
-        model.updateFilteredPersonList(person -> predicates.stream().allMatch(p -> p.test(person)));
+        // Combine all predicates using logical OR (at least one condition needs to be met)
+        model.updateFilteredPersonList(person -> predicates.stream()
+                .anyMatch(p -> p.test(person)));
 
         int count = model.getFilteredPersonList().size();
         if (count == 0) {
