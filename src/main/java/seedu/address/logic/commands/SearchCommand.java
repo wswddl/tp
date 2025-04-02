@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_NO_RESULT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -25,11 +26,6 @@ public class SearchCommand extends Command {
      * Command word to trigger the search functionality in the application.
      */
     public static final String COMMAND_WORD = "search";
-
-    /**
-     * Message displayed when no applicants match the search criteria.
-     */
-    public static final String MESSAGE_NO_RESULT = "Error: No applicants found.";
 
     /**
      * Usage message displayed when the user provides an incorrect format for the search command.

@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_NO_RESULT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -72,6 +73,10 @@ public class SummaryCommand extends Command {
         ObservableList<Applicant> filteredList =
                 applicants.filtered(person -> predicates.stream()
                         .allMatch(p -> p.test(person)));
+
+        if (filteredList.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_RESULT);
+        }
 
         // Count how many Applicants per JobPosition
         Map<JobPosition, Long> jobPositionCountMap = filteredList.stream()

@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_NO_RESULT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -47,7 +48,6 @@ public class DeleteCommand extends Command {
             "Are you sure you want to delete the following applicant(s)?\n"
                     + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the deletion";
-    static final String MESSAGE_NO_MATCHING_PERSON = "No matching applicant found.";
     static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Applicant(s): %1$s";
 
     private final List<IdentifierPredicate> predicates;
@@ -102,7 +102,7 @@ public class DeleteCommand extends Command {
 
         List<Applicant> filteredList = model.getFilteredPersonList();
         if (filteredList.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_MATCHING_PERSON);
+            throw new CommandException(MESSAGE_NO_RESULT);
         }
 
         if (!isForceDelete) {

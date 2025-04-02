@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.ParserUtil.extractPredicates;
 
 import java.util.List;
 
-import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SummaryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.applicant.IdentifierPredicate;
@@ -29,10 +28,10 @@ public class SummaryCommandParser implements Parser<SummaryCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_ORDER);
 
         List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
-        //yuqian todo: test this okay!
-        if (argMultimap.areAnyPrefixesPresent(PREFIX_ORDER) && predicates.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+        if (predicates.isEmpty() && !args.trim().equals("summary")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SummaryCommand.MESSAGE_USAGE));
         }
+
         return new SummaryCommand(predicates);
     }
 }

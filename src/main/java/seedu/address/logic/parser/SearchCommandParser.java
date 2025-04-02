@@ -30,7 +30,6 @@ public class SearchCommandParser implements Parser<SearchCommand> {
         if (!argMultimap.areAnyPrefixesPresent(PREFIX_ORDER)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
-        //yuqian todo: check what is this verifyNoDuplicatePrefixesFor output
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_ORDER);
 
         List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
