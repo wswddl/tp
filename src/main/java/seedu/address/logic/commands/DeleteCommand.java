@@ -16,6 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -44,23 +45,37 @@ public class DeleteCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John Doe"
             + PREFIX_PHONE + "98765432" + "--force";
 
-    static final String MESSAGE_CONFIRMATION_REQUIRED =
+    static final String MESSAGE_ID_DELETE_CONFIRMATION =
+            "Are you sure you want to delete applicant %d in the list?\n"
+                    + "Type 'yes' to continue\n"
+                    + "Type anything else to cancel the deletion";
+
+    static final String MESSAGE_DELETE_CONFIRMATION =
             "Are you sure you want to delete the following applicant(s)?\n"
                     + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the deletion";
-    static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Applicant(s): %1$s";
+    static final String MESSAGE_DELETE_SUCCESS = "Deleted Applicant(s): %1$s";
 
     private final List<IdentifierPredicate> predicates;
     private boolean isForceDelete;
     private final Index targetIndex;
 
     /**
-     * @param predicates     The predicates used to identify the {@code Applicant} to be deleted.
-     * @param targetIndex    The index in the last shown list used to identify the {@code Applicant} to be deleted.
-     * @param isForceDelete  The flag to specify whether it is force deletion or not.
+     * @param predicates The predicate used to identify the {@code Applicant} to be updated.
+     * @param isForceDelete The flag to specify whether it is force deletion or not.
      */
-    public DeleteCommand(List<IdentifierPredicate> predicates, Index targetIndex, boolean isForceDelete) {
+    public DeleteCommand(List<IdentifierPredicate> predicates, boolean isForceDelete) {
         this.predicates = predicates;
+        this.targetIndex = null;
+        this.isForceDelete = isForceDelete;
+    }
+
+    /**
+     * @param targetIndex The index of the {@code Applicant} to be updated in the filtered list.
+     * @param isForceDelete The flag to specify whether it is force deletion or not.
+     */
+    public DeleteCommand(Index targetIndex, boolean isForceDelete) {
+        this.predicates = null;
         this.targetIndex = targetIndex;
         this.isForceDelete = isForceDelete;
     }
@@ -84,12 +99,11 @@ public class DeleteCommand extends Command {
 
         Applicant applicantToDelete = lastShownList.get(targetIndex.getZeroBased());
         if (!isForceDelete) {
-            model.updateFilteredPersonList(a -> a.equals(applicantToDelete));
-            return new CommandResult(MESSAGE_CONFIRMATION_REQUIRED);
+            return new CommandResult(String.format(MESSAGE_ID_DELETE_CONFIRMATION, targetIndex.getOneBased()));
         }
 
         model.deletePerson(applicantToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
+        return new CommandResult(String.format(MESSAGE_DELETE_SUCCESS,
                 Messages.format(applicantToDelete)));
     }
 
@@ -106,7 +120,7 @@ public class DeleteCommand extends Command {
         }
 
         if (!isForceDelete) {
-            return new CommandResult(MESSAGE_CONFIRMATION_REQUIRED);
+            return new CommandResult(MESSAGE_DELETE_CONFIRMATION);
         }
 
         // Create a copy of the list to avoid concurrent modification
@@ -117,9 +131,9 @@ public class DeleteCommand extends Command {
 
         String deletedApplicants = applicantsToDelete.stream()
                 .map(Messages::format)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining("\n\n"));
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedApplicants));
+        return new CommandResult(String.format(MESSAGE_DELETE_SUCCESS, deletedApplicants));
     }
 
     @Override
@@ -128,11 +142,10 @@ public class DeleteCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof DeleteCommand)) {
+        if (!(other instanceof DeleteCommand otherCommand)) {
             return false;
         }
 
-        DeleteCommand otherCommand = (DeleteCommand) other;
         return Objects.equals(predicates, otherCommand.predicates)
                 && Objects.equals(targetIndex, otherCommand.targetIndex)
                 && isForceDelete == otherCommand.isForceDelete;
@@ -140,5 +153,18 @@ public class DeleteCommand extends Command {
 
     public void setForceDelete(boolean isForceDelete) {
         this.isForceDelete = isForceDelete;
+    }
+
+    @Override
+    public String toString() {
+        if (targetIndex == null) {
+            return new ToStringBuilder(this)
+                    .add("predicate", predicates)
+                    .toString();
+        } else {
+            return new ToStringBuilder(this)
+                    .add("targetIndex", targetIndex)
+                    .toString();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_FLAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -24,8 +25,10 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import javafx.util.Pair;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.applicant.Address;
 import seedu.address.model.applicant.AfterDatePredicate;
@@ -106,6 +109,31 @@ public class ParserUtil {
             predicate = new AfterDatePredicate(validAfterDate);
             predicates.add(predicate);
         }
+    }
+
+    public static Pair<String, Boolean> checkFlag(String args) throws ParseException {
+        // Flags other than --force that start with "--" are invalid
+        if (args.matches(".*\\s--\\w+.*")) {
+            System.out.println("checkFlag: " + args);
+            String unknownFlag = args.trim().replaceAll(".*(--\\w+).*", "$1");
+            throw new ParseException(String.format(MESSAGE_UNKNOWN_FLAG, unknownFlag));
+        }
+
+        // Check for --force flag
+        boolean isForceOperation = args.contains("--force");
+        System.out.println("isForceOperation: " + isForceOperation);
+        args = args.replace("--force", ""); // Remove --force from args
+
+
+        return new Pair<>(args, isForceOperation);
+    }
+
+    /**
+     * Counts the number of prefixes that have values in the given {@code ArgumentMultimap}.
+     * i.e. number of prefixes provided in the argument.
+     */
+    public static int numOfPrefixesPresent(ArgumentMultimap argMultimap, Prefix... prefixes) {
+        return (int) Stream.of(prefixes).filter(prefix -> argMultimap.getValue(prefix).isPresent()).count();
     }
 
     /**

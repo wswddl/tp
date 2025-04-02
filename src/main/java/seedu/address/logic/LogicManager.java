@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -59,17 +60,23 @@ public class LogicManager implements Logic {
 
         if (pendingCommand != null) {
             if (commandText.equalsIgnoreCase("yes")) {
-                // currently only deletion needs the confirmation
-                DeleteCommand deleteCommand = (DeleteCommand) pendingCommand;
-                deleteCommand.setForceDelete(true);
-
-                System.out.println("deleting command");
-                commandResult = deleteCommand.execute(model);
-                pendingCommand = null;
+                // delete and update commands need the confirmation
+                if (pendingCommand instanceof DeleteCommand deleteCommand) {
+                    deleteCommand.setForceDelete(true);
+                    commandResult = deleteCommand.execute(model);
+                } else {
+                    UpdateCommand updateCommand = (UpdateCommand) pendingCommand;
+                    updateCommand.setForceUpdate(true);
+                    commandResult = updateCommand.execute(model);
+                }
             } else {
-                pendingCommand = null;
-                return new CommandResult("Deletion cancelled.");
+                if (pendingCommand instanceof DeleteCommand) {
+                    return new CommandResult("Deletion cancelled.");
+                } else {
+                    return new CommandResult("Update cancelled.");
+                }
             }
+            pendingCommand = null;
         } else {
             Command command = addressBookParser.parseCommand(commandText);
             commandResult = command.execute(model);
