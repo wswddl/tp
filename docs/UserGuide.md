@@ -105,9 +105,9 @@ add n/Alex Yeoh p/91237654 e/alexy@example.com a/34, Chartwell Drive j/Data Anal
 ```
 
 Command Input:\
-<img title="addCommand" alt="Command Input" src="/images/addCommand_before.png"><br/><br/>
+<img title="addCommand" alt="Command Input" src="./images/addCommand_before.png"><br/><br/>
 Result:\
-<img title="addCommand" alt="Result" src="/images/addCommand_after.png"><br/><br/>
+<img title="addCommand" alt="Result" src="./images/addCommand_after.png"><br/><br/>
 
 ### ✏️ Editing Details
 **Command Format**: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…`
@@ -125,9 +125,9 @@ edit 4 j/Data Scientist p/91238765
 Updates phone number and job position for candidate #4.
 
 Command Input:\
-<img title="editCommand" alt="Command Input" src="/images/editCommand_before.png"><br/><br/>
+<img title="editCommand" alt="Command Input" src="./images/editCommand_before.png"><br/><br/>
 Result:\
-<img title="editCommand" alt="Result" src="/images/editCommand_after.png"><br/><br/>
+<img title="editCommand" alt="Result" src="./images/editCommand_after.png"><br/><br/>
 
 ### 🗑️ Removing Applicants
 **Command Format**: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
@@ -151,9 +151,9 @@ delete n/Alex Yeoh --force
 💡 **Pro Tip**: Adding `--force` skips confirmation for quick removal.
 
 Command Input:\
-<img title="deleteCommand" alt="Command Input" src="/images/deleteCommand_before.png"><br/><br/>
+<img title="deleteCommand" alt="Command Input" src="./images/deleteCommand_before.png"><br/><br/>
 Result:\
-<img title="deleteCommand" alt="Result" src="/images/deleteCommand_after.png"><br/><br/>
+<img title="deleteCommand" alt="Result" src="./images/deleteCommand_after.png"><br/><br/>
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
@@ -189,9 +189,9 @@ update n/John Doe s/Job Offered
 ```
 
 Command Input:\
-<img title="updateCommand" alt="Command Input" src="/images/updateCommand_before.png"><br/><br/>
+<img title="updateCommand" alt="Command Input" src="./images/updateCommand_before.png"><br/><br/>
 Result:\
-<img title="updateCommand" alt="Result" src="/images/updateCommand_after.png"><br/><br/>
+<img title="updateCommand" alt="Result" src="./images/updateCommand_after.png"><br/><br/>
 
 ### ⭐ Rating Candidates
 Give 1-5 star ratings:
@@ -213,9 +213,9 @@ rate id/2 r/4
 Now candidate #2 has a shiny 4-star rating!
 
 Command Input:\
-<img title="rateCommand" alt="Command Input" src="/images/rateCommand_before.png"><br/><br/>
+<img title="rateCommand" alt="Command Input" src="./images/rateCommand_before.png"><br/><br/>
 Result:\
-<img title="rateCommand" alt="Result" src="/images/rateCommand_after.png"><br/><br/>
+<img title="rateCommand" alt="Result" src="./images/rateCommand_after.png"><br/><br/>
 
 
 [🔝 Back to top](#-recruittrack-user-guide)
@@ -246,9 +246,9 @@ search j/Frontend SWE
 Shows all frontend developers.
 
 Command Input:\
-<img title="searchCommand" alt="Command Input" src="/images/searchCommand_before.png"><br/><br/>
+<img title="searchCommand" alt="Command Input" src="./images/searchCommand_before.png"><br/><br/>
 Result:\
-<img title="searchCommand" alt="Result" src="/images/searchCommand_after.png"><br/><br/>
+<img title="searchCommand" alt="Result" src="./images/searchCommand_after.png"><br/><br/>
 
 ### 🔄 Sorting Your View
 Organize by what matters most:
@@ -270,9 +270,9 @@ sort n/
 Shows applicants in alphabetical order.
 
 Command Input:\
-<img title="sortCommand" alt="Command Input" src="/images/sortCommand_before.png"><br/><br/>
+<img title="sortCommand" alt="Command Input" src="./images/sortCommand_before.png"><br/><br/>
 Result:\
-<img title="sortCommand" alt="Result" src="/images/sortCommand_after.png"><br/><br/>
+<img title="sortCommand" alt="Result" src="./images/sortCommand_after.png"><br/><br/>
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
