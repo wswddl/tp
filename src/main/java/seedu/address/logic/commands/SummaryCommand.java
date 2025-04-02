@@ -74,6 +74,9 @@ public class SummaryCommand extends Command {
                 applicants.filtered(person -> predicates.stream()
                         .allMatch(p -> p.test(person)));
 
+        model.updateFilteredPersonList(person -> predicates.stream()
+                .allMatch(p -> p.test(person)));
+
         if (filteredList.isEmpty()) {
             throw new CommandException(MESSAGE_NO_RESULT);
         }
@@ -106,7 +109,38 @@ public class SummaryCommand extends Command {
                 String.format(MESSAGE_SUCCESS, filteredList.size(), applicants.size(), statisticsString)));
     }
 
-    // yuqian todo: equals method here do I extract it out for commands that use a lot of predicates?
+    /**
+     * Checks if this {@code SummaryCommand} is equal to another object.
+     *
+     * @param other The object to compare.
+     * @return True if the other object is a {@code SummaryCommand} with the same predicates.
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof SummaryCommand otherSummaryCommand)) {
+            return false;
+        }
+
+        List<IdentifierPredicate> otherPredicates = otherSummaryCommand.predicates;
+        if (predicates.size() != otherPredicates.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < predicates.size(); i++) {
+            IdentifierPredicate thisPredicate = predicates.get(i);
+            IdentifierPredicate thatPredicate = otherPredicates.get(i);
+
+            if (!thisPredicate.equals(thatPredicate)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Returns a string representation of this {@code SummaryCommand}.

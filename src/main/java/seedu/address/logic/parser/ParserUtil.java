@@ -1,7 +1,10 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -12,17 +15,21 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.applicant.Address;
+import seedu.address.model.applicant.AfterDatePredicate;
+import seedu.address.model.applicant.BeforeDatePredicate;
 import seedu.address.model.applicant.Email;
 import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
 import seedu.address.model.applicant.IdentifierPredicate;
@@ -48,14 +55,17 @@ public class ParserUtil {
      * The order in which prefixes are parsed. This determines the order of
      * predicates in the final command.
      */
-    public static final Prefix[] PREFIX_ORDER = {
-        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS
+    public static final Prefix[] COMMON_PREFIXES = {
+        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS, PREFIX_BEFORE, PREFIX_AFTER
     };
 
+    public static final Prefix[] COMMON_PREFIXES_WITH_ID =
+            Stream.concat(Arrays.stream(COMMON_PREFIXES), Stream.of(PREFIX_ID))
+                    .toArray(Prefix[]::new);
     /**
      * Mapping of prefixes to their respective predicate constructors.
      */
-    public static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
+    public static final Map<Prefix, Function<String, IdentifierPredicate>> PREFIX_MAPPING = Map.of(
             PREFIX_NAME, NameMatchesKeywordPredicate::new,
             PREFIX_PHONE, PhoneMatchesKeywordPredicate::new,
             PREFIX_EMAIL, EmailMatchesKeywordPredicate::new,
@@ -69,14 +79,33 @@ public class ParserUtil {
      * @param argMultimap The parsed argument multimap.
      * @return A list of identifier predicates for filtering applicants.
      */
-    public static List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) {
+    public static List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) throws ParseException {
         List<IdentifierPredicate> predicates = new ArrayList<>();
 
-        predicateMapping.forEach((prefix, predicateConstructor) ->
+        PREFIX_MAPPING.forEach((prefix, predicateConstructor) ->
                 argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
         );
 
+        extractPredicateFromDates(argMultimap, predicates);
+
         return predicates;
+    }
+
+    static void extractPredicateFromDates(ArgumentMultimap argMultimap, List<IdentifierPredicate> predicates)
+            throws ParseException {
+        IdentifierPredicate predicate;
+        if (argMultimap.getValue(PREFIX_BEFORE).isPresent()) {
+            String beforeDateString = argMultimap.getValue(PREFIX_BEFORE).get();
+            LocalDateTime validBeforeDate = ParserUtil.parseBeforeDate(beforeDateString);
+            predicate = new BeforeDatePredicate(validBeforeDate);
+            predicates.add(predicate);
+        }
+        if (argMultimap.getValue(PREFIX_AFTER).isPresent()) {
+            String afterDateString = argMultimap.getValue(PREFIX_AFTER).get();
+            LocalDateTime validAfterDate = ParserUtil.parseAfterDate(afterDateString);
+            predicate = new AfterDatePredicate(validAfterDate);
+            predicates.add(predicate);
+        }
     }
 
     /**

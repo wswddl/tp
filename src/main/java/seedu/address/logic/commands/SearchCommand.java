@@ -91,26 +91,21 @@ public class SearchCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof SearchCommand)) {
+        if (!(other instanceof SearchCommand otherSearchCommand)) {
             return false;
         }
-
-        SearchCommand otherSearchCommand = (SearchCommand) other;
 
         List<IdentifierPredicate> otherPredicates = otherSearchCommand.predicates;
         if (predicates.size() != otherPredicates.size()) {
             return false;
         }
-    
         for (int i = 0; i < predicates.size(); i++) {
             IdentifierPredicate thisPredicate = predicates.get(i);
             IdentifierPredicate thatPredicate = otherPredicates.get(i);
-    
             if (!thisPredicate.equals(thatPredicate)) {
                 return false;
             }
         }
-    
         return true;
     }
 

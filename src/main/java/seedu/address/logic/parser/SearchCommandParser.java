@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.ParserUtil.PREFIX_ORDER;
+import static seedu.address.logic.parser.ParserUtil.COMMON_PREFIXES;
 import static seedu.address.logic.parser.ParserUtil.extractPredicates;
 
 import java.util.List;
@@ -26,13 +26,14 @@ public class SearchCommandParser implements Parser<SearchCommand> {
     public SearchCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ORDER);
-        if (!argMultimap.areAnyPrefixesPresent(PREFIX_ORDER)) {
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, COMMON_PREFIXES);
+        if (!argMultimap.areAnyPrefixesPresent(COMMON_PREFIXES)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_ORDER);
+        argMultimap.verifyNoDuplicatePrefixesFor(COMMON_PREFIXES);
 
         List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
+
         if (predicates.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }

@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.ParserUtil.PREFIX_ORDER;
+import static seedu.address.logic.parser.ParserUtil.COMMON_PREFIXES;
 import static seedu.address.logic.parser.ParserUtil.extractPredicates;
 
 import java.util.List;
@@ -24,14 +24,13 @@ public class SummaryCommandParser implements Parser<SummaryCommand> {
     public SummaryCommand parse(String args) throws ParseException {
         // Note: There can be no predicates i.e. Summarize all
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_ORDER);
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_ORDER);
+                args, COMMON_PREFIXES);
+        argMultimap.verifyNoDuplicatePrefixesFor(COMMON_PREFIXES);
 
         List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
-        if (predicates.isEmpty() && !args.trim().equals("summary")) {
+        if (predicates.isEmpty() && !args.trim().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SummaryCommand.MESSAGE_USAGE));
         }
-
         return new SummaryCommand(predicates);
     }
 }

@@ -2,17 +2,16 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
+import static seedu.address.logic.parser.ParserUtil.COMMON_PREFIXES;
+import static seedu.address.logic.parser.ParserUtil.COMMON_PREFIXES_WITH_ID;
+import static seedu.address.logic.parser.ParserUtil.extractPredicates;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -21,8 +20,6 @@ import java.util.stream.Stream;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.applicant.AfterDatePredicate;
-import seedu.address.model.applicant.BeforeDatePredicate;
 import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
 import seedu.address.model.applicant.IdentifierPredicate;
 import seedu.address.model.applicant.JobPositionMatchesPredicate;
@@ -62,14 +59,12 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_ID, PREFIX_STATUS, PREFIX_JOB_POSITION, PREFIX_BEFORE, PREFIX_AFTER);
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ID,
-                PREFIX_STATUS, PREFIX_JOB_POSITION, PREFIX_BEFORE, PREFIX_AFTER);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, COMMON_PREFIXES_WITH_ID);
 
-        int numOfPrefixesPresentOtherThanId = numOfPrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_STATUS, PREFIX_JOB_POSITION, PREFIX_BEFORE, PREFIX_AFTER);
+        argMultimap.verifyNoDuplicatePrefixesFor(COMMON_PREFIXES_WITH_ID);
+
+        int numOfPrefixesPresentOtherThanId = numOfPrefixesPresent(argMultimap, COMMON_PREFIXES);
         // Allow ONLY id or any combination of other identifiers
         if ((numOfPrefixesPresentOtherThanId > 0 && argMultimap.getValue(PREFIX_ID).isPresent())
             || (numOfPrefixesPresentOtherThanId == 0 && argMultimap.getValue(PREFIX_ID).isEmpty())) {
@@ -82,21 +77,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             return new DeleteCommand(null, index, isForceDelete); // Use index-based constructor
         }
 
-        IdentifierPredicate predicate;
         List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
-
-        if (argMultimap.getValue(PREFIX_BEFORE).isPresent()) {
-            String beforeDateString = argMultimap.getValue(PREFIX_BEFORE).get();
-            LocalDateTime validBeforeDate = ParserUtil.parseBeforeDate(beforeDateString);
-            predicate = new BeforeDatePredicate(validBeforeDate);
-            predicates.add(predicate);
-        }
-        if (argMultimap.getValue(PREFIX_AFTER).isPresent()) {
-            String afterDateString = argMultimap.getValue(PREFIX_AFTER).get();
-            LocalDateTime validAfterDate = ParserUtil.parseAfterDate(afterDateString);
-            predicate = new AfterDatePredicate(validAfterDate);
-            predicates.add(predicate);
-        }
+        assert predicates.size() == numOfPrefixesPresentOtherThanId;
         return new DeleteCommand(predicates, null, isForceDelete);
     }
 
@@ -106,21 +88,5 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     private static int numOfPrefixesPresent(ArgumentMultimap argMultimap, Prefix... prefixes) {
         return (int) Stream.of(prefixes).filter(prefix -> argMultimap.getValue(prefix).isPresent()).count();
-    }
-
-    /**
-     * Extracts predicates from the given {@code ArgumentMultimap}.
-     *
-     * @param argMultimap The parsed argument multimap.
-     * @return A list of identifier predicates for filtering applicants.
-     */
-    private List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) {
-        List<IdentifierPredicate> predicates = new ArrayList<>();
-
-        predicateMapping.forEach((prefix, predicateConstructor) ->
-                argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
-        );
-
-        return predicates;
     }
 }
