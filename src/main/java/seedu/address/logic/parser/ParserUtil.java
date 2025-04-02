@@ -28,7 +28,6 @@ import java.util.stream.Stream;
 import javafx.util.Pair;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.applicant.Address;
 import seedu.address.model.applicant.AfterDatePredicate;
@@ -94,6 +93,13 @@ public class ParserUtil {
         return predicates;
     }
 
+    /**
+     * Extracts date-related predicates from the argument multimap.
+     *
+     * @param argMultimap The parsed argument multimap.
+     * @param predicates  The list of predicates to which extracted predicates will be added.
+     * @throws ParseException if date parsing fails.
+     */
     static void extractPredicateFromDates(ArgumentMultimap argMultimap, List<IdentifierPredicate> predicates)
             throws ParseException {
         IdentifierPredicate predicate;
@@ -111,19 +117,26 @@ public class ParserUtil {
         }
     }
 
+    /**
+     * Checks for the presence of a flag in the argument string.
+     *
+     * @param args The input argument string.
+     * @return A pair containing the cleaned argument string and a boolean indicating
+     *      whether the --force flag was present.
+     * @throws ParseException if an unknown flag is encountered.
+     */
     public static Pair<String, Boolean> checkFlag(String args) throws ParseException {
+        // Check for --force flag
+        boolean isForceOperation = args.contains("--force");
+        System.out.println("isForceOperation: " + isForceOperation);
+        args = args.replace("--force", ""); // Remove --force from args
+
         // Flags other than --force that start with "--" are invalid
         if (args.matches(".*\\s--\\w+.*")) {
             System.out.println("checkFlag: " + args);
             String unknownFlag = args.trim().replaceAll(".*(--\\w+).*", "$1");
             throw new ParseException(String.format(MESSAGE_UNKNOWN_FLAG, unknownFlag));
         }
-
-        // Check for --force flag
-        boolean isForceOperation = args.contains("--force");
-        System.out.println("isForceOperation: " + isForceOperation);
-        args = args.replace("--force", ""); // Remove --force from args
-
 
         return new Pair<>(args, isForceOperation);
     }

@@ -60,7 +60,6 @@ public class LogicManager implements Logic {
 
         if (pendingCommand != null) {
             if (commandText.equalsIgnoreCase("yes")) {
-                // delete and update commands need the confirmation
                 if (pendingCommand instanceof DeleteCommand deleteCommand) {
                     deleteCommand.setForceDelete(true);
                     commandResult = deleteCommand.execute(model);
@@ -70,11 +69,10 @@ public class LogicManager implements Logic {
                     commandResult = updateCommand.execute(model);
                 }
             } else {
-                if (pendingCommand instanceof DeleteCommand) {
-                    return new CommandResult("Deletion cancelled.");
-                } else {
-                    return new CommandResult("Update cancelled.");
-                }
+                String cancelMessage = pendingCommand instanceof DeleteCommand
+                        ? "Deletion cancelled."
+                        : "Update cancelled.";
+                return new CommandResult(cancelMessage);
             }
             pendingCommand = null;
         } else {
@@ -91,6 +89,11 @@ public class LogicManager implements Logic {
         return commandResult;
     }
 
+    /**
+     * Saves the current address book data to storage.
+     *
+     * @throws CommandException If an error occurs during saving
+     */
     public void saveAddressBook() throws CommandException {
         try {
             storage.saveAddressBook(model.getAddressBook());

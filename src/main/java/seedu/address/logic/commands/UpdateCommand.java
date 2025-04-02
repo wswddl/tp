@@ -12,11 +12,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.applicant.Applicant;
@@ -24,11 +22,16 @@ import seedu.address.model.applicant.IdentifierPredicate;
 import seedu.address.model.applicant.Status;
 
 /**
- * Updates the {@code Status} of a {@code Applicant} identified using the specified contact identifier
+ * Updates the status of applicants identified by index or by matching criteria.
+ * <p>
+ * Supports both individual updates by index and bulk updates using multiple
+ * filtering criteria. Requires a status parameter and includes confirmation
+ * prompts unless --force flag is used.
  */
-public class UpdateCommand extends Command {
+public class UpdateCommand extends ConfirmationRequiredCommand {
     public static final String COMMAND_WORD = "update";
 
+    /** Message explaining the command usage and parameters */
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the application status of the applicant "
             + "identified by the provided identifier(s).\n"
             + "Parameters: (Must include Status, and specify EITHER an ID or any combination of other identifiers) "
@@ -43,135 +46,115 @@ public class UpdateCommand extends Command {
             + "[--force]\n"
             + "Example: " + COMMAND_WORD + " n/Alex Yeoh s/Interview Scheduled";
 
-    static final String MESSAGE_UPDATE_CONFIRMATION =
+    /** Confirmation message for bulk updates */
+    private static final String MESSAGE_UPDATE_CONFIRMATION =
             "Are you sure you want to update the following applicant(s)?\n"
                     + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the update";
 
-    static final String MESSAGE_ID_UPDATE_CONFIRMATION =
+    /** Confirmation message for index-based updates */
+    private static final String MESSAGE_ID_UPDATE_CONFIRMATION =
             "Are you sure you want to update applicant %d in the list?\n"
                     + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the update";
 
+    /** Success message after update */
     private static final String MESSAGE_UPDATE_STATUS_SUCCESS = "Updated status of: %1$s";
 
-    private final List<IdentifierPredicate> predicates;
-    private final Index targetIndex;
+    /** The new status to set for matching applicants */
     private final Status status;
-    private boolean isForceUpdate;
 
     /**
-     * @param predicates The predicate used to identify the {@code Applicant} to be updated.
-     * @param status    The {@code Status} to which the {@code Applicant}'s status should be set to.
-     * @param isForceUpdate The flag to specify whether it is force deletion or not.
+     * Creates an UpdateCommand that updates applicants matching the given predicates.
+     *
+     * @param predicates The criteria to filter applicants, must not be null
+     * @param status The new status to set, must not be null
+     * @param isForceOperation Whether to skip confirmation
+     * @throws NullPointerException if predicates or status is null
      */
-    public UpdateCommand(List<IdentifierPredicate> predicates, Status status, boolean isForceUpdate) {
-        this.predicates = predicates;
-        this.targetIndex = null;
+    public UpdateCommand(List<IdentifierPredicate> predicates, Status status, boolean isForceOperation) {
+        super(predicates, isForceOperation);
+        requireNonNull(status);
         this.status = status;
-        this.isForceUpdate = isForceUpdate;
     }
 
     /**
-     * @param targetIndex The index of the {@code Applicant} to be updated in the filtered list.
-     * @param status      The {@code Status} to which the {@code Applicant}'s status should be set to.
-     * @param isForceUpdate The flag to specify whether it is force deletion or not.
+     * Creates an UpdateCommand that updates the applicant at the given index.
+     *
+     * @param targetIndex The index of the applicant to update, must not be null
+     * @param status The new status to set, must not be null
+     * @param isForceOperation Whether to skip confirmation
+     * @throws NullPointerException if targetIndex or status is null
      */
-    public UpdateCommand(Index targetIndex, Status status, boolean isForceUpdate) {
-        this.predicates = null;
-        this.targetIndex = targetIndex;
+    public UpdateCommand(Index targetIndex, Status status, boolean isForceOperation) {
+        super(targetIndex, isForceOperation);
+        requireNonNull(status);
         this.status = status;
-        this.isForceUpdate = isForceUpdate;
     }
 
-    /**
-     * Executes update command with target identified by predicate or index,
-     * depending on whether targetIndex was provided.
-     */
     @Override
-    public CommandResult execute(Model model) throws CommandException {
-        requireNonNull(model);
-
-        if (targetIndex == null) {
-            return updateByPredicate(model);
-        } else {
-            return updateByIndex(model);
-        }
+    protected String getNoResultMessage() {
+        return MESSAGE_NO_RESULT;
     }
 
-    public CommandResult updateByPredicate(Model model) throws CommandException {
+    @Override
+    protected String getConfirmationMessage() {
+        return MESSAGE_UPDATE_CONFIRMATION;
+    }
+
+    @Override
+    protected String getIndexConfirmationMessage() {
+        return MESSAGE_ID_UPDATE_CONFIRMATION;
+    }
+
+    @Override
+    protected String getSuccessMessage() {
+        return MESSAGE_UPDATE_STATUS_SUCCESS;
+    }
+
+    @Override
+    protected void processApplicants(Model model, List<Applicant> applicants) throws CommandException {
         requireNonNull(model);
+        requireNonNull(applicants);
 
-        // Apply filtering predicates
-        model.updateFilteredPersonList(applicant -> {
-            assert predicates != null;
-            return predicates.stream().allMatch(predicate -> predicate.test(applicant));
-        });
-
-        List<Applicant> filteredList = model.getFilteredPersonList();
-        if (filteredList.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_RESULT);
-        }
-
-        if (!isForceUpdate) {
-            return new CommandResult(MESSAGE_UPDATE_CONFIRMATION);
-        }
-        List<Applicant> applicantsToUpdate = List.copyOf(filteredList);
-        for (Applicant applicant : applicantsToUpdate) {
+        for (Applicant applicant : applicants) {
             model.setStatus(applicant, status);
         }
-        String updatedApplicants = applicantsToUpdate.stream()
-                .map(Messages::format)
-                .collect(Collectors.joining("\n\n"));
-
-        return new CommandResult(String.format(MESSAGE_UPDATE_STATUS_SUCCESS, updatedApplicants));
     }
 
-    public CommandResult updateByIndex(Model model) throws CommandException {
-        List<Applicant> lastShownList = model.getFilteredPersonList();
+    @Override
+    protected void processApplicant(Model model, Applicant applicant) throws CommandException {
+        requireNonNull(model);
+        requireNonNull(applicant);
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-        Applicant applicantToUpdate = lastShownList.get(targetIndex.getZeroBased());
-        if (!isForceUpdate) {
-            return new CommandResult(String.format(MESSAGE_ID_UPDATE_CONFIRMATION, targetIndex.getOneBased()));
-        }
-        Applicant updatedApplicant = model.setStatus(applicantToUpdate, status);
-        return new CommandResult(String.format(MESSAGE_UPDATE_STATUS_SUCCESS, Messages.format(updatedApplicant)));
+        model.setStatus(applicant, status);
+    }
+
+    /**
+     * Sets the force update flag.
+     *
+     * @param isForceUpdate Whether to skip confirmation
+     */
+    public void setForceUpdate(boolean isForceUpdate) {
+        setForceOperation(isForceUpdate);
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof UpdateCommand otherUpdateCommand)) {
+        if (!super.equals(other)) {
             return false;
         }
-
-        assert predicates != null;
-        return predicates.equals(otherUpdateCommand.predicates);
+        UpdateCommand otherCommand = (UpdateCommand) other;
+        return status.equals(otherCommand.status);
     }
 
     @Override
     public String toString() {
-        if (targetIndex == null) {
-            return new ToStringBuilder(this)
-                    .add("predicate", predicates)
-                    .add("status", status)
-                    .toString();
-        } else {
-            return new ToStringBuilder(this)
-                    .add("targetIndex", targetIndex)
-                    .add("status", status)
-                    .toString();
-        }
-    }
-
-    public void setForceUpdate(boolean isForceDelete) {
-        this.isForceUpdate = isForceDelete;
+        return new ToStringBuilder(this)
+                .add("predicates", predicates)
+                .add("targetIndex", targetIndex)
+                .add("status", status)
+                .add("isForceOperation", isForceOperation)
+                .toString();
     }
 }
