@@ -52,13 +52,13 @@ public class DeleteCommand extends ConfirmationRequiredCommand {
                     + "Type anything else to cancel the deletion";
 
     /** Confirmation message for index-based deletion */
-    private static final String MESSAGE_ID_DELETE_CONFIRMATION =
+    static final String MESSAGE_ID_DELETE_CONFIRMATION =
             "Are you sure you want to delete applicant %d in the list?\n"
                     + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the deletion";
 
     /** Success message after deletion */
-    private static final String MESSAGE_DELETE_SUCCESS = "Deleted Applicant(s): %1$s";
+    static final String MESSAGE_DELETE_SUCCESS = "Deleted Applicant(s): %1$s";
 
     /**
      * Creates a DeleteCommand that deletes applicants matching the given predicates.

@@ -37,7 +37,6 @@ public class SearchCommandParser implements Parser<SearchCommand> {
         if (predicates.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
-        assert !predicates.isEmpty();
 
         return new SearchCommand(predicates);
     }

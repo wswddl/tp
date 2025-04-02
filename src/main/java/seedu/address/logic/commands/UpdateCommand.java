@@ -53,13 +53,13 @@ public class UpdateCommand extends ConfirmationRequiredCommand {
                     + "Type anything else to cancel the update";
 
     /** Confirmation message for index-based updates */
-    private static final String MESSAGE_ID_UPDATE_CONFIRMATION =
+    static final String MESSAGE_ID_UPDATE_CONFIRMATION =
             "Are you sure you want to update applicant %d in the list?\n"
                     + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the update";
 
     /** Success message after update */
-    private static final String MESSAGE_UPDATE_STATUS_SUCCESS = "Updated status of: %1$s";
+    static final String MESSAGE_UPDATE_STATUS_SUCCESS = "Updated status of: %1$s";
 
     /** The new status to set for matching applicants */
     private final Status status;

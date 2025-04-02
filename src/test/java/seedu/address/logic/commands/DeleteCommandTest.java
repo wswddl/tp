@@ -20,13 +20,18 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.applicant.Applicant;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for
- * {@code DeleteCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
  */
 public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+    // ===== Index-based Deletion Tests =====
+
+    /**
+     * EP: Valid index within bounds, force delete
+     * BV: First index in unfiltered list
+     */
     @Test
     public void execute_validIndexUnfilteredList_forceDeleteSuccess() {
         Applicant applicantToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -41,6 +46,25 @@ public class DeleteCommandTest {
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
+    /**
+     * EP: Valid index within bounds, needs confirmation
+     * BV: Last index in unfiltered list
+     */
+    @Test
+    public void execute_validIndexUnfilteredList_needsConfirmation() {
+        Index lastIndex = Index.fromOneBased(model.getFilteredPersonList().size());
+        DeleteCommand deleteCommand = new DeleteCommand(lastIndex, false);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_ID_DELETE_CONFIRMATION,
+                lastIndex.getOneBased());
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, null);
+    }
+
+    /**
+     * EP: Invalid index (out of bounds)
+     * BV: size + 1
+     */
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
@@ -49,6 +73,9 @@ public class DeleteCommandTest {
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    /**
+     * EP: Valid index in filtered list, force delete
+     */
     @Test
     public void execute_validIndexFilteredList_forceDeleteSuccess() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
@@ -65,6 +92,12 @@ public class DeleteCommandTest {
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
+
+    // ===== Predicate-based Deletion Tests =====
+
+    // Note: Add tests for predicate-based deletion once implemented
+
+    // ===== Unit Tests =====
 
     @Test
     public void equals() {
@@ -97,8 +130,7 @@ public class DeleteCommandTest {
         Index targetIndex = Index.fromOneBased(1);
         DeleteCommand deleteCommand = new DeleteCommand(targetIndex, false);
         String expected = DeleteCommand.class.getCanonicalName()
-                + "{predicate=null, "
-                + "targetIndex=" + targetIndex + ", isForceDelete=false}";
+                + "{targetIndex=" + targetIndex + ", isForceDelete=false}";
         assertEquals(expected, deleteCommand.toString());
     }
 
@@ -107,7 +139,6 @@ public class DeleteCommandTest {
      */
     private void showNoPerson(Model model) {
         model.updateFilteredPersonList(p -> false);
-
         assertTrue(model.getFilteredPersonList().isEmpty());
     }
 }
