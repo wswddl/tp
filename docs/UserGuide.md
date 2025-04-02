@@ -38,17 +38,17 @@ Let’s dive in and explore how RecruitTrack can help you streamline your hiring
 
 Let's get you up and running quickly!
 
-### 1️⃣ Install Java
+### 1. Install Java
 First, ensure you have **Java 17 or later**.  
 *Mac users:* Our [special guide](https://se-education.org/guides/tutorials/javaInstallationMac.html) has you covered!
 
-### 2️⃣ Download the App
+### 2. Download the App
 Grab the latest version from our [download page](https://github.com/AY2425S2-CS2103T-W09-1/tp/releases).
 
-### 3️⃣ Set Up Your Workspace
+### 3. Set Up Your Workspace
 Place the `.jar` file in your favorite folder – this will be your RecruitTrack home.
 
-### 4️⃣ Launch and Explore
+### 4. Launch and Explore
 Double-click the file or run:
 ```bash
 java -jar recruittrack.jar
@@ -56,7 +56,7 @@ java -jar recruittrack.jar
 
 You'll see our friendly interface welcoming you:
 
-### 5️⃣ Try These Starter Commands
+### 5. Try These Starter Commands
 Type in the command box:
 - `help` 📚 - Shows all commands
 - `add n/Emma p/87654321 e/emma@tech.com j/Developer` ➕ - Adds Emma
@@ -67,7 +67,7 @@ Type in the command box:
 
 --------------------------------------------------------------------------------------------------------------------
 
-## ✨ Feature Highlights
+## Feature Highlights
 
 ### 👥 People Management
 - `add` - Welcome new candidates
@@ -92,7 +92,7 @@ Type in the command box:
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 🧑‍💻 Working With Applicants
+## Working With Applicants
 
 ### ➕ Adding New Candidates
 **Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOB s/STATUS [t/TAG]...`  
@@ -159,7 +159,7 @@ Result:\
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 📊 Tracking Progress
+## Tracking Progress
 
 ### 🔄 Updating Status
 Move candidates through your pipeline:
@@ -222,7 +222,7 @@ Result:\
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 🔍 Finding Your Perfect Hire
+## Finding Your Perfect Hire
 
 ### 📋 Listing Everyone
 Simple command to see all candidates:
@@ -278,7 +278,7 @@ Result:\
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 🛠️ Power User Tools
+## Power User Tools
 
 ### 📤 Exporting Data
 Export the **currently displayed** applicant data into a CSV (Comma-Separated Values) file for sharing:
@@ -328,20 +328,20 @@ Statuses ->
 
 ## ❓ Frequently Asked Questions
 
-### 🧐 How do I move my data to a new computer?
+### How do I move my data to a new computer?
 Just copy the `data/addressbook.json` file to the new computer - it's that easy!
 
-### 😅 Can I undo a deletion?
+### Can I undo a deletion?
 Not directly, but if you have a backup of your data file, you can restore it.
 
-### 🌈 Can I change the colors?
+### Can I change the colors?
 Not yet, but we're working on theme options for a future update!
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 🎨 Cheat Sheet
+## Cheat Sheet
 
 
 | Action      | Format, Examples                                                                                                                                                                                                                      |
@@ -366,7 +366,7 @@ Not yet, but we're working on theme options for a future update!
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 💌 Final Thoughts
+## Final Thoughts
 
 We hope you enjoy using RecruitTrack as much as we enjoyed making it! Remember:
 
