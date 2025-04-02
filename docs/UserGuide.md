@@ -316,6 +316,23 @@ Statuses ->
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Miscellaneous
+
+### Clear All Records
+
+Clears all applicant data from the application.<br/>
+
+❗️**Warning:** This is an **irreversible** action that removes **ALL** entries from the applicant records
+
+**Command Format:** `clear`
+<br/><br/>
+
+### Exit the Application  
+
+**Command Format:** `exit`
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## 💾 Your Data is Safe With Us
 
 🔒 **Automatic Saving**: Every change is saved instantly  
