@@ -145,7 +145,7 @@ public class Applicant {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both persons have the same email or phone number.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Applicant otherApplicant) {
@@ -154,7 +154,7 @@ public class Applicant {
         }
 
         return otherApplicant != null
-                && otherApplicant.getName().equals(getName());
+                && (otherApplicant.getEmail().equals(getEmail()) || otherApplicant.getPhone().equals(getPhone()));
     }
 
     /**

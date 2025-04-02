@@ -42,7 +42,7 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "busy";
 
     public static final String MESSAGE_SUCCESS = "New applicant added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This applicant already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This applicant already exists in the address book (Duplicate Email or Phone Number)";
 
     private final Applicant toAdd;
 

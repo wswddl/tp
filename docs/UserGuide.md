@@ -94,8 +94,30 @@ Type in the command box:
 
 ## Working With Applicants
 
+### 📜 Applicant Data Model
+RecruitTrack stores applicants with the following fields, each with strict validation rules:
+
+| **Field**                  | **Format & Validation Rules**                                                  | **Example**                                               |
+|----------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------------|
+| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. Not blank.                            | `n/John Doe`                                              |
+| **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**.                  | `p/98765432`                                              |
+| **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**.                     | `e/john@example.com`                                      |
+| **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                            | `j/Data Scientist`                                        |
+| **Status** (`s/`)          | Alphanumeric + spaces, case-insensitive. Not blank.                            | `s/Interview Scheduled`                                   |
+| **Address** (`a/`)         | Alphanumeric + spaces. Not blank.                                              | `a/123 Main St, Singapore`                                |
+| **Tags** (`t/`)            | Space-separated, alphanumeric (hyphens allowed). Stored *without* `t/` prefix. | Input: `t/Tech t/Urgent` → Stored as `["Tech", "Urgent"]` |
+| **Rating** (`r/`)          | Integer **1-5**.                                                               | `r/4`                                                     |
+| **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).                     | `time/2025-03-12T14:30:15`                                |
+| **Index** (`id/`)          | Auto-assigned unique integer (GUI display).                                    | `id/1`                                                    |
+
+**Email Validation Rules**:
+- Local-part (before `@`): Alphanumeric, `+_.-` allowed. Cannot start/end with special chars.
+- Domain: Labels separated by `.` (e.g., `sub.domain.com`). TLD ≥ 2 chars.
+
 ### ➕ Adding New Candidates
 **Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOB s/STATUS [t/TAG]...`  
+
+* **Phone/Email**: Must be unique (rejects duplicates).
 
 💡 **Pro Tip**: Tags help you categorize candidates for easy searching later!
 
@@ -113,6 +135,7 @@ Result:\
 **Command Format**: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…`
 * Edits the applicant at the specified `INDEX`. The index refers to the index number shown in the **displayed** applicant list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
+* Updates must preserve uniqueness for applicant's phone number and email.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the applicant will be removed i.e. adding of tags is **not cumulative**.
 * You can remove all the applicant’s tags by typing `t/` without
