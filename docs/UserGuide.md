@@ -38,17 +38,17 @@ Let’s dive in and explore how RecruitTrack can help you streamline your hiring
 
 Let's get you up and running quickly!
 
-### 1️⃣ Install Java
+### 1. Install Java
 First, ensure you have **Java 17 or later**.  
 *Mac users:* Our [special guide](https://se-education.org/guides/tutorials/javaInstallationMac.html) has you covered!
 
-### 2️⃣ Download the App
+### 2. Download the App
 Grab the latest version from our [download page](https://github.com/AY2425S2-CS2103T-W09-1/tp/releases).
 
-### 3️⃣ Set Up Your Workspace
+### 3. Set Up Your Workspace
 Place the `.jar` file in your favorite folder – this will be your RecruitTrack home.
 
-### 4️⃣ Launch and Explore
+### 4. Launch and Explore
 Double-click the file or run:
 ```bash
 java -jar recruittrack.jar
@@ -56,7 +56,7 @@ java -jar recruittrack.jar
 
 You'll see our friendly interface welcoming you:
 
-### 5️⃣ Try These Starter Commands
+### 5. Try These Starter Commands
 Type in the command box:
 - `help` 📚 - Shows all commands
 - `add n/Emma p/87654321 e/emma@tech.com j/Developer` ➕ - Adds Emma
@@ -67,7 +67,7 @@ Type in the command box:
 
 --------------------------------------------------------------------------------------------------------------------
 
-## ✨ Feature Highlights
+## Feature Highlights
 
 ### 👥 People Management
 - `add` - Welcome new candidates
@@ -92,7 +92,7 @@ Type in the command box:
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 🧑‍💻 Working With Applicants
+## Working With Applicants
 
 ### ➕ Adding New Candidates
 **Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOB s/STATUS [t/TAG]...`  
@@ -105,9 +105,9 @@ add n/Alex Yeoh p/91237654 e/alexy@example.com a/34, Chartwell Drive j/Data Anal
 ```
 
 Command Input:\
-<img title="addCommand" alt="Command Input" src="/images/addCommand_before.png"><br/><br/>
+<img title="addCommand" alt="Command Input" src="./images/addCommand_before.png"><br/><br/>
 Result:\
-<img title="addCommand" alt="Result" src="/images/addCommand_after.png"><br/><br/>
+<img title="addCommand" alt="Result" src="./images/addCommand_after.png"><br/><br/>
 
 ### ✏️ Editing Details
 **Command Format**: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…`
@@ -125,9 +125,9 @@ edit 4 j/Data Scientist p/91238765
 Updates phone number and job position for candidate #4.
 
 Command Input:\
-<img title="editCommand" alt="Command Input" src="/images/editCommand_before.png"><br/><br/>
+<img title="editCommand" alt="Command Input" src="./images/editCommand_before.png"><br/><br/>
 Result:\
-<img title="editCommand" alt="Result" src="/images/editCommand_after.png"><br/><br/>
+<img title="editCommand" alt="Result" src="./images/editCommand_after.png"><br/><br/>
 
 ### 🗑️ Removing Applicants
 **Command Format**: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
@@ -151,15 +151,15 @@ delete n/Alex Yeoh --force
 💡 **Pro Tip**: Adding `--force` skips confirmation for quick removal.
 
 Command Input:\
-<img title="deleteCommand" alt="Command Input" src="/images/deleteCommand_before.png"><br/><br/>
+<img title="deleteCommand" alt="Command Input" src="./images/deleteCommand_before.png"><br/><br/>
 Result:\
-<img title="deleteCommand" alt="Result" src="/images/deleteCommand_after.png"><br/><br/>
+<img title="deleteCommand" alt="Result" src="./images/deleteCommand_after.png"><br/><br/>
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 📊 Tracking Progress
+## Tracking Progress
 
 ### 🔄 Updating Status
 Move candidates through your pipeline:
@@ -189,9 +189,9 @@ update n/John Doe s/Job Offered
 ```
 
 Command Input:\
-<img title="updateCommand" alt="Command Input" src="/images/updateCommand_before.png"><br/><br/>
+<img title="updateCommand" alt="Command Input" src="./images/updateCommand_before.png"><br/><br/>
 Result:\
-<img title="updateCommand" alt="Result" src="/images/updateCommand_after.png"><br/><br/>
+<img title="updateCommand" alt="Result" src="./images/updateCommand_after.png"><br/><br/>
 
 ### ⭐ Rating Candidates
 Give 1-5 star ratings:
@@ -213,16 +213,16 @@ rate id/2 r/4
 Now candidate #2 has a shiny 4-star rating!
 
 Command Input:\
-<img title="rateCommand" alt="Command Input" src="/images/rateCommand_before.png"><br/><br/>
+<img title="rateCommand" alt="Command Input" src="./images/rateCommand_before.png"><br/><br/>
 Result:\
-<img title="rateCommand" alt="Result" src="/images/rateCommand_after.png"><br/><br/>
+<img title="rateCommand" alt="Result" src="./images/rateCommand_after.png"><br/><br/>
 
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 🔍 Finding Your Perfect Hire
+## Finding Your Perfect Hire
 
 ### 📋 Listing Everyone
 Simple command to see all candidates:
@@ -246,9 +246,9 @@ search j/Frontend SWE
 Shows all frontend developers.
 
 Command Input:\
-<img title="searchCommand" alt="Command Input" src="/images/searchCommand_before.png"><br/><br/>
+<img title="searchCommand" alt="Command Input" src="./images/searchCommand_before.png"><br/><br/>
 Result:\
-<img title="searchCommand" alt="Result" src="/images/searchCommand_after.png"><br/><br/>
+<img title="searchCommand" alt="Result" src="./images/searchCommand_after.png"><br/><br/>
 
 ### 🔄 Sorting Your View
 Organize by what matters most:
@@ -270,15 +270,15 @@ sort n/
 Shows applicants in alphabetical order.
 
 Command Input:\
-<img title="sortCommand" alt="Command Input" src="/images/sortCommand_before.png"><br/><br/>
+<img title="sortCommand" alt="Command Input" src="./images/sortCommand_before.png"><br/><br/>
 Result:\
-<img title="sortCommand" alt="Result" src="/images/sortCommand_after.png"><br/><br/>
+<img title="sortCommand" alt="Result" src="./images/sortCommand_after.png"><br/><br/>
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 🛠️ Power User Tools
+## Power User Tools
 
 ### 📤 Exporting Data
 Export the **currently displayed** applicant data into a CSV (Comma-Separated Values) file for sharing:
@@ -316,6 +316,23 @@ Statuses ->
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Miscellaneous
+
+### Clear All Records
+
+Clears all applicant data from the application.<br/>
+
+❗️**Warning:** This is an **irreversible** action that removes **ALL** entries from the applicant records
+
+**Command Format:** `clear`
+<br/><br/>
+
+### Exit the Application  
+
+**Command Format:** `exit`
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## 💾 Your Data is Safe With Us
 
 🔒 **Automatic Saving**: Every change is saved instantly  
@@ -328,20 +345,20 @@ Statuses ->
 
 ## ❓ Frequently Asked Questions
 
-### 🧐 How do I move my data to a new computer?
+### How do I move my data to a new computer?
 Just copy the `data/addressbook.json` file to the new computer - it's that easy!
 
-### 😅 Can I undo a deletion?
+### Can I undo a deletion?
 Not directly, but if you have a backup of your data file, you can restore it.
 
-### 🌈 Can I change the colors?
+### Can I change the colors?
 Not yet, but we're working on theme options for a future update!
 
 [🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 🎨 Cheat Sheet
+## Cheat Sheet
 
 
 | Action      | Format, Examples                                                                                                                                                                                                                      |
@@ -366,7 +383,7 @@ Not yet, but we're working on theme options for a future update!
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 💌 Final Thoughts
+## Final Thoughts
 
 We hope you enjoy using RecruitTrack as much as we enjoyed making it! Remember:
 
