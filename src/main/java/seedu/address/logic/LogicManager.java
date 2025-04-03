@@ -1,12 +1,11 @@
 package seedu.address.logic;
 
-import com.opencsv.CSVWriter;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -16,6 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -58,17 +58,21 @@ public class LogicManager implements Logic {
 
         if (pendingCommand != null) {
             if (commandText.equalsIgnoreCase("yes")) {
-                // currently only deletion needs the confirmation
-                DeleteCommand deleteCommand = (DeleteCommand) pendingCommand;
-                deleteCommand.setForceDelete(true);
-
-                System.out.println("deleting command");
-                commandResult = deleteCommand.execute(model);
-                pendingCommand = null;
+                if (pendingCommand instanceof DeleteCommand deleteCommand) {
+                    deleteCommand.setForceDelete(true);
+                    commandResult = deleteCommand.execute(model);
+                } else {
+                    UpdateCommand updateCommand = (UpdateCommand) pendingCommand;
+                    updateCommand.setForceUpdate(true);
+                    commandResult = updateCommand.execute(model);
+                }
             } else {
-                pendingCommand = null;
-                return new CommandResult("Deletion cancelled.");
+                String cancelMessage = pendingCommand instanceof DeleteCommand
+                        ? "Deletion cancelled."
+                        : "Update cancelled.";
+                return new CommandResult(cancelMessage);
             }
+            pendingCommand = null;
         } else {
             Command command = addressBookParser.parseCommand(commandText);
             commandResult = command.execute(model);
@@ -83,6 +87,11 @@ public class LogicManager implements Logic {
         return commandResult;
     }
 
+    /**
+     * Saves the current address book data to storage.
+     *
+     * @throws CommandException If an error occurs during saving
+     */
     public void saveAddressBook() throws CommandException {
         try {
             storage.saveAddressBook(model.getAddressBook());
@@ -97,30 +106,6 @@ public class LogicManager implements Logic {
     public Command parseCommand(String commandText) throws ParseException {
         return addressBookParser.parseCommand(commandText);
     }
-
-
-    @Override
-    public void exportCsv(File file) throws CommandException {
-        try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-            // Header row
-            writer.writeNext(new String[] { "Name", "Email", "Phone", "Job Position", "Status", "Tags" });
-    
-            // Write each applicant
-            for (Applicant a : model.getFilteredPersonList()) {
-                writer.writeNext(new String[] {
-                        a.getName().fullName,
-                        a.getEmail().value,
-                        a.getPhone().value,
-                        a.getJobPosition().jobPosition,
-                        a.getStatus().value,
-                        a.getTags().stream().map(tag -> tag.tagName).collect(Collectors.joining(";"))
-                });
-            }
-        } catch (IOException e) {
-            throw new CommandException(MESSAGE_EXPORT_FAILURE, e);
-        }
-    }
-
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {

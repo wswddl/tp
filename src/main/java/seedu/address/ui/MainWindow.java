@@ -173,25 +173,12 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Returns true if the given command is an ExportCommand.
-     */
-    private boolean isExportCommand(Command command) {
-        return command instanceof ExportCommand;
-    }
-
-    /**
      * Executes the command and returns the result.
      *
      * @see seedu.address.logic.Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
-            Command command = logic.parseCommand(commandText);
-
-            if (isExportCommand(command)) {
-                return handleExportCommand((ExportCommand) command);
-            }            
-    
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
@@ -225,35 +212,6 @@ public class MainWindow extends UiPart<Stage> {
         } catch (CommandException e) {
             logger.info("An error occurred while saving the applicant's data");
             resultDisplay.setFeedbackToUser(e.getMessage());
-        }
-    }
-
-    /**
-     * Handles execution of the export command with file chooser.
-     */
-    private CommandResult handleExportCommand(ExportCommand exportCommand) throws CommandException {
-        String suggestedFileName = exportCommand.getFileName();
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Exported CSV");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
-        fileChooser.setInitialFileName(suggestedFileName);
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-
-        File file = fileChooser.showSaveDialog(getPrimaryStage());
-
-        if (file != null) {
-            if (!file.getName().endsWith(".csv")) {
-                file = new File(file.getAbsolutePath() + ".csv");
-            }
-
-            logic.exportCsv(file);
-            resultDisplay.setFeedbackToUser("Exported applicant list to: " + file.getName());
-
-            return new CommandResult("Export completed.");
-        } else {
-            resultDisplay.setFeedbackToUser("Export cancelled.");
-            return new CommandResult("Export cancelled.");
         }
     }
 }

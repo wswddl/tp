@@ -23,6 +23,8 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_INVALID_CRITERIA_FORMAT = "Invalid criteria for %1$s \n%2$s";
+    public static final String MESSAGE_NO_RESULT = "No applicants found.";
+    public static final String MESSAGE_UNKNOWN_FLAG = "Unknown flag: %1$s";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

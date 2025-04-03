@@ -47,11 +47,17 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_JOB_POSITION,
                 PREFIX_STATUS, PREFIX_ADDRESS);
+        assert argMultimap.getValue(PREFIX_NAME).isPresent();
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        assert argMultimap.getValue(PREFIX_PHONE).isPresent();
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
+        assert argMultimap.getValue(PREFIX_EMAIL).isPresent();
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        assert argMultimap.getValue(PREFIX_JOB_POSITION).isPresent();
         JobPosition jobPosition = ParserUtil.parseJobPosition(argMultimap.getValue(PREFIX_JOB_POSITION).get());
+        assert argMultimap.getValue(PREFIX_STATUS).isPresent();
         Status status = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
+        assert argMultimap.getValue(PREFIX_ADDRESS).isPresent();
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
