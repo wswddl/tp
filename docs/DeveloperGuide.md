@@ -536,7 +536,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 - **Mainstream OS** - Windows, Linux, Unix, MacOS
 - **Private contact detail** - A contact detail that is not meant to be shared with others
-- **Applicant** – A applicant who has applied for a job and is stored as a contact in the system.
+- **Applicant** – An applicant who has applied for a job and is stored as a contact in the system.
 - **Application Metadata** – Information related to an applicant’s job application, such as job position, status, and contact details.
 - **Contact** – A stored applicant or candidate with essential details such as name, email, phone, job position, and application status.
 - **Custom Status** – A user-defined application status when the `--custom` flag is used.

@@ -7,6 +7,7 @@ import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +53,8 @@ public class AddressBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " n/" + "Joe");
-        assertEquals(new DeleteCommand(new NameMatchesKeywordPredicate("Joe"), false), command);
+        assertEquals(new DeleteCommand((List<IdentifierPredicate>) new NameMatchesKeywordPredicate("Joe"),
+                false), command);
     }
 
     @Test

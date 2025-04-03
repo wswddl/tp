@@ -1,21 +1,49 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_FLAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-
-import java.util.*;
-import java.util.function.Function;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
+import javafx.util.Pair;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.applicant.*;
+import seedu.address.model.applicant.Address;
+import seedu.address.model.applicant.AfterDatePredicate;
+import seedu.address.model.applicant.BeforeDatePredicate;
+import seedu.address.model.applicant.Email;
+import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
+import seedu.address.model.applicant.IdentifierPredicate;
+import seedu.address.model.applicant.JobPosition;
+import seedu.address.model.applicant.JobPositionMatchesPredicate;
+import seedu.address.model.applicant.Name;
+import seedu.address.model.applicant.NameMatchesKeywordPredicate;
+import seedu.address.model.applicant.Phone;
+import seedu.address.model.applicant.PhoneMatchesKeywordPredicate;
+import seedu.address.model.applicant.Rating;
+import seedu.address.model.applicant.Status;
+import seedu.address.model.applicant.StatusMatchesPredicate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,13 +57,19 @@ public class ParserUtil {
      * The order in which prefixes are parsed. This determines the order of
      * predicates in the final command.
      */
-    public static final Prefix[] PREFIX_ORDER = {
-            PREFIX_NAME, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS
+    public static final Prefix[] COMMON_PREFIXES = {
+        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_STATUS, PREFIX_BEFORE, PREFIX_AFTER
     };
 
-    /** Mapping of prefixes to their respective predicate constructors. */
-    public static final Map<Prefix, Function<String, IdentifierPredicate>> predicateMapping = Map.of(
+    public static final Prefix[] COMMON_PREFIXES_WITH_ID =
+            Stream.concat(Arrays.stream(COMMON_PREFIXES), Stream.of(PREFIX_ID))
+                    .toArray(Prefix[]::new);
+    /**
+     * Mapping of prefixes to their respective predicate constructors.
+     */
+    public static final Map<Prefix, Function<String, IdentifierPredicate>> PREFIX_MAPPING = Map.of(
             PREFIX_NAME, NameMatchesKeywordPredicate::new,
+            PREFIX_PHONE, PhoneMatchesKeywordPredicate::new,
             PREFIX_EMAIL, EmailMatchesKeywordPredicate::new,
             PREFIX_JOB_POSITION, JobPositionMatchesPredicate::new,
             PREFIX_STATUS, StatusMatchesPredicate::new
@@ -47,19 +81,78 @@ public class ParserUtil {
      * @param argMultimap The parsed argument multimap.
      * @return A list of identifier predicates for filtering applicants.
      */
-    public static List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) {
+    public static List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) throws ParseException {
         List<IdentifierPredicate> predicates = new ArrayList<>();
 
-        predicateMapping.forEach((prefix, predicateConstructor) ->
+        PREFIX_MAPPING.forEach((prefix, predicateConstructor) ->
                 argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
         );
+
+        extractPredicateFromDates(argMultimap, predicates);
 
         return predicates;
     }
 
     /**
+     * Extracts date-related predicates from the argument multimap.
+     *
+     * @param argMultimap The parsed argument multimap.
+     * @param predicates  The list of predicates to which extracted predicates will be added.
+     * @throws ParseException if date parsing fails.
+     */
+    static void extractPredicateFromDates(ArgumentMultimap argMultimap, List<IdentifierPredicate> predicates)
+            throws ParseException {
+        IdentifierPredicate predicate;
+        if (argMultimap.getValue(PREFIX_BEFORE).isPresent()) {
+            String beforeDateString = argMultimap.getValue(PREFIX_BEFORE).get();
+            LocalDateTime validBeforeDate = ParserUtil.parseBeforeDate(beforeDateString);
+            predicate = new BeforeDatePredicate(validBeforeDate);
+            predicates.add(predicate);
+        }
+        if (argMultimap.getValue(PREFIX_AFTER).isPresent()) {
+            String afterDateString = argMultimap.getValue(PREFIX_AFTER).get();
+            LocalDateTime validAfterDate = ParserUtil.parseAfterDate(afterDateString);
+            predicate = new AfterDatePredicate(validAfterDate);
+            predicates.add(predicate);
+        }
+    }
+
+    /**
+     * Checks for the presence of a flag in the argument string.
+     *
+     * @param args The input argument string.
+     * @return A pair containing the cleaned argument string and a boolean indicating
+     *      whether the --force flag was present.
+     * @throws ParseException if an unknown flag is encountered.
+     */
+    public static Pair<String, Boolean> checkFlag(String args) throws ParseException {
+        // Check for --force flag
+        boolean isForceOperation = args.contains("--force");
+        System.out.println("isForceOperation: " + isForceOperation);
+        args = args.replace("--force", ""); // Remove --force from args
+
+        // Flags other than --force that start with "--" are invalid
+        if (args.matches(".*\\s--\\w+.*")) {
+            System.out.println("checkFlag: " + args);
+            String unknownFlag = args.trim().replaceAll(".*(--\\w+).*", "$1");
+            throw new ParseException(String.format(MESSAGE_UNKNOWN_FLAG, unknownFlag));
+        }
+
+        return new Pair<>(args, isForceOperation);
+    }
+
+    /**
+     * Counts the number of prefixes that have values in the given {@code ArgumentMultimap}.
+     * i.e. number of prefixes provided in the argument.
+     */
+    public static int numOfPrefixesPresent(ArgumentMultimap argMultimap, Prefix... prefixes) {
+        return (int) Stream.of(prefixes).filter(prefix -> argMultimap.getValue(prefix).isPresent()).count();
+    }
+
+    /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {

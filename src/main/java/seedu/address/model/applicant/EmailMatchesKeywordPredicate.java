@@ -44,11 +44,10 @@ public class EmailMatchesKeywordPredicate extends IdentifierPredicate {
             return true;
         }
 
-        if (!(other instanceof EmailMatchesKeywordPredicate)) {
+        if (!(other instanceof EmailMatchesKeywordPredicate otherEmailMatchesKeywordPredicate)) {
             return false;
         }
 
-        EmailMatchesKeywordPredicate otherEmailMatchesKeywordPredicate = (EmailMatchesKeywordPredicate) other;
         return keyword.equals(otherEmailMatchesKeywordPredicate.keyword);
     }
 
