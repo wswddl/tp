@@ -1,10 +1,10 @@
 package seedu.address.model.applicant;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class RatingTest {
     @Test
@@ -41,21 +41,21 @@ public class RatingTest {
 
     @Test
     public void equals() {
-        Rating Rating = new Rating("2");
+        Rating rating = new Rating("2");
 
         // same values -> returns true
-        assertTrue(Rating.equals(new Rating("2")));
+        assertTrue(rating.equals(new Rating("2")));
 
         // same object -> returns true
-        assertTrue(Rating.equals(Rating));
+        assertTrue(rating.equals(rating));
 
         // null -> returns false
-        assertFalse(Rating.equals(null));
+        assertFalse(rating.equals(null));
 
         // different types -> returns false
-        assertFalse(Rating.equals(5.0f));
+        assertFalse(rating.equals(5.0f));
 
         // different values -> returns false
-        assertFalse(Rating.equals(new Rating("3")));
+        assertFalse(rating.equals(new Rating("3")));
     }
 }

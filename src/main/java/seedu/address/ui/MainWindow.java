@@ -1,27 +1,21 @@
 package seedu.address.ui;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.applicant.Applicant;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -174,37 +168,24 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Returns true if the given command is an ExportCommand.
-     */
-    private boolean isExportCommand(Command command) {
-        return command instanceof ExportCommand;
-    }
-
-    /**
      * Executes the command and returns the result.
      *
      * @see seedu.address.logic.Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
-            Command command = logic.parseCommand(commandText);
-
-            if (isExportCommand(command)) {
-                return handleExportCommand((ExportCommand) command);
-            }            
-    
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-    
+
             if (commandResult.isShowHelp()) {
                 handleHelp();
             }
-    
+
             if (commandResult.isExit()) {
                 handleExit();
             }
-    
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
@@ -230,46 +211,17 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Handles execution of the export command with file chooser.
-     */
-    private CommandResult handleExportCommand(ExportCommand exportCommand) throws CommandException {
-        String suggestedFileName = exportCommand.getFileName();
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Exported CSV");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
-        fileChooser.setInitialFileName(suggestedFileName);
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-
-        File file = fileChooser.showSaveDialog(getPrimaryStage());
-
-        if (file != null) {
-            if (!file.getName().endsWith(".csv")) {
-                file = new File(file.getAbsolutePath() + ".csv");
-            }
-
-            logic.exportCsv(file);
-            resultDisplay.setFeedbackToUser("Exported applicant list to: " + file.getName());
-
-            return new CommandResult("Export completed.");
-        } else {
-            resultDisplay.setFeedbackToUser("Export cancelled.");
-            return new CommandResult("Export cancelled.");
-        }
-    }
-
-    /**
      * Display error message when selected file's size is too big.
      */
     public void displayOversizeImageError(String maxFileSizeString) {
-        resultDisplay.setFeedbackToUser("Please select an image smaller than " + maxFileSizeString + ".");
+        resultDisplay.setFeedbackToUser("Please select an image smaller than " + maxFileSizeString);
     }
 
     /**
      * Displays error message when no file is chosen.
      */
     public void displayNoFileChosen(String applicantName) {
-        resultDisplay.setFeedbackToUser("Please select an image for " + applicantName + ".");
+        resultDisplay.setFeedbackToUser("Please select an image for " + applicantName);
     }
 
     /**

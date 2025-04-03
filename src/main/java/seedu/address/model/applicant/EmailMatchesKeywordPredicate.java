@@ -24,7 +24,8 @@ public class EmailMatchesKeywordPredicate extends IdentifierPredicate {
      * Matching is case-insensitive and exact (not partial).
      *
      * @param applicant The applicant to be tested.
-     * @return {@code true} if the applicant's email exactly matches the keyword (case-insensitive), {@code false} otherwise.
+     * @return {@code true} if the applicant's email exactly matches the keyword (case-insensitive),
+     *         {@code false} otherwise.
      */
     @Override
     public boolean test(Applicant applicant) {
@@ -44,11 +45,10 @@ public class EmailMatchesKeywordPredicate extends IdentifierPredicate {
             return true;
         }
 
-        if (!(other instanceof EmailMatchesKeywordPredicate)) {
+        if (!(other instanceof EmailMatchesKeywordPredicate otherEmailMatchesKeywordPredicate)) {
             return false;
         }
 
-        EmailMatchesKeywordPredicate otherEmailMatchesKeywordPredicate = (EmailMatchesKeywordPredicate) other;
         return keyword.equals(otherEmailMatchesKeywordPredicate.keyword);
     }
 

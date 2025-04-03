@@ -61,7 +61,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// applicant-level operations
 
     /**
-     * Returns true if a applicant with the same identity as {@code applicant} exists in the address book.
+     * Returns true if an applicant with the same identity as {@code applicant} exists in the address book.
      */
     public boolean hasPerson(Applicant applicant) {
         requireNonNull(applicant);
@@ -69,7 +69,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a applicant to the address book.
+     * Adds an applicant to the address book.
      * The applicant must not already exist in the address book.
      */
     public void addPerson(Applicant p) {

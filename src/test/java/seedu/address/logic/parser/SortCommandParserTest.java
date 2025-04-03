@@ -1,9 +1,5 @@
 package seedu.address.logic.parser;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.logic.commands.SortCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
-
 import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CRITERIA_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDED_TIME;
@@ -13,6 +9,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 public class SortCommandParserTest {
     private final SortCommandParser parser = new SortCommandParser();
