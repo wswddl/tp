@@ -22,7 +22,7 @@ public class UiManager implements Ui {
     public static final String CUSTOM_PROFILE_PIC_FOLDER = "./data/profile_photos/";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static final String ICON_APPLICATION = "/images/recruitTrack.png";
     private Logic logic;
     private MainWindow mainWindow;
 
