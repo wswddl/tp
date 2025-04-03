@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.*;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.*;
 import java.util.function.Function;
@@ -24,6 +23,15 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+
+    public static final int MAX_INPUT_LENGTH = 100;
+
+    private static void checkLength(String fieldName, String value) throws ParseException {
+        if (value.length() > MAX_INPUT_LENGTH) {
+            throw new ParseException(fieldName + " cannot exceed " + MAX_INPUT_LENGTH + " characters.");
+        }
+    }
+    
 
     /**
      * The order in which prefixes are parsed. This determines the order of
@@ -82,6 +90,7 @@ public class ParserUtil {
         if (!Name.isValidName(trimmedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
+        checkLength("Name", trimmedName);
         return new Name(trimmedName);
     }
 
@@ -97,6 +106,7 @@ public class ParserUtil {
         if (!Phone.isValidPhone(trimmedPhone)) {
             throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
         }
+        checkLength("Phone", trimmedPhone);
         return new Phone(trimmedPhone);
     }
 
@@ -112,6 +122,7 @@ public class ParserUtil {
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
+        checkLength("Address", trimmedAddress);
         return new Address(trimmedAddress);
     }
 
@@ -127,6 +138,7 @@ public class ParserUtil {
         if (!Email.isValidEmail(trimmedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
+        checkLength("Email", trimmedEmail);
         return new Email(trimmedEmail);
     }
 
@@ -142,6 +154,7 @@ public class ParserUtil {
         if (!JobPosition.isValidJobPosition(trimmedJobPosition)) {
             throw new ParseException(JobPosition.MESSAGE_CONSTRAINTS);
         }
+        checkLength("Job Position", trimmedJobPosition);
         return new JobPosition(trimmedJobPosition);
     }
 
@@ -157,6 +170,7 @@ public class ParserUtil {
         if (!Status.isValidStatus(trimmedStatus)) {
             throw new ParseException(Status.MESSAGE_CONSTRAINTS);
         }
+        checkLength("Status", trimmedStatus);
         return new Status(trimmedStatus);
     }
 
@@ -169,6 +183,7 @@ public class ParserUtil {
     public static LocalDateTime parseBeforeDate(String beforeDate) throws ParseException {
         requireNonNull(beforeDate);
         String trimmedDate = beforeDate.trim();
+        checkLength("Date", trimmedDate);
         try {
             return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
         } catch (DateTimeParseException e) {
@@ -185,6 +200,7 @@ public class ParserUtil {
     public static LocalDateTime parseAfterDate(String afterDate) throws ParseException {
         requireNonNull(afterDate);
         String trimmedDate = afterDate.trim();
+        checkLength("Date", trimmedDate);
         try {
             return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
         } catch (DateTimeParseException e) {
@@ -204,6 +220,7 @@ public class ParserUtil {
         if (!Tag.isValidTagName(trimmedTag)) {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
+        checkLength("Tag", trimmedTag);
         return new Tag(trimmedTag);
     }
 
@@ -231,6 +248,7 @@ public class ParserUtil {
         if (!Rating.isValidRating(trimmedRating)) {
             throw new ParseException(Rating.MESSAGE_CONSTRAINTS);
         }
+        checkLength("Rating", trimmedRating);
         return new Rating(trimmedRating);
     }
 }
