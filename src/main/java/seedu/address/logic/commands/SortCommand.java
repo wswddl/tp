@@ -2,11 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CRITERIA_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDED_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -19,15 +15,19 @@ import seedu.address.model.Model;
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sort the applicants based on [CRITERIA].\n"
-            + "Accepted [CRITERIA]:   "
-            + PREFIX_NAME + ": Sort by name.   "
-            + PREFIX_EMAIL + ": Sort by email address.   "
-            + PREFIX_ADDED_TIME + ": Sort by added time.   "
-            + PREFIX_JOB_POSITION + ": Sort by job position.   "
-            + PREFIX_STATUS + ": Sort by application status.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Sort the applicants based on one specified criterion and an optional sorting order.\n"
+            + "Criteria: "
+            + "[" + PREFIX_NAME + "]: Sort by name. "
+            + "[" + PREFIX_EMAIL + "]: Sort by email address. "
+            + "[" + PREFIX_ADDED_TIME + "]: Sort by added time. "
+            + "[" + PREFIX_JOB_POSITION + "]: Sort by job position. "
+            + "[" + PREFIX_STATUS + "]: Sort by application status. \n"
+            + "Order (ascending order by default): "
+            + "[" + PREFIX_ASCENDING + "] OR [" + PREFIX_DESCENDING + "]: Sort in ascending OR descending order.\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_EMAIL;
+            + "Example: " + COMMAND_WORD + " " + PREFIX_EMAIL + " " + PREFIX_ASCENDING + "\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_ADDED_TIME + " " + PREFIX_DESCENDING;
 
     public static final String MESSAGE_SUCCESS = "Applicant list has been sorted successfully based on %1$s in %2$s";
     private final Prefix prefix;
