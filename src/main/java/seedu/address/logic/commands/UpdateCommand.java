@@ -47,7 +47,7 @@ public class UpdateCommand extends ConfirmationRequiredCommand {
             + "Example: " + COMMAND_WORD + " n/Alex Yeoh s/Interview Scheduled";
 
     /** Confirmation message for bulk updates */
-    private static final String MESSAGE_UPDATE_CONFIRMATION =
+    static final String MESSAGE_UPDATE_CONFIRMATION =
             "Are you sure you want to update the following applicant(s)?\n"
                     + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the update";

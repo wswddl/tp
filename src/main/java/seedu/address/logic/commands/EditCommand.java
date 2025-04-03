@@ -56,7 +56,8 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Applicant: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This applicant already exists in the address book (Duplicate Email or Phone Number)";
+    public static final String MESSAGE_DUPLICATE_PERSON =
+            "This applicant already exists in the address book (Duplicate Email or Phone Number)";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;

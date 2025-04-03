@@ -5,6 +5,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.DeleteCommand;
@@ -23,16 +25,19 @@ public class DeleteCommandParserTest {
 
         // Test when Name is provided
         String nameArg = "delete n/John Doe";
-        assertParseSuccess(parser, nameArg, new DeleteCommand(new NameMatchesKeywordPredicate("John Doe"), false));
+        assertParseSuccess(parser, nameArg,
+                new DeleteCommand(List.of(new NameMatchesKeywordPredicate("John Doe")), false));
 
         // Test when Phone is provided
         String phoneArg = "delete p/98765432";
-        assertParseSuccess(parser, phoneArg, new DeleteCommand(new PhoneMatchesKeywordPredicate("98765432"), false));
+        assertParseSuccess(parser, phoneArg,
+                new DeleteCommand(List.of(new PhoneMatchesKeywordPredicate("98765432")), false));
 
         // Test when Email is provided
         String emailArg = "delete e/john.doe@example.com";
-        assertParseSuccess(parser, emailArg, new DeleteCommand(new EmailMatchesKeywordPredicate("john.doe@example.com"),
-                false));
+        assertParseSuccess(parser, emailArg,
+                new DeleteCommand(List.of(new EmailMatchesKeywordPredicate("john.doe@example.com")), false));
+
 
         // Test when force delete flag is present
         String forceDeleteArg = "delete id/1 --force";

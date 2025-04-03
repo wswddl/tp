@@ -97,7 +97,7 @@ public class SearchCommandParserTest {
      * Tests parsing input with multiple fields and extra whitespace between tokens.
      */
     @Test
-    public void parse_multipleFields_withWhitespace_success() {
+    public void parse_multipleFieldsWithWhitespace_success() {
         SearchCommand expected = new SearchCommand(List.of(
                 new NameMatchesKeywordPredicate("Bob"),
                 new EmailMatchesKeywordPredicate("bob@example.com")

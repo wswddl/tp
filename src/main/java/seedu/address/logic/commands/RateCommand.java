@@ -75,14 +75,18 @@ public class RateCommand extends Command {
     public CommandResult rateByPredicate(Model model) {
         model.updateFilteredPersonList(predicate);
         int numberOfMatches = model.getFilteredPersonListSize();
+
         if (numberOfMatches == 0) {
             return new CommandResult(MESSAGE_NO_RESULT);
         } else if (numberOfMatches > 1) {
             return new CommandResult(String.format(MESSAGE_MULTIPLE_MATCHES, numberOfMatches));
         }
+
         Applicant target = model.getFilteredPersonList().get(0);
         Applicant updatedApplicant = model.setRating(target, rating);
-        return new CommandResult(String.format(MESSAGE_ASSIGN_RATING_SUCCESS, rating.toString(), Messages.format(updatedApplicant)));
+
+        return new CommandResult(String.format(MESSAGE_ASSIGN_RATING_SUCCESS,
+                rating.toString(), Messages.format(updatedApplicant)));
     }
 
     /**
@@ -101,7 +105,8 @@ public class RateCommand extends Command {
 
         Applicant target = lastShownList.get(targetIndex.getZeroBased());
         Applicant updatedApplicant = model.setRating(target, rating);
-        return new CommandResult(String.format(MESSAGE_ASSIGN_RATING_SUCCESS, rating.toString(), Messages.format(updatedApplicant)));
+        return new CommandResult(String.format(MESSAGE_ASSIGN_RATING_SUCCESS,
+                rating.toString(), Messages.format(updatedApplicant)));
     }
 
     /**

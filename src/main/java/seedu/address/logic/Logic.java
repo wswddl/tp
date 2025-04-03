@@ -1,16 +1,16 @@
 package seedu.address.logic;
 
-import java.io.File;
 import java.nio.file.Path;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.applicant.Applicant;
+
 
 /**
  * API of the Logic component
@@ -28,7 +28,7 @@ public interface Logic {
     /**
      * Save the applicant's data in storage
      */
-    void saveAddressBook()  throws CommandException;
+    void saveAddressBook() throws CommandException;
 
     /**
      * Returns the AddressBook.

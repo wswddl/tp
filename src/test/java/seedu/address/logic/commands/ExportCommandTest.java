@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -56,11 +55,11 @@ public class ExportCommandTest {
         ExportCommand c2 = new ExportCommand("file1.csv");
         ExportCommand c3 = new ExportCommand("other.csv");
 
-        assertEquals(c1, c1);         // same object
-        assertEquals(c1, c2);         // same value
-        assertTrue(!c1.equals(c3));   // different value
+        assertEquals(c1, c1); // same object
+        assertEquals(c1, c2); // same value
+        assertTrue(!c1.equals(c3)); // different value
         assertTrue(!c1.equals(null)); // null check
-        assertTrue(!c1.equals(42));   // different type
+        assertTrue(!c1.equals(42)); // different type
     }
 
     /**
@@ -68,7 +67,7 @@ public class ExportCommandTest {
      */
     @Test
     public void execute_unwritableFile_throwsCommandException() {
-        String invalidPath = "/this/does/not/exist/export.csv"; 
+        String invalidPath = "/this/does/not/exist/export.csv";
         ExportCommand command = new ExportCommand(invalidPath);
         assertThrows(CommandException.class, () -> command.execute(model));
     }
