@@ -63,8 +63,6 @@ Type in the command box:
 - `list` 📋 - Shows everyone
 - `exit` 🚪 - Leaves the party (saves automatically!)
 
-[🔝 Back to top](#-recruittrack-user-guide)
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Feature Highlights
@@ -88,7 +86,7 @@ Type in the command box:
 - `export` - Take data elsewhere
 - Profile pics - Add friendly faces
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top](#🌟-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -178,8 +176,6 @@ Command Input:\
 Result:\
 <img title="deleteCommand" alt="Result" src="./images/deleteCommand_after.png"><br/><br/>
 
-[🔝 Back to top](#-recruittrack-user-guide)
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Tracking Progress
@@ -241,7 +237,7 @@ Result:\
 <img title="rateCommand" alt="Result" src="./images/rateCommand_after.png"><br/><br/>
 
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top](#🌟-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -297,8 +293,6 @@ Command Input:\
 Result:\
 <img title="sortCommand" alt="Result" src="./images/sortCommand_after.png"><br/><br/>
 
-[🔝 Back to top](#-recruittrack-user-guide)
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Power User Tools
@@ -335,7 +329,7 @@ Statuses ->
 [Interview Scheduled: 1, Pending Review: 2, Offer Rejected: 1]
 ```
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top](#🌟-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -362,8 +356,6 @@ Clears all applicant data from the application.<br/>
 📂 **Easy Backups**: Just copy the `data/` folder  
 🔄 **Recovery**: Previous versions are kept for safety
 
-[🔝 Back to top](#-recruittrack-user-guide)
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## ❓ Frequently Asked Questions
@@ -376,8 +368,6 @@ Not directly, but if you have a backup of your data file, you can restore it.
 
 ### Can I change the colors?
 Not yet, but we're working on theme options for a future update!
-
-[🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -402,8 +392,6 @@ Not yet, but we're working on theme options for a future update!
 
 <br/>
 
-[🔝 Back to top](#-recruittrack-user-guide)
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Final Thoughts
@@ -414,4 +402,4 @@ We hope you enjoy using RecruitTrack as much as we enjoyed making it! Remember:
 
 Need help? Just type `help` in the app or reach out to our friendly support team.
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top](#🌟-recruittrack-user-guide)
