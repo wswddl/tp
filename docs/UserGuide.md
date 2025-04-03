@@ -262,11 +262,11 @@ list
 ### 🔎 Smart Searching
 Find candidates by any detail:
 
-**Command Format**: `search [n/NAME] [p/PHONE] [e/EMAIL] [j/JOB] [s/STATUS]`
+**Command Format**: `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`
 * The search is **case-insensitive**. e.g. `hans` will match `Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Only applicants that match all provided criteria are returned (i.e. logical `AND` search, applicant must match **all** specified field values to appear in the results).<br>
-  e.g. `search n/John e/john@example.com` searches by name and email
+* Only applicants that match any provided criteria are returned (i.e. logical `OR` search, applicant that match **any** specified field values will appear in the results).<br>
+  e.g. `search n/John e/john@example.com` searches by name or email
 
 **Example**:
 ```bash
@@ -391,7 +391,7 @@ Not yet, but we're working on theme options for a future update!
 | **List**    | `list`                                                                                                                                                                                                                                |
 | **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
 | **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
-| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`                                                                                                                                               |
+| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                                               |
 | **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
 | **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
 | **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
