@@ -108,8 +108,13 @@ RecruitTrack stores applicants with the following fields, each with strict valid
 | **Index** (`id/`)          | Auto-assigned unique integer (GUI display).                                    | `id/1`                                                    |
 
 **Email Validation Rules**:
-- Local-part (before `@`): Alphanumeric, `+_.-` allowed. Cannot start/end with special chars.
-- Domain: Labels separated by `.` (e.g., `sub.domain.com`). TLD ≥ 2 chars.
+
+Emails should be of the format `local-part@domain` and adhere to the following constraints:
+1. The local-part should only contain alphanumeric characters and these special characters, (`+` `_` `.` `-`). The local-part may not start or end with any special characters.
+2. This is followed by a `@` and then a domain name. The domain name is made up of domain labels separated by periods. The domain name must:
+   - end with a domain label at least 2 characters long
+   - have each domain label start and end with alphanumeric characters
+   - have each domain label consist of alphanumeric characters, separated only by hyphens, if any
 
 ### ➕ Adding New Candidates
 **Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOBPOSITION s/STATUS a/ADDRESS [t/TAG]...`  
