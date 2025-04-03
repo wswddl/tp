@@ -99,6 +99,7 @@ public class RateCommand extends Command {
     public CommandResult rateByIndex(Model model) throws CommandException {
         List<Applicant> lastShownList = model.getFilteredPersonList();
 
+        assert targetIndex != null;
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }

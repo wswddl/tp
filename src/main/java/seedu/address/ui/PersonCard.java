@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,14 +42,12 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
+    private static boolean isProfilePicClicked = false; // allow only one window pop up in a given moment
+    private static final long MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
+    private static final String MAX_FILE_SIZE_STRING = "2MB";
     private MainWindow mainWindow;
     private Applicant applicant;
     private final Logger logger = LogsCenter.getLogger(PersonCard.class);
-
-    private static boolean isProfilePicClicked = false; // allow only one window pop up in a given moment
-    private static final long MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
-
     @FXML
     private HBox cardPane;
     @FXML
@@ -198,7 +195,7 @@ public class PersonCard extends UiPart<Region> {
 
         File selectedFile = this.chooseProfilePicture();
 
-        // check if user did NOT select a file
+        // if user didn't select a file OR selected file is too big
         if (selectedFile == null) {
             return;
         }
@@ -252,7 +249,7 @@ public class PersonCard extends UiPart<Region> {
         String applicantName = applicant.getName().fullName;
         fileChooser.setTitle("Choose Profile Picture for " + applicantName);
 
-        // Restrict to image file types
+        // Restrict to image file types only
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files",
                         "*.png", "*.jpg", "*.jpeg", "*.gif", ".tiff", "*.bmp", "*.webp"));
@@ -262,19 +259,21 @@ public class PersonCard extends UiPart<Region> {
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         isProfilePicClicked = false;
 
-        // check if the chosen file is too big
-        if (selectedFile != null && selectedFile.length() > MAX_FILE_SIZE) {
-            // Alert the user if the file is too large
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("File Too Large");
-            alert.setHeaderText("The selected file is too large.");
-            alert.setContentText("Please select a file smaller than 2MB.");
-            alert.showAndWait();
-
-            // Return null to indicate no file was chosen
+        if (selectedFile == null) {
+            logger.info("User didn't select an image file");
+            mainWindow.displayNoFileChosenError(applicantName);
             return null;
         }
 
+        // check if the chosen file is too big
+        if (selectedFile != null && selectedFile.length() > MAX_FILE_SIZE) {
+            logger.info("The selected image file exceeds " + MAX_FILE_SIZE_STRING);
+            mainWindow.displayOversizeImageError(MAX_FILE_SIZE_STRING);
+            return null;
+        }
+
+        logger.info("User successfully selected an image file");
+        mainWindow.displaySuccessfulFileSelection(applicantName);
         return selectedFile;
     }
 

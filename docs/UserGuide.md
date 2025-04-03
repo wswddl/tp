@@ -281,13 +281,17 @@ Result:\
 ### 🔄 Sorting Your View
 Organize by what matters most:
 
-**Command Format**: `sort CRITERIA/`
-* Sort the applicant list by the sorting `CRITERIA/`. The supported `CRITERIA/` are:
+**Command Format**: `sort CRITERIA/ ORDER/`
+* Sort the applicant list by the sorting `CRITERIA/`. 
+* The supported `CRITERIA/` are:
     * `n/`: Applicant's name
     * `e/`: Applicant's email address
     * `time/`: The time the applicant was added to the list.
     * `j/`: Job position
     * `s/`: Application status
+* The `ORDER/` is optional, with the default being ascending:
+    * `a/`: Ascending order
+    * `d/`: Descending order
 * Only one sorting criterion can be provided at a time.
 * The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
 
@@ -343,6 +347,14 @@ Statuses ->
 --------------------------------------------------------------------------------------------------------------------
 
 ## Miscellaneous
+
+### Adding/Updating Profile Picture
+
+* This is not a command.
+* To change the profile picture, click on the existing picture.
+* A pop-up window will appear, allowing you to select an image for the applicant.
+  * Ensure the image size is below 2MB.
+<br/><br/>
 
 ### Clear All Records
 

@@ -87,7 +87,7 @@ public interface Model {
     Applicant setRating(Applicant target, Rating rating);
 
     // Added for Applicant sorting
-    void sortPersons(Prefix prefix);
+    void sortPersons(Prefix prefix, boolean isAscendingOrder);
 
     /** Returns an unmodifiable view of the filtered applicant list */
     ObservableList<Applicant> getFilteredPersonList();
