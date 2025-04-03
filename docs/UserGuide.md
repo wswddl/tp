@@ -349,6 +349,14 @@ Statuses ->
 
 ## Miscellaneous
 
+### Adding/Updating Profile Picture
+
+* This is not a command.
+* To change the profile picture, click on the existing picture.
+* A pop-up window will appear, allowing you to select an image for the applicant.
+  * Ensure the image size is below 2MB.
+<br/><br/>
+
 ### Clear All Records
 
 Clears all applicant data from the application.<br/>
