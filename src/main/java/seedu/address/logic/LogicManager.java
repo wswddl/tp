@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import javafx.stage.FileChooser;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
@@ -55,7 +54,6 @@ public class LogicManager implements Logic {
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
-
         CommandResult commandResult;
 
         if (pendingCommand != null) {

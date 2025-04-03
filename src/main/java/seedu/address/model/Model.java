@@ -66,6 +66,8 @@ public interface Model {
      */
     void deletePerson(Applicant target);
 
+    void deleteAllProfilePicture();
+
     /**
      * Adds the given applicant.
      * {@code applicant} must not already exist in the address book.
