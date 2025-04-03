@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.UiManager.CUSTOM_PROFILE_PIC_FOLDER;
+import static seedu.address.ui.UiManager.DEFAULT_PROFILE_PIC;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,12 +27,6 @@ import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.applicant.Applicant;
-
-
-import javax.imageio.ImageIO;
-
-import static seedu.address.ui.UiManager.CUSTOM_PROFILE_PIC_FOLDER;
-import static seedu.address.ui.UiManager.DEFAULT_PROFILE_PIC;
 
 /**
  * An UI component that displays information of a {@code Applicant}.

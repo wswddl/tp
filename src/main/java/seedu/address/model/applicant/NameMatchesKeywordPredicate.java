@@ -24,7 +24,8 @@ public class NameMatchesKeywordPredicate extends IdentifierPredicate {
      * Matching is case-insensitive and exact (not partial).
      *
      * @param applicant The applicant to be tested.
-     * @return {@code true} if the applicant's name exactly matches the keyword (case-insensitive), {@code false} otherwise.
+     * @return {@code true} if the applicant's name exactly matches the keyword (case-insensitive),
+     *         {@code false} otherwise.
      */
     @Override
     public boolean test(Applicant applicant) {

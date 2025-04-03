@@ -94,7 +94,7 @@ public class ExportCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE, e);
         }
     }
-    
+
     /**
      * Checks whether this command is equal to another.
      *
