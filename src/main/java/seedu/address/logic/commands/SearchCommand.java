@@ -7,9 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
 import java.util.List;
@@ -34,7 +31,6 @@ public class SearchCommand extends Command {
     /**
      * Usage message displayed when the user provides an incorrect format for the search command.
      */
-    //search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [a/ADDRESS] [t/TAGS] [time/TIME] [r/RATING]
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Searches for applicants who match at least one of the specified criteria (logical OR).\n"
             + "Parameters: [" + PREFIX_NAME + "NAME] "
@@ -42,11 +38,8 @@ public class SearchCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_JOB_POSITION + "JOB_POSITION] "
             + "[" + PREFIX_STATUS + "STATUS]\n"
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAGS] "
-            + "[" + PREFIX_BEFORE + "BEFORE]\n"
-            + "[" + PREFIX_AFTER + "AFTER]\n"
-            + "[" + PREFIX_RATING + "RATING]\n"
+            + "[" + PREFIX_BEFORE + "YYYY-MM-DD]\n"
+            + "[" + PREFIX_AFTER + "YYYY-MM-DD]\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John "
             + PREFIX_EMAIL + "alice@example.com";
 
