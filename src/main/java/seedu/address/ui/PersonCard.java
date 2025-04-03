@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,6 +47,9 @@ public class PersonCard extends UiPart<Region> {
     private MainWindow mainWindow;
     private Applicant applicant;
     private final Logger logger = LogsCenter.getLogger(PersonCard.class);
+
+    private static boolean isProfilePicClicked = false; // allow only one window pop up in a given moment
+    private static final long MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 
     @FXML
     private HBox cardPane;
@@ -186,6 +190,12 @@ public class PersonCard extends UiPart<Region> {
      */
     @FXML
     private void handleImageClick() {
+
+        // prevent multiple window pop up
+        if (isProfilePicClicked) {
+            return;
+        }
+
         File selectedFile = this.chooseProfilePicture();
 
         // check if user did NOT select a file
@@ -239,14 +249,33 @@ public class PersonCard extends UiPart<Region> {
         FileChooser fileChooser = new FileChooser();
 
         // Set title of file chooser window
-        fileChooser.setTitle("Choose Profile Picture");
+        String applicantName = applicant.getName().fullName;
+        fileChooser.setTitle("Choose Profile Picture for " + applicantName);
 
         // Restrict to image file types
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+                new FileChooser.ExtensionFilter("Image Files",
+                        "*.png", "*.jpg", "*.jpeg", "*.gif", ".tiff", "*.bmp", "*.webp"));
 
+        isProfilePicClicked = true;
         // open file chooser and return the selected file
-        return fileChooser.showOpenDialog(new Stage());
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        isProfilePicClicked = false;
+
+        // check if the chosen file is too big
+        if (selectedFile != null && selectedFile.length() > MAX_FILE_SIZE) {
+            // Alert the user if the file is too large
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("File Too Large");
+            alert.setHeaderText("The selected file is too large.");
+            alert.setContentText("Please select a file smaller than 2MB.");
+            alert.showAndWait();
+
+            // Return null to indicate no file was chosen
+            return null;
+        }
+
+        return selectedFile;
     }
 
     /**

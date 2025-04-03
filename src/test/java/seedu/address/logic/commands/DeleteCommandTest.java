@@ -1,14 +1,20 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.Messages.MESSAGE_NO_RESULT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +23,12 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.applicant.AfterDatePredicate;
 import seedu.address.model.applicant.Applicant;
+import seedu.address.model.applicant.BeforeDatePredicate;
+import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
+import seedu.address.model.applicant.IdentifierPredicate;
+import seedu.address.model.applicant.NameMatchesKeywordPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -57,8 +68,9 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_ID_DELETE_CONFIRMATION,
                 lastIndex.getOneBased());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, null);
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     /**
@@ -95,7 +107,114 @@ public class DeleteCommandTest {
 
     // ===== Predicate-based Deletion Tests =====
 
-    // Note: Add tests for predicate-based deletion once implemented
+    /**
+     * EP: Single predicate matching one applicant, force delete
+     */
+    @Test
+    public void execute_singlePredicateUnfilteredList_forceDeleteSuccess() {
+        Applicant applicantToDelete = model.getFilteredPersonList().get(0);
+        IdentifierPredicate predicate = new NameMatchesKeywordPredicate(applicantToDelete.getName().fullName);
+        DeleteCommand deleteCommand = new DeleteCommand(List.of(predicate), true);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SUCCESS,
+                Messages.format(applicantToDelete));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getUserPrefs());
+        expectedModel.deletePerson(applicantToDelete);
+        showNoPerson(expectedModel);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * EP: Multiple predicates matching one applicant, force delete
+     */
+    @Test
+    public void execute_multiplePredicatesUnfilteredList_forceDeleteSuccess() {
+        Applicant applicantToDelete = model.getFilteredPersonList().get(0);
+        IdentifierPredicate namePredicate = new NameMatchesKeywordPredicate(applicantToDelete.getName().fullName);
+        IdentifierPredicate emailPredicate = new EmailMatchesKeywordPredicate(applicantToDelete.getEmail().value);
+        DeleteCommand deleteCommand = new DeleteCommand(Arrays.asList(namePredicate, emailPredicate), true);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SUCCESS,
+                Messages.format(applicantToDelete));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(applicantToDelete);
+        showNoPerson(expectedModel);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * EP: Predicate matching no applicants
+     */
+    @Test
+    public void execute_predicateNoMatches_throwsCommandException() {
+        IdentifierPredicate predicate = new NameMatchesKeywordPredicate("Nonexistent Name");
+        DeleteCommand deleteCommand = new DeleteCommand(List.of(predicate), false);
+
+        assertCommandFailure(deleteCommand, model, MESSAGE_NO_RESULT);
+    }
+
+    /**
+     * EP: Date predicate (after), force delete
+     */
+    @Test
+    public void execute_afterDatePredicate_forceDeleteSuccess() {
+        LocalDateTime futureDate = LocalDateTime.now().plusDays(1);
+        IdentifierPredicate predicate = new AfterDatePredicate(futureDate);
+        DeleteCommand deleteCommand = new DeleteCommand(List.of(predicate), true);
+        System.out.println("Current applicants in model:");
+        model.getFilteredPersonList().forEach(System.out::println);
+        // Expect no matches (since we're using future date)
+        assertCommandFailure(deleteCommand, model, MESSAGE_NO_RESULT);
+    }
+
+    /**
+     * EP: Date predicate (before), force delete
+     */
+    @Test
+    public void execute_beforeDatePredicate_forceDeleteSuccess() {
+        LocalDateTime pastDate = LocalDateTime.now().minusDays(1);
+        IdentifierPredicate predicate = new BeforeDatePredicate(pastDate);
+        DeleteCommand deleteCommand = new DeleteCommand(List.of(predicate), true);
+
+        // Should match all typical persons since they were created in the past
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SUCCESS,
+                model.getFilteredPersonList().stream()
+                        .map(Messages::format)
+                        .collect(Collectors.joining("\n\n")));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getUserPrefs());
+        expectedModel.deletePerson(model.getFilteredPersonList().get(0));
+        expectedModel.deletePerson(model.getFilteredPersonList().get(1));
+        showNoPerson(expectedModel);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * EP: Combined date and name predicates
+     */
+    @Test
+    public void execute_combinedDateAndNamePredicates_forceDeleteSuccess() {
+        Applicant applicantToDelete = model.getFilteredPersonList().get(0);
+        LocalDateTime pastDate = LocalDateTime.now().minusDays(1);
+
+        IdentifierPredicate namePredicate = new NameMatchesKeywordPredicate(applicantToDelete.getName().fullName);
+        IdentifierPredicate datePredicate = new BeforeDatePredicate(pastDate);
+
+        DeleteCommand deleteCommand = new DeleteCommand(Arrays.asList(namePredicate, datePredicate), true);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SUCCESS,
+                Messages.format(applicantToDelete));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(applicantToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
 
     // ===== Unit Tests =====
 
@@ -105,24 +224,24 @@ public class DeleteCommandTest {
         DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON, false);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertEquals(deleteFirstCommand, deleteFirstCommand);
 
         // same values -> returns true
         DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PERSON, false);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        assertEquals(deleteFirstCommand, deleteFirstCommandCopy);
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertNotEquals(1, deleteFirstCommand);
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertNotEquals(null, deleteFirstCommand);
 
         // different applicant -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        assertNotEquals(deleteFirstCommand, deleteSecondCommand);
 
         // different force flag -> returns false
         DeleteCommand deleteFirstCommandForce = new DeleteCommand(INDEX_FIRST_PERSON, true);
-        assertFalse(deleteFirstCommand.equals(deleteFirstCommandForce));
+        assertNotEquals(deleteFirstCommand, deleteFirstCommandForce);
     }
 
     @Test
@@ -130,7 +249,8 @@ public class DeleteCommandTest {
         Index targetIndex = Index.fromOneBased(1);
         DeleteCommand deleteCommand = new DeleteCommand(targetIndex, false);
         String expected = DeleteCommand.class.getCanonicalName()
-                + "{targetIndex=" + targetIndex + ", isForceDelete=false}";
+                + "{predicates=null, "
+                + "targetIndex=" + targetIndex + ", isForceOperation=false}";
         assertEquals(expected, deleteCommand.toString());
     }
 

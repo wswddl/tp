@@ -50,7 +50,6 @@ public class LogicManager implements Logic {
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
-
         CommandResult commandResult;
 
         if (pendingCommand != null) {
@@ -67,6 +66,7 @@ public class LogicManager implements Logic {
                 String cancelMessage = pendingCommand instanceof DeleteCommand
                         ? "Deletion cancelled."
                         : "Update cancelled.";
+                pendingCommand = null;
                 return new CommandResult(cancelMessage);
             }
             pendingCommand = null;

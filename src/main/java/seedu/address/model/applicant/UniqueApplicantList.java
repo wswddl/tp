@@ -93,6 +93,12 @@ public class UniqueApplicantList implements Iterable<Applicant> {
         }
     }
 
+    public void removeAllProfilePicture() {
+        for (Applicant applicant : internalList) {
+            applicant.deleteProfilePic();
+        }
+    }
+
     public void setPersons(UniqueApplicantList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
