@@ -7,10 +7,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDED_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
 import java.util.List;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -43,7 +44,8 @@ public class SearchCommand extends Command {
             + "[" + PREFIX_STATUS + "STATUS]\n"
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAGS] "
-            + "[" + PREFIX_ADDED_TIME + "TIME]\n"
+            + "[" + PREFIX_BEFORE + "BEFORE]\n"
+            + "[" + PREFIX_AFTER + "AFTER]\n"
             + "[" + PREFIX_RATING + "RATING]\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John "
             + PREFIX_EMAIL + "alice@example.com";
