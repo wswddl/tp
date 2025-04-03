@@ -29,18 +29,27 @@ public class SortCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_EMAIL;
 
-    public static final String MESSAGE_SUCCESS = "Applicant list has been sorted successfully based on %1$s";
-
+    public static final String MESSAGE_SUCCESS = "Applicant list has been sorted successfully based on %1$s in %2$s";
     private final Prefix prefix;
     private final String criteria;
+    private final boolean isAscendingOrder;
+    private final String order;
 
 
 
     /**
      * Creates an SortCommand to add the specified {@code Prefix}
      */
-    public SortCommand(Prefix prefix) throws CommandException {
+    public SortCommand(Prefix prefix, boolean isAscendingOrder) throws CommandException {
         requireNonNull(prefix);
+
+        this.isAscendingOrder = isAscendingOrder;
+        if (isAscendingOrder) {
+            this.order = "ascending order";
+        } else {
+            this.order = "descending order";
+        }
+
         this.prefix = prefix;
         if (prefix.equals(PREFIX_NAME)) {
             this.criteria = "Name";
@@ -76,9 +85,9 @@ public class SortCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
-        model.sortPersons(this.prefix);
+        model.sortPersons(this.prefix, isAscendingOrder);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, this.criteria));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, this.criteria, this.order));
     }
 
     /**

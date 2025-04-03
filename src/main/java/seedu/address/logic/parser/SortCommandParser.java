@@ -4,6 +4,12 @@ import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+import java.io.PrintWriter;
+
+import static seedu.address.logic.Messages.MESSAGE_INVALID_CRITERIA_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCENDING;
+
 /**
  * Parses input arguments and creates a new SortCommand object
  */
@@ -19,8 +25,31 @@ public class SortCommandParser implements Parser<SortCommand> {
     public SortCommand parse(String args) throws ParseException {
         try {
             String input = args.trim();
-            Prefix p = new Prefix(input);
-            return new SortCommand(p);
+            String[] parts = input.split("\\s+");
+
+            if (parts.length > 2) {
+                throw new ParseException(String.format(
+                        MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE));
+            }
+            
+            // if user didn't specify the order, sort in ascending order by default
+            boolean isAscendingOrder = true;
+
+            if (parts.length > 1) {
+                Prefix sortOrder = new Prefix(parts[1]);
+                if (sortOrder.equals(PREFIX_ASCENDING)) {
+                    isAscendingOrder = true;
+                } else if (sortOrder.equals(PREFIX_DESCENDING)) {
+                    isAscendingOrder = false;
+                } else {
+                    throw new ParseException(String.format(
+                            MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE));
+                }
+            }
+
+            String criteria = parts[0];
+            Prefix p = new Prefix(criteria);
+            return new SortCommand(p, isAscendingOrder);
 
         } catch (CommandException e) {
             throw new ParseException(e.getMessage());

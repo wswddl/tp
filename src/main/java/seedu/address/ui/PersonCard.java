@@ -53,6 +53,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static boolean isProfilePicClicked = false; // allow only one window pop up in a given moment
     private static final long MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
+    private static final String MAX_FILE_SIZE_STRING = "2 MB";
 
     @FXML
     private HBox cardPane;
@@ -201,7 +202,7 @@ public class PersonCard extends UiPart<Region> {
 
         File selectedFile = this.chooseProfilePicture();
 
-        // check if user did NOT select a file
+        // if user didn't select a file OR selected file is too big
         if (selectedFile == null) {
             return;
         }
@@ -265,19 +266,21 @@ public class PersonCard extends UiPart<Region> {
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         isProfilePicClicked = false;
 
-        // check if the chosen file is too big
-        if (selectedFile != null && selectedFile.length() > MAX_FILE_SIZE) {
-            // Alert the user if the file is too large
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("File Too Large");
-            alert.setHeaderText("The selected file is too large.");
-            alert.setContentText("Please select a file smaller than 2MB.");
-            alert.showAndWait();
-
-            // Return null to indicate no file was chosen
+        if (selectedFile == null) {
+            logger.info("User didn't select an image file");
+            mainWindow.displayNoFileChosen(applicantName);
             return null;
         }
 
+        // check if the chosen file is too big
+        if (selectedFile != null && selectedFile.length() > MAX_FILE_SIZE) {
+            logger.info("The selected image file exceeds " + MAX_FILE_SIZE_STRING);
+            mainWindow.displayOversizeImageError(MAX_FILE_SIZE_STRING);
+            return null;
+        }
+
+        logger.info("User successfully selected an image file");
+        mainWindow.displaySuccessfulFileSelection(applicantName);
         return selectedFile;
     }
 

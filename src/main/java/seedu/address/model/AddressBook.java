@@ -104,10 +104,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Sort {@code internalList} in {@code AddressBook} based on the prefix.
      * @param prefix is the sorting criteria.
      */
-    public void sortPersons(Prefix prefix) {
+    public void sortPersons(Prefix prefix, boolean isAscendingOrder) {
         requireNonNull(prefix);
 
-        persons.sortPersons(prefix);
+        if (isAscendingOrder) {
+            persons.sortPersonsByAscendingOrder(prefix);
+        } else {
+            persons.sortPersonsByDescendingOrder(prefix);
+        }
     }
 
     //// util methods

@@ -18,4 +18,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_RATING = new Prefix("r/");
     public static final Prefix PREFIX_BEFORE = new Prefix("bfr/");
     public static final Prefix PREFIX_AFTER = new Prefix("aft/");
+    public static final Prefix PREFIX_ASCENDING = new Prefix("a/");
+    public static final Prefix PREFIX_DESCENDING = new Prefix("d/");
+
 }

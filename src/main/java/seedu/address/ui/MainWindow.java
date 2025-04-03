@@ -21,6 +21,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.applicant.Applicant;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -255,5 +256,26 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser("Export cancelled.");
             return new CommandResult("Export cancelled.");
         }
+    }
+
+    /**
+     * Display error message when selected file's size is too big.
+     */
+    public void displayOversizeImageError(String maxFileSizeString) {
+        resultDisplay.setFeedbackToUser("Please select an image smaller than " + maxFileSizeString + ".");
+    }
+
+    /**
+     * Displays error message when no file is chosen.
+     */
+    public void displayNoFileChosen(String applicantName) {
+        resultDisplay.setFeedbackToUser("Please select an image for " + applicantName + ".");
+    }
+
+    /**
+     * Displays success message after file selection.
+     */
+    public void displaySuccessfulFileSelection(String applicantName) {
+        resultDisplay.setFeedbackToUser(applicantName + "'s profile picture has been updated");
     }
 }
