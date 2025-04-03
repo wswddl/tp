@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.Messages.MESSAGE_NO_RESULT;
+
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -22,7 +24,6 @@ public class RateCommand extends Command {
             + "Parameters: IDENTIFIER_TYPE/KEYWORD r/RATING\n"
             + "Example: " + COMMAND_WORD + " n/Alex Yeoh + r/4";
 
-    public static final String MESSAGE_NO_MATCHES = "No applicant matches provided keyword!";
     public static final String MESSAGE_MULTIPLE_MATCHES = "%1$d persons matched keyword. Please be more specific!";
 
     public static final String MESSAGE_ASSIGN_RATING_SUCCESS = "Assigned a rating of %1$s to: %2$s";
@@ -75,7 +76,7 @@ public class RateCommand extends Command {
         model.updateFilteredPersonList(predicate);
         int numberOfMatches = model.getFilteredPersonListSize();
         if (numberOfMatches == 0) {
-            return new CommandResult(String.format(MESSAGE_NO_MATCHES));
+            return new CommandResult(MESSAGE_NO_RESULT);
         } else if (numberOfMatches > 1) {
             return new CommandResult(String.format(MESSAGE_MULTIPLE_MATCHES, numberOfMatches));
         }
@@ -129,6 +130,7 @@ public class RateCommand extends Command {
         }
 
         if (targetIndex == null) {
+            assert predicate != null;
             return predicate.equals(otherRateCommand.predicate) && rating.equals(otherRateCommand.rating);
         } else {
             return targetIndex.equals(otherRateCommand.targetIndex) && rating.equals(otherRateCommand.rating);

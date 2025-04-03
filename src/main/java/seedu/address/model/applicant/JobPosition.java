@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Applicant's applying JobPosition.
+ * Represents an applicant's applying JobPosition.
  * Guarantees: immutable; is valid as declared in {@link #isValidJobPosition(String)}
  */
 public class JobPosition {
