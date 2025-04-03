@@ -190,7 +190,7 @@ Move candidates through your pipeline:
 
 **Command Format**: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]`
 * Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then updates their application status to the provided `STATUS`.
-* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the last shown list
+* The `IDENTIFIER_TYPE` must include `s/` for status AND either `id/` – the ID in the last shown list
   or any combination of the following:
   * `n/` – Name
   * `e/` – Email
@@ -198,7 +198,6 @@ Move candidates through your pipeline:
   * `bfr/` - Date added (before the specified date)
   * `aft/` - Date added (after the specified date).
   * `j/` - Job Position
-  * `s/` - Status
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
 * The `--force` flag (optional) bypasses confirmation prompts and updates the applicant immediately.
 
@@ -262,11 +261,11 @@ list
 ### 🔎 Smart Searching
 Find candidates by any detail:
 
-**Command Format**: `search [n/NAME] [p/PHONE] [e/EMAIL] [j/JOB] [s/STATUS]`
+**Command Format**: `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`
 * The search is **case-insensitive**. e.g. `hans` will match `Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Only applicants that match all provided criteria are returned (i.e. logical `AND` search, applicant must match **all** specified field values to appear in the results).<br>
-  e.g. `search n/John e/john@example.com` searches by name and email
+* Only applicants that match any provided criteria are returned (i.e. logical `OR` search, applicant that match **any** specified field values will appear in the results).<br>
+  e.g. `search n/John e/john@example.com` searches by name or email
 
 **Example**:
 ```bash
@@ -327,7 +326,7 @@ export candidates.csv
 ### 📊 Summary Reports
 Get quick statistics:
 
-**Command Format**: `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
+**Command Format**: `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`
 * Having no identifiers will summarize all applicants
 * The filter is case-insensitive. e.g. `hans` will match `Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
@@ -403,11 +402,11 @@ Not yet, but we're working on theme options for a future update!
 | **List**    | `list`                                                                                                                                                                                                                                |
 | **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
 | **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
-| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`                                                                                                                                               |
+| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                                               |
 | **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
 | **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
 | **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
-| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
+| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
 | **Rate**    | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                   |
 | **Clear**   | `clear`                                                                                                                                                                                                                               |
 | **Exit**    | `exit`                                                                                                                                                                                                                                |
