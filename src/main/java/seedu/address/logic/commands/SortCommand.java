@@ -42,6 +42,7 @@ public class SortCommand extends Command {
      */
     public SortCommand(Prefix prefix, boolean isAscendingOrder) throws CommandException {
         requireNonNull(prefix);
+        requireNonNull(isAscendingOrder);
 
         this.isAscendingOrder = isAscendingOrder;
         if (isAscendingOrder) {
@@ -105,7 +106,7 @@ public class SortCommand extends Command {
         }
 
         SortCommand otherSortCommand = (SortCommand) other;
-        return prefix.equals(otherSortCommand.prefix);
+        return prefix.equals(otherSortCommand.prefix) && this.isAscendingOrder == otherSortCommand.isAscendingOrder;
     }
 
     /**
@@ -115,6 +116,7 @@ public class SortCommand extends Command {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("prefix", prefix)
+                .add("sortingOrder", isAscendingOrder)
                 .toString();
     }
 }
