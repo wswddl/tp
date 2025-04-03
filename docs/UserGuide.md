@@ -282,13 +282,17 @@ Result:\
 ### 🔄 Sorting Your View
 Organize by what matters most:
 
-**Command Format**: `sort CRITERIA/`
-* Sort the applicant list by the sorting `CRITERIA/`. The supported `CRITERIA/` are:
+**Command Format**: `sort CRITERIA/ ORDER/`
+* Sort the applicant list by the sorting `CRITERIA/`. 
+* The supported `CRITERIA/` are:
     * `n/`: Applicant's name
     * `e/`: Applicant's email address
     * `time/`: The time the applicant was added to the list.
     * `j/`: Job position
     * `s/`: Application status
+* The `ORDER/` is optional, with the default being ascending:
+    * `a/`: Ascending order
+    * `d/`: Descending order
 * Only one sorting criterion can be provided at a time.
 * The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
 
