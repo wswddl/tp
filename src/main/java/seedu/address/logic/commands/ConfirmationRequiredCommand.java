@@ -215,11 +215,10 @@ public abstract class ConfirmationRequiredCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof ConfirmationRequiredCommand)) {
+        if (!(other instanceof ConfirmationRequiredCommand otherCommand)) {
             return false;
         }
 
-        ConfirmationRequiredCommand otherCommand = (ConfirmationRequiredCommand) other;
         return Objects.equals(predicates, otherCommand.predicates)
                 && Objects.equals(targetIndex, otherCommand.targetIndex)
                 && isForceOperation == otherCommand.isForceOperation;

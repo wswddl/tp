@@ -55,6 +55,7 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
     public static final int MAX_INPUT_LENGTH = 50;
+    public static final String MESSAGE_INVALID_DATE_FORMAT = "Invalid date format. Please use YYYY-MM-DD.";
 
     private static void checkLength(String fieldName, String value) throws ParseException {
         if (value.length() > MAX_INPUT_LENGTH) {
@@ -276,14 +277,7 @@ public class ParserUtil {
      * @throws ParseException if the given {@code beforeDate} is invalid.
      */
     public static LocalDateTime parseBeforeDate(String beforeDate) throws ParseException {
-        requireNonNull(beforeDate);
-        String trimmedDate = beforeDate.trim();
-        checkLength("Date", trimmedDate);
-        try {
-            return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
-        } catch (DateTimeParseException e) {
-            throw new ParseException("Invalid date format. Please use YYYY-MM-DD.");
-        }
+        return parseAfterDate(beforeDate);
     }
 
     /**
@@ -299,7 +293,7 @@ public class ParserUtil {
         try {
             return LocalDate.parse(trimmedDate, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
         } catch (DateTimeParseException e) {
-            throw new ParseException("Invalid date format. Please use YYYY-MM-DD.");
+            throw new ParseException(MESSAGE_INVALID_DATE_FORMAT);
         }
     }
 
