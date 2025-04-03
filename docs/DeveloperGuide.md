@@ -656,9 +656,9 @@ Expected: No applicant is deleted. Error message is shown.
 2. Searching by Multiple Fields
 
    1. Test case: `search n/John j/Software`  
-      Expected: Applicants whose name contains "John" **and** job position contains "Software" are shown.
+      Expected: Applicants whose name contains "John" **or** job position contains "Software" are shown.
    2. Test case: `search s/Rejected p/123`  
-      Expected: Applicants whose status is "Rejected" and phone number contains "123" are shown.
+      Expected: Applicants whose status is "Rejected" or phone number contains "123" are shown.
 
 3. Search with No Results
 
