@@ -24,7 +24,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
-    public static final int MAX_INPUT_LENGTH = 100;
+    public static final int MAX_INPUT_LENGTH = 50;
 
     private static void checkLength(String fieldName, String value) throws ParseException {
         if (value.length() > MAX_INPUT_LENGTH) {
