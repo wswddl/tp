@@ -2,7 +2,13 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CRITERIA_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDED_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -42,7 +48,6 @@ public class SortCommand extends Command {
      */
     public SortCommand(Prefix prefix, boolean isAscendingOrder) throws CommandException {
         requireNonNull(prefix);
-        requireNonNull(isAscendingOrder);
 
         this.isAscendingOrder = isAscendingOrder;
         if (isAscendingOrder) {
@@ -53,15 +58,15 @@ public class SortCommand extends Command {
 
         this.prefix = prefix;
         if (prefix.equals(PREFIX_NAME)) {
-            this.criteria = "Name";
+            this.criteria = "name";
         } else if (prefix.equals(PREFIX_EMAIL)) {
-            this.criteria = "Email Address";
+            this.criteria = "email address";
         } else if (prefix.equals(PREFIX_ADDED_TIME)) {
-            this.criteria = "Added Time";
+            this.criteria = "added time";
         } else if (prefix.equals(PREFIX_JOB_POSITION)) {
-            this.criteria = "Job Position";
+            this.criteria = "job position";
         } else if (prefix.equals(PREFIX_STATUS)) {
-            this.criteria = "Application Status";
+            this.criteria = "application status";
         } else {
             throw new CommandException(String.format(
                     MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE));

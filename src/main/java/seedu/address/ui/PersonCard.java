@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,15 +42,12 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
-    private MainWindow mainWindow;
-    private Applicant applicant;
-    private final Logger logger = LogsCenter.getLogger(PersonCard.class);
-
     private static boolean isProfilePicClicked = false; // allow only one window pop up in a given moment
     private static final long MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
     private static final String MAX_FILE_SIZE_STRING = "2MB";
-
+    private MainWindow mainWindow;
+    private Applicant applicant;
+    private final Logger logger = LogsCenter.getLogger(PersonCard.class);
     @FXML
     private HBox cardPane;
     @FXML
@@ -253,7 +249,7 @@ public class PersonCard extends UiPart<Region> {
         String applicantName = applicant.getName().fullName;
         fileChooser.setTitle("Choose Profile Picture for " + applicantName);
 
-        // Restrict to image file types
+        // Restrict to image file types only
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files",
                         "*.png", "*.jpg", "*.jpeg", "*.gif", ".tiff", "*.bmp", "*.webp"));
