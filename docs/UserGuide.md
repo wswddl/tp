@@ -108,8 +108,13 @@ RecruitTrack stores applicants with the following fields, each with strict valid
 | **Index** (`id/`)          | Auto-assigned unique integer (GUI display).                                    | `id/1`                                                    |
 
 **Email Validation Rules**:
-- Local-part (before `@`): Alphanumeric, `+_.-` allowed. Cannot start/end with special chars.
-- Domain: Labels separated by `.` (e.g., `sub.domain.com`). TLD ≥ 2 chars.
+
+Emails should be of the format `local-part@domain` and adhere to the following constraints:
+1. The local-part should only contain alphanumeric characters and these special characters, (`+` `_` `.` `-`). The local-part may not start or end with any special characters.
+2. This is followed by a `@` and then a domain name. The domain name is made up of domain labels separated by periods. The domain name must:
+   - end with a domain label at least 2 characters long
+   - have each domain label start and end with alphanumeric characters
+   - have each domain label consist of alphanumeric characters, separated only by hyphens, if any
 
 ### ➕ Adding New Candidates
 **Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOBPOSITION s/STATUS a/ADDRESS [t/TAG]...`  
@@ -183,15 +188,19 @@ Result:\
 ### 🔄 Updating Status
 Move candidates through your pipeline:
 
-**Command Format**: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS`
+**Command Format**: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]`
 * Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then updates their application status to the provided `STATUS`.
-* The `IDENTIFIER_TYPE` can be one of the following:
-    * `n/` – Name
-    * `e/` – Email
-    * `p/` – Phone number
-    * `id/` – The index of the applicant in the last shown list
+* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the last shown list
+  or any combination of the following:
+  * `n/` – Name
+  * `e/` – Email
+  * `p/` – Phone number
+  * `bfr/` - Date added (before the specified date)
+  * `aft/` - Date added (after the specified date).
+  * `j/` - Job Position
+  * `s/` - Status
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
-* The `STATUS` should contain only **alphanumeric** characters and spaces.
+* The `--force` flag (optional) bypasses confirmation prompts and updates the applicant immediately.
 
 **Common Statuses**:
 1. `Applied` 🆕
@@ -199,13 +208,14 @@ Move candidates through your pipeline:
 3. `Interview Scheduled` 💬
 4. `Offered` ✉️
 5. `Failed` ❌
-5. `Offer Accepted` 🎉
-6. `Offer Rejected` ❎
+6. `Offer Accepted` 🎉
+7. `Offer Rejected` ❎
 
 **Example**:
 ```bash
-update n/John Doe s/Job Offered
+update n/John Doe s/Job Offered --force
 ```
+💡 **Pro Tip**: Adding `--force` skips confirmation for quick update.
 
 Command Input:\
 <img title="updateCommand" alt="Command Input" src="./images/updateCommand_before.png"><br/><br/>
@@ -383,7 +393,7 @@ Not yet, but we're working on theme options for a future update!
 | **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
 | **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`                                                                                                                                               |
 | **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
-| **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                                       |
+| **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
 | **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
 | **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
 | **Rate**    | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                   |
