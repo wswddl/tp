@@ -28,7 +28,7 @@ This guide is designed for:
 - 🚀 **Blazing fast** applicant management
 - � **No more mouse dependency** – everything at your fingertips
 - 📊 **Smart organization** to keep your pipeline flowing
-- 💾 **Automatic saves** so you never lose data
+- 💾 **Easy backups and restorations** so you never lose data
 
 Let’s dive in and explore how RecruitTrack can help you streamline your hiring process! 🚀
 
@@ -58,10 +58,9 @@ You'll see our friendly interface welcoming you:
 
 ### 5. Try These Starter Commands
 Type in the command box:
-- `help` 📚 - Shows all commands
-- `add n/Emma p/87654321 e/emma@tech.com j/Developer` ➕ - Adds Emma
-- `list` 📋 - Shows everyone
-- `exit` 🚪 - Leaves the party (saves automatically!)
+- `help` 📚 - Shows link to all commands
+- `list` 📋 - Shows everyone in the records
+- `exit` 🚪 - Leaves the party
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -113,9 +112,10 @@ RecruitTrack stores applicants with the following fields, each with strict valid
 - Domain: Labels separated by `.` (e.g., `sub.domain.com`). TLD ≥ 2 chars.
 
 ### ➕ Adding New Candidates
-**Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOB s/STATUS [t/TAG]...`  
+**Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOBPOSITION s/STATUS a/ADDRESS [t/TAG]...`  
 
 * **Phone/Email**: Must be unique (rejects duplicates).
+* Details can be input in any order (e.g. `ADDRESS` before `EMAIL`)
 
 💡 **Pro Tip**: Tags help you categorize candidates for easy searching later!
 
@@ -130,7 +130,7 @@ Result:\
 <img title="addCommand" alt="Result" src="./images/addCommand_after.png"><br/><br/>
 
 ### ✏️ Editing Details
-**Command Format**: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…`
+**Command Format**: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [j/JOBPOSITION] [a/ADDRESS] [t/TAG]…`
 * Edits the applicant at the specified `INDEX`. The index refers to the index number shown in the **displayed** applicant list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Updates must preserve uniqueness for applicant's phone number and email.
@@ -252,7 +252,7 @@ list
 ### 🔎 Smart Searching
 Find candidates by any detail:
 
-**Command Format**: `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS]`
+**Command Format**: `search [n/NAME] [p/PHONE] [e/EMAIL] [j/JOB] [s/STATUS]`
 * The search is **case-insensitive**. e.g. `hans` will match `Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Only applicants that match all provided criteria are returned (i.e. logical `AND` search, applicant must match **all** specified field values to appear in the results).<br>
@@ -278,7 +278,7 @@ Organize by what matters most:
     * `e/`: Applicant's email address
     * `time/`: The time the applicant was added to the list.
     * `j/`: Job position
-    * `s/`: Hiring stage
+    * `s/`: Application status
 * Only one sorting criterion can be provided at a time.
 * The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
 
@@ -354,17 +354,17 @@ Clears all applicant data from the application.<br/>
 
 🔒 **Automatic Saving**: Every change is saved instantly  
 📂 **Easy Backups**: Just copy the `data/` folder  
-🔄 **Recovery**: Previous versions are kept for safety
+🔄 **Recovery**: Restore backups in a [single step](#how-do-i-import-my-data)
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## ❓ Frequently Asked Questions
 
-### How do I move my data to a new computer?
-Just copy the `data/addressbook.json` file to the new computer - it's that easy!
+### How do I import my data?
+Just copy the `data/` folder into the folder containing `recruittrack.jar` - it's that easy!
 
 ### Can I undo a deletion?
-Not directly, but if you have a backup of your data file, you can restore it.
+Not directly, but if you have a backup of your data file, you can restore it by following the steps [above](#how-do-i-import-my-data).
 
 ### Can I change the colors?
 Not yet, but we're working on theme options for a future update!
