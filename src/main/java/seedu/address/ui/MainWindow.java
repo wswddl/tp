@@ -220,7 +220,7 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Displays error message when no file is chosen.
      */
-    public void displayNoFileChosen(String applicantName) {
+    public void displayNoFileChosenError(String applicantName) {
         resultDisplay.setFeedbackToUser("Please select an image for " + applicantName);
     }
 

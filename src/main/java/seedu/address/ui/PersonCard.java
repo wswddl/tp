@@ -265,7 +265,7 @@ public class PersonCard extends UiPart<Region> {
 
         if (selectedFile == null) {
             logger.info("User didn't select an image file");
-            mainWindow.displayNoFileChosen(applicantName);
+            mainWindow.displayNoFileChosenError(applicantName);
             return null;
         }
 
