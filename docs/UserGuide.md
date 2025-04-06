@@ -293,13 +293,13 @@ Organize by what matters most:
     * `a/`: Ascending order
     * `d/`: Descending order
 * Only one sorting criterion can be provided at a time.
-* The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
+* The list will be sorted in case-sensitive lexicographical order based on the chosen criterion.
 
 **Example**:
 ```bash
 sort n/
 ```
-Shows applicants in alphabetical order.
+Sorts applicants by their names in case-sensitive lexicographical order.
 
 Command Input:\
 <img title="sortCommand" alt="Command Input" src="./images/sortCommand_before.png"><br/><br/>
@@ -402,11 +402,11 @@ Not yet, but we're working on theme options for a future update!
 | **List**    | `list`                                                                                                                                                                                                                                |
 | **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
 | **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
-| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                                               |
+| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                     |
 | **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
 | **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
-| **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
-| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
+| **Sort**    | `sort CRITERIA/ [ORDER/]`<br> e.g., `sort n/ a/`                                                                                                                                                                                      |
+| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                            |
 | **Rate**    | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                   |
 | **Clear**   | `clear`                                                                                                                                                                                                                               |
 | **Exit**    | `exit`                                                                                                                                                                                                                                |
