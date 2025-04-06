@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDED_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.Comparator;
@@ -79,7 +80,7 @@ public class UniqueApplicantList implements Iterable<Applicant> {
     }
 
     /**
-     * Removes the equivalent applicant from the list and delete their profile picture in the save folder
+     * Removes the equivalent applicant from the list and delete their profile picture in the save folder.
      * The applicant must exist in the list.
      */
     public void remove(Applicant toRemove) {
@@ -93,6 +94,9 @@ public class UniqueApplicantList implements Iterable<Applicant> {
         }
     }
 
+    /**
+     * Deletes all applicant's profile picture.
+     */
     public void removeAllProfilePicture() {
         for (Applicant applicant : internalList) {
             applicant.deleteProfilePic();
@@ -118,9 +122,9 @@ public class UniqueApplicantList implements Iterable<Applicant> {
     }
 
     /**
-     * Sorts the list of persons based on the given prefix.
+     * Sorts the list of persons based on the given prefix in ascending order.
      * The sorting works as follows:
-     * - If sorting by name, email, job position, or status, the list is sorted in
+     * - If sorting by name, email, job position, status or rating, the list is sorted in
      *   lexicographic order with case sensitivity (0, 1, ..., 9, A, a, B, b, ..., Z, z).
      * - If sorting by added time, the list is sorted in chronological order,
      *   with the earliest added applicant appearing first.
@@ -170,9 +174,24 @@ public class UniqueApplicantList implements Iterable<Applicant> {
             internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
                     .compare(p1.getStatus().value, p2.getStatus().value));
 
+        } else if (prefix.equals(PREFIX_RATING)) {
+            // sort by status
+            internalList.sort((p1, p2) -> p1.getRating().compareTo(p2.getRating(), true));
+
         } // ignore non-sorting prefix
     }
 
+    /**
+     * Sorts the list of persons based on the given prefix in descending order.
+     * The sorting works as follows:
+     * - If sorting by name, email, job position, status, or rating, the list is sorted in
+     *   lexicographic order with case sensitivity (0, 1, ..., 9, A, a, B, b, ..., Z, z).
+     * - If sorting by added time, the list is sorted in chronological order,
+     *   with the earliest added applicant appearing first.
+     * - If the prefix is not recognized, the list remains unchanged.
+     *
+     * @param prefix The prefix that determines how the list should be sorted.
+     */
     public void sortPersonsByDescendingOrder(Prefix prefix) {
         // sort String based on lexicographic order with case sensitivity (A, a, B, b, ..., Z, z)
         Comparator<String> caseSensitiveLexicographicComparator = (s1, s2) -> {
@@ -214,6 +233,10 @@ public class UniqueApplicantList implements Iterable<Applicant> {
             // sort by status
             internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
                     .compare(p2.getStatus().value, p1.getStatus().value));
+
+        } else if (prefix.equals(PREFIX_RATING)) {
+            // sort by status
+            internalList.sort((p1, p2) -> p1.getRating().compareTo(p2.getRating(), false));
 
         } // ignore non-sorting prefix
     }
