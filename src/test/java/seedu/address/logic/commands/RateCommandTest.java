@@ -62,7 +62,7 @@ public class RateCommandTest {
         RateCommand rateCommand = new RateCommand(INDEX_FIRST_PERSON, rating);
 
         String expectedMessage = String.format(RateCommand.MESSAGE_ASSIGN_RATING_SUCCESS,
-                rating.toString() ,Messages.format(applicantToRate));
+                rating.toString(), Messages.format(applicantToRate));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setRating(applicantToRate, rating);
@@ -88,7 +88,7 @@ public class RateCommandTest {
         assertFalse(validRateCommand.equals(null));
 
         // different applicant -> returns false
-        RateCommand differentIndexRateCommand =  new RateCommand(INDEX_SECOND_PERSON, new Rating("4"));
+        RateCommand differentIndexRateCommand = new RateCommand(INDEX_SECOND_PERSON, new Rating("4"));
         assertFalse(validRateCommand.equals(differentIndexRateCommand));
 
         // different rating -> returns false

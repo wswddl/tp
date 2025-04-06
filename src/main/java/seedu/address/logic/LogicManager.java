@@ -1,22 +1,17 @@
 package seedu.address.logic;
 
-import com.opencsv.CSVWriter;
-
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import javafx.stage.FileChooser;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -33,7 +28,7 @@ public class LogicManager implements Logic {
 
     public static final String FILE_OPS_PERMISSION_ERROR_FORMAT =
             "Could not save data to file %s due to insufficient permissions to write to the file or the folder.";
-    
+
     public static final String MESSAGE_EXPORT_FAILURE = "Failed to export applicant list.";
 
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
@@ -55,22 +50,26 @@ public class LogicManager implements Logic {
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
-
         CommandResult commandResult;
 
         if (pendingCommand != null) {
             if (commandText.equalsIgnoreCase("yes")) {
-                // currently only deletion needs the confirmation
-                DeleteCommand deleteCommand = (DeleteCommand) pendingCommand;
-                deleteCommand.setForceDelete(true);
-
-                System.out.println("deleting command");
-                commandResult = deleteCommand.execute(model);
-                pendingCommand = null;
+                if (pendingCommand instanceof DeleteCommand deleteCommand) {
+                    deleteCommand.setForceDelete(true);
+                    commandResult = deleteCommand.execute(model);
+                } else {
+                    UpdateCommand updateCommand = (UpdateCommand) pendingCommand;
+                    updateCommand.setForceUpdate(true);
+                    commandResult = updateCommand.execute(model);
+                }
             } else {
+                String cancelMessage = pendingCommand instanceof DeleteCommand
+                        ? "Deletion cancelled."
+                        : "Update cancelled.";
                 pendingCommand = null;
-                return new CommandResult("Deletion cancelled.");
+                return new CommandResult(cancelMessage);
             }
+            pendingCommand = null;
         } else {
             Command command = addressBookParser.parseCommand(commandText);
             commandResult = command.execute(model);
@@ -85,6 +84,11 @@ public class LogicManager implements Logic {
         return commandResult;
     }
 
+    /**
+     * Saves the current address book data to storage.
+     *
+     * @throws CommandException If an error occurs during saving
+     */
     public void saveAddressBook() throws CommandException {
         try {
             storage.saveAddressBook(model.getAddressBook());
@@ -99,30 +103,6 @@ public class LogicManager implements Logic {
     public Command parseCommand(String commandText) throws ParseException {
         return addressBookParser.parseCommand(commandText);
     }
-
-
-    @Override
-    public void exportCsv(File file) throws CommandException {
-        try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-            // Header row
-            writer.writeNext(new String[] { "Name", "Email", "Phone", "Job Position", "Status", "Tags" });
-    
-            // Write each applicant
-            for (Applicant a : model.getFilteredPersonList()) {
-                writer.writeNext(new String[] {
-                        a.getName().fullName,
-                        a.getEmail().value,
-                        a.getPhone().value,
-                        a.getJobPosition().jobPosition,
-                        a.getStatus().value,
-                        a.getTags().stream().map(tag -> tag.tagName).collect(Collectors.joining(";"))
-                });
-            }
-        } catch (IOException e) {
-            throw new CommandException(MESSAGE_EXPORT_FAILURE, e);
-        }
-    }
-
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {

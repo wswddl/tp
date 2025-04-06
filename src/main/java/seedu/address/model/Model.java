@@ -56,7 +56,7 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a applicant with the same identity as {@code applicant} exists in the address book.
+     * Returns true if an applicant with the same identity as {@code applicant} exists in the address book.
      */
     boolean hasPerson(Applicant applicant);
 
@@ -65,6 +65,8 @@ public interface Model {
      * The applicant must exist in the address book.
      */
     void deletePerson(Applicant target);
+
+    void deleteAllProfilePicture();
 
     /**
      * Adds the given applicant.
@@ -85,7 +87,7 @@ public interface Model {
     Applicant setRating(Applicant target, Rating rating);
 
     // Added for Applicant sorting
-    void sortPersons(Prefix prefix);
+    void sortPersons(Prefix prefix, boolean isAscendingOrder);
 
     /** Returns an unmodifiable view of the filtered applicant list */
     ObservableList<Applicant> getFilteredPersonList();

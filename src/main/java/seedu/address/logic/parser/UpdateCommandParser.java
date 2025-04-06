@@ -2,25 +2,28 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
+import static seedu.address.logic.parser.ParserUtil.COMMON_PREFIXES_WITH_ID;
+import static seedu.address.logic.parser.ParserUtil.checkFlag;
+import static seedu.address.logic.parser.ParserUtil.extractPredicates;
+import static seedu.address.logic.parser.ParserUtil.numOfPrefixesPresent;
 
-import java.util.stream.Stream;
+import java.util.List;
 
+import javafx.util.Pair;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.applicant.Email;
-import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
 import seedu.address.model.applicant.IdentifierPredicate;
-import seedu.address.model.applicant.Name;
-import seedu.address.model.applicant.NameMatchesKeywordPredicate;
-import seedu.address.model.applicant.Phone;
-import seedu.address.model.applicant.PhoneMatchesKeywordPredicate;
 import seedu.address.model.applicant.Status;
+import seedu.address.model.applicant.StatusMatchesPredicate;
 
 /**
  * Parses input arguments and creates a new UpdateCommand object
@@ -36,15 +39,14 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
     public UpdateCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS, PREFIX_ID);
+        boolean isForceUpdate;
+        Pair<String, Boolean> checkFlagResult = checkFlag(args);
+        args = checkFlagResult.getKey();
+        isForceUpdate = checkFlagResult.getValue();
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS, PREFIX_ID);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, COMMON_PREFIXES_WITH_ID);
 
-        // Check that only one identifier prefix is provided
-        if (numOfPrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ID) != 1) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
-        }
+        argMultimap.verifyNoDuplicatePrefixesFor(COMMON_PREFIXES_WITH_ID);
 
         Status status;
         // Check if status is provided and valid
@@ -54,37 +56,26 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
             status = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
         }
 
-        IdentifierPredicate predicate;
+        assert argMultimap.getValue(PREFIX_STATUS).isPresent();
 
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            String nameString = argMultimap.getValue(PREFIX_NAME).get();
-            Name validName = ParserUtil.parseName(nameString);
-            predicate = new NameMatchesKeywordPredicate(validName.fullName);
-            return new UpdateCommand(predicate, status);
-        } else if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            String phoneString = argMultimap.getValue(PREFIX_PHONE).get();
-            Phone validPhone = ParserUtil.parsePhone(phoneString);
-            predicate = new PhoneMatchesKeywordPredicate(validPhone.value);
-            return new UpdateCommand(predicate, status);
-        } else if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            String emailString = argMultimap.getValue(PREFIX_EMAIL).get();
-            Email validEmail = ParserUtil.parseEmail(emailString);
-            predicate = new EmailMatchesKeywordPredicate(validEmail.value);
-            return new UpdateCommand(predicate, status);
-        } else if (argMultimap.getValue(PREFIX_ID).isPresent()) {
-            Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_ID).get());
-            return new UpdateCommand(index, status);
-        } else {
+        boolean hasId = argMultimap.getValue(PREFIX_ID).isPresent();
+        int numOfContactIdentifiersExceptIdAndStatus = numOfPrefixesPresent(argMultimap, PREFIX_NAME,
+                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_JOB_POSITION, PREFIX_BEFORE, PREFIX_AFTER);
+        // Validate input format
+        if ((hasId && numOfContactIdentifiersExceptIdAndStatus > 0)
+                || (!hasId && numOfContactIdentifiersExceptIdAndStatus == 0)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         }
-    }
 
-    /**
-     * Counts the number of prefixes that have values in the given {@code ArgumentMultimap}.
-     * i.e. number of prefixes provided in the argument.
-     */
-    private static int numOfPrefixesPresent(ArgumentMultimap argMultimap, Prefix... prefixes) {
-        return (int) Stream.of(prefixes).filter(prefix -> argMultimap.getValue(prefix).isPresent()).count();
-    }
 
+        // If Index is provided, perform delete solely on the index
+        if (argMultimap.getValue(PREFIX_ID).isPresent()) {
+            Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_ID).get());
+            return new UpdateCommand(index, status, isForceUpdate); // Use index-based constructor
+        }
+
+        List<IdentifierPredicate> predicates = extractPredicates(argMultimap);
+        predicates.remove(new StatusMatchesPredicate(status.toString()));
+        return new UpdateCommand(predicates, status, isForceUpdate);
+    }
 }

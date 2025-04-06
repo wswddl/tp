@@ -1,24 +1,19 @@
 package seedu.address.ui;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -53,7 +48,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane resultDisplayPlaceholder;
 
     @FXML
-    private StackPane statusbarPlaceholder;
+    private StackPane statusBarPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -122,7 +117,7 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        statusBarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
@@ -179,24 +174,18 @@ public class MainWindow extends UiPart<Stage> {
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
-            Command command = logic.parseCommand(commandText);
-    
-            if (command instanceof ExportCommand) {
-                return handleExportCommand((ExportCommand) command);
-            }
-    
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-    
+
             if (commandResult.isShowHelp()) {
                 handleHelp();
             }
-    
+
             if (commandResult.isExit()) {
                 handleExit();
             }
-    
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
@@ -205,6 +194,13 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Saves the current state of the address book to the storage.
+     * <p>
+     * Displays an error message in the result display if saving fails.
+     * This method is typically invoked after user operations that may
+     * modify the data and require persistence.
+     */
     public void saveAddressBook() {
         try {
             logic.saveAddressBook();
@@ -213,44 +209,25 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
         }
     }
+
     /**
-     * Displays an information alert indicating export success.
+     * Display error message when selected file's size is too big.
      */
-    private void showExportSuccessPopup(File file) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Export Successful");
-        alert.setHeaderText(null);
-        alert.setContentText("CSV exported to: " + file.getAbsolutePath());
-        alert.showAndWait();
+    public void displayOversizeImageError(String maxFileSizeString) {
+        resultDisplay.setFeedbackToUser("Please select an image smaller than " + maxFileSizeString);
     }
 
     /**
-     * Handles execution of the export command with file chooser.
+     * Displays error message when no file is chosen.
      */
-    private CommandResult handleExportCommand(ExportCommand exportCommand) throws CommandException {
-        String suggestedFileName = exportCommand.getFileName();
+    public void displayNoFileChosenError(String applicantName) {
+        resultDisplay.setFeedbackToUser("Please select an image for " + applicantName);
+    }
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Exported CSV");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
-        fileChooser.setInitialFileName(suggestedFileName);
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-
-        File file = fileChooser.showSaveDialog(getPrimaryStage());
-
-        if (file != null) {
-            if (!file.getName().endsWith(".csv")) {
-                file = new File(file.getAbsolutePath() + ".csv");
-            }
-
-            logic.exportCsv(file);
-            resultDisplay.setFeedbackToUser("Exported applicant list to: " + file.getName());
-            showExportSuccessPopup(file);
-
-            return new CommandResult("Export completed.");
-        } else {
-            resultDisplay.setFeedbackToUser("Export cancelled.");
-            return new CommandResult("Export cancelled.");
-        }
+    /**
+     * Displays success message after file selection.
+     */
+    public void displaySuccessfulFileSelection(String applicantName) {
+        resultDisplay.setFeedbackToUser(applicantName + "'s profile picture has been updated");
     }
 }

@@ -101,6 +101,10 @@ public class ModelManager implements Model {
         addressBook.removePerson(target);
     }
 
+    public void deleteAllProfilePicture() {
+        addressBook.removeAllProfilePicture();
+    }
+
     @Override
     public void addPerson(Applicant applicant) {
         addressBook.addPerson(applicant);
@@ -140,10 +144,10 @@ public class ModelManager implements Model {
 
     // Added for applicant sorting
     @Override
-    public void sortPersons(Prefix prefix) {
+    public void sortPersons(Prefix prefix, boolean isAscendingOrder) {
         requireAllNonNull(prefix);
 
-        addressBook.sortPersons(prefix);
+        addressBook.sortPersons(prefix, isAscendingOrder);
     }
 
     //=========== Filtered Applicant List Accessors =============================================================

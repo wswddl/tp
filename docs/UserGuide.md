@@ -1,179 +1,165 @@
 ---
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
+layout: default.md
+title: "User Guide"
+pageNav: 3
 ---
 
-# RecruitTrack User Guide
+# 🌟 RecruitTrack User Guide
 
-RecruitTrack is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+Welcome to **RecruitTrack**, your efficient companion for managing job applicants! ✨ RecruitTrack is a **desktop application designed for recruiters and hiring managers** who prefer a fast and streamlined workflow. It is optimized for users who can type quickly, leveraging a **Command Line Interface (CLI)** while still offering the benefits of a **Graphical User Interface (GUI)**.
 
-<!-- * Table of Contents -->
-<page-nav-print />
+With RecruitTrack, you can:  
+✅ Quickly add, edit, and remove applicants from your records.  
+✅ Track the progress of candidates throughout the hiring process.  
+✅ Search, filter, and sort applicants based on various criteria.  
+✅ Organize and manage candidate information efficiently—all without relying on a mouse.
 
---------------------------------------------------------------------------------------------------------------------
+RecruitTrack is lightweight, runs on **Java 17 or later**, and requires no internet connection. Whether you're an HR professional, a recruiter, or part of a hiring team, RecruitTrack simplifies applicant tracking so you can focus on finding the best talent.
 
-## Quick start
+## Who is this guide for?
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+This guide is designed for:
+- **First-time users** who want to get started quickly.
+- **Recruiters and hiring managers** looking for an efficient way to manage applicants.
+- **Power users** who want to maximize productivity using keyboard commands.
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-W09-1/tp/releases).
+## 🎯 Why You'll Love RecruitTrack
 
-1. Copy the file to the folder you want to use as the _home folder_ for your RecruitTrack.
+- 🚀 **Blazing fast** applicant management
+- � **No more mouse dependency** – everything at your fingertips
+- 📊 **Smart organization** to keep your pipeline flowing
+- 💾 **Easy backups and restorations** so you never lose data
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar recruittrack.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
-
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
-
-   * `list` : Lists all applicants.
-
-   * `add n/John Doe p/98765432 e/johnd@example.com j/Front-end Engineer s/Online Assessment a/John street, block 123, #01-01` : Adds a applicant named `John Doe` to the Applicant Records.
-
-   * `delete id/3` : Deletes the 3rd applicant shown in the current list.
-
-   * `clear` : Deletes all applicants.
-
-   * `exit` : Exits the app.
-
-1. Refer to the [Features](#features) below for details of each command.
+Let’s dive in and explore how RecruitTrack can help you streamline your hiring process! 🚀
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+## 🚀 Getting Started in 5 Minutes
 
-<box type="info" seamless>
+Let's get you up and running quickly!
 
-**Notes about the command format:**<br>
+### 1. Install Java
+First, ensure you have **Java 17 or later**.  
+*Mac users:* Our [special guide](https://se-education.org/guides/tutorials/javaInstallationMac.html) has you covered!
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+### 2. Download the App
+Grab the latest version from our [download page](https://github.com/AY2425S2-CS2103T-W09-1/tp/releases).
 
-* Items in square brackets are optional.<br>
-  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+### 3. Set Up Your Workspace
+Place the `.jar` file in your favorite folder – this will be your RecruitTrack home.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+### 4. Launch and Explore
+Double-click the file or run:
+```bash
+java -jar recruittrack.jar
+```
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+You'll see our friendly interface welcoming you:
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+### 5. Try These Starter Commands
+Type in the command box:
+- `help` 📚 - Shows link to all commands
+- `list` 📋 - Shows everyone in the records
+- `exit` 🚪 - Leaves the party
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
+--------------------------------------------------------------------------------------------------------------------
 
-### Viewing help: `help`
+## Feature Highlights
 
-Shows a message explaining how to access the help page.
+### 👥 People Management
+- `add` - Welcome new candidates
+- `edit` - Update details
+- `delete` - Remove applicants
 
-![help message](images/helpMessage.png)
+### 🔍 Finding Talent
+- `search` - Find needles in haystacks
+- `sort` - Organize your view
+- `list` - See everyone at once
 
-Format: `help`
+### 📈 Tracking Progress
+- `update` - Move candidates through stages
+- `rate` - Give star ratings
+- `summary` - Get the big picture
 
+### 🛠️ Advanced Tools
+- `export` - Take data elsewhere
+- Profile pics - Add friendly faces
 
-### Adding an applicant: `add`
+[🔝 Back to top](#🌟-recruittrack-user-guide)
 
-Adds an applicant to the applicant records.
+--------------------------------------------------------------------------------------------------------------------
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL j/JOB_POSITION s/STATUS a/ADDRESS [t/TAG]…​`
+## Working With Applicants
 
-<box type="tip" seamless>
+### 📜 Applicant Data Model
+RecruitTrack stores applicants with the following fields, each with strict validation rules:
 
-**Tip:** A applicant can have any number of tags (including 0)
-</box>
+| **Field**                  | **Format & Validation Rules**                                                  | **Example**                                               |
+|----------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------------|
+| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. Not blank.                            | `n/John Doe`                                              |
+| **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**.                  | `p/98765432`                                              |
+| **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**.                     | `e/john@example.com`                                      |
+| **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                            | `j/Data Scientist`                                        |
+| **Status** (`s/`)          | Alphanumeric + spaces, case-insensitive. Not blank.                            | `s/Interview Scheduled`                                   |
+| **Address** (`a/`)         | Alphanumeric + spaces. Not blank.                                              | `a/123 Main St, Singapore`                                |
+| **Tags** (`t/`)            | Space-separated, alphanumeric (hyphens allowed). Stored *without* `t/` prefix. | Input: `t/Tech t/Urgent` → Stored as `["Tech", "Urgent"]` |
+| **Rating** (`r/`)          | Integer **1-5**.                                                               | `r/4`                                                     |
+| **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).                     | `time/2025-03-12T14:30:15`                                |
+| **Index** (`id/`)          | Auto-assigned unique integer (GUI display).                                    | `id/1`                                                    |
 
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com j/Frontend Engineer s/Online Assessment a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com j/Backend Intern s/Offered a/Raffles Hall p/1234567 t/criminal`
+**Email Validation Rules**:
 
-### Listing all applicants: `list`
+Emails should be of the format `local-part@domain` and adhere to the following constraints:
+1. The local-part should only contain alphanumeric characters and these special characters, (`+` `_` `.` `-`). The local-part may not start or end with any special characters.
+2. This is followed by a `@` and then a domain name. The domain name is made up of domain labels separated by periods. The domain name must:
+   - end with a domain label at least 2 characters long
+   - have each domain label start and end with alphanumeric characters
+   - have each domain label consist of alphanumeric characters, separated only by hyphens, if any
 
-Shows a list of all applicants in the applicant records.
+### ➕ Adding New Candidates
+**Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOBPOSITION s/STATUS a/ADDRESS [t/TAG]...`  
 
-Format: `list`
+* **Phone/Email**: Must be unique (rejects duplicates).
+* Details can be input in any order (e.g. `ADDRESS` before `EMAIL`)
 
-### Editing an applicant: `edit`
+💡 **Pro Tip**: Tags help you categorize candidates for easy searching later!
 
-Edits an existing applicant in the Applicant Records.
+**Example**:
+```bash
+add n/Alex Yeoh p/91237654 e/alexy@example.com a/34, Chartwell Drive j/Data Analyst s/Interview Scheduled t/Recommended
+```
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Command Input:\
+<img title="addCommand" alt="Command Input" src="./images/addCommand_before.png"><br/><br/>
+Result:\
+<img title="addCommand" alt="Result" src="./images/addCommand_after.png"><br/><br/>
 
-* Edits the applicant at the specified `INDEX`. The index refers to the index number shown in the displayed applicant list. The index **must be a positive integer** 1, 2, 3, …​
+### ✏️ Editing Details
+**Command Format**: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [j/JOBPOSITION] [a/ADDRESS] [t/TAG]…`
+* Edits the applicant at the specified `INDEX`. The index refers to the index number shown in the **displayed** applicant list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
+* Updates must preserve uniqueness for applicant's phone number and email.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the applicant will be removed i.e. adding of tags is not cumulative.
+* When editing tags, the existing tags of the applicant will be removed i.e. adding of tags is **not cumulative**.
 * You can remove all the applicant’s tags by typing `t/` without
-    specifying any tags after it.
+  specifying any tags after it.
 
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st applicant to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd applicant to be `Betsy Crower` and clears all existing tags.
+**Example**:
+```bash
+edit 4 j/Data Scientist p/91238765
+```
+Updates phone number and job position for candidate #4.
 
-### Exporting Applicant Data: `export`
+Command Input:\
+<img title="editCommand" alt="Command Input" src="./images/editCommand_before.png"><br/><br/>
+Result:\
+<img title="editCommand" alt="Result" src="./images/editCommand_after.png"><br/><br/>
 
-Allows users to export the currently **displayed** applicant data into a CSV (Comma-Separated Values) file.
-
-Format: `export [FILE-NAME]`
-
-Parameters:
-- `FILE-NAME`: The name of the CSV file to be created. It can include a relative folder path (e.g., `data/export.csv`), but the folder must already exist.
-- File extension `.csv` is recommended for proper formatting.
-
-The exported file will contain **all applicants currently visible in the UI list**. These applicants may be the result of any command that filters the list, such as `list`, `search`, or `filter`.
-
-Each row in the CSV file represents a single applicant and includes the following fields:
-
-| Field         | Description                        |
-|---------------|------------------------------------|
-| Name          | Full name of the applicant         |
-| Email         | Email address                      |
-| Phone         | Contact number                     |
-| Job Position  | The job role applied for           |
-| Status        | Current application status         |
-| Tags          | Any tags associated with applicant |
-
-Tags are exported as a single comma-separated string in the last column.
-
-Examples:
-* `export applicants_data.csv`  
-  → Exports the currently displayed list of applicants into a file named `applicants_data.csv` in the working directory.
-
-* `export data/recruittrack_list.csv`  
-  → Exports to a file inside the `data/` folder. The folder must already exist.
-
-
-### Searching applicants: `search`
-
-Searches applicants whose names contain any of the given keywords.
-
-Format: `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
-
-Behavior :
-* The search is **case-insensitive**. e.g. `hans` will match `Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Only applicants that match all provided criteria are returned (i.e. logical `AND` search, applicant must match **all** specified field values to appear in the results).<br>
-  e.g. `search n/John e/john@example.com` searches by name and email
-  
-Examples:
-- `search e/john@example.com` returns all applicants with that exact email (case-insensitive match).
-- `search j/Software Engineer s/Interviewing` returns all applicants applying for "Software Engineer" and currently in the "Interviewing" stage.
-- `search n/Alice j/Product Manager s/Hired` lists applicants named Alice who applied for Product Manager and are already hired.
-- `search p/98764321` returns applicants whose phone numbers are "98764321".
-
-### Deleting an applicant: `delete`
-
-Deletes the specified applicant from the applicant records, including all associated application details.
-
-Format: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
-
+### 🗑️ Removing Applicants
+**Command Format**: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 * Deletes the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`.
 * The `IDENTIFIER_TYPE` can be either `id/` – the ID in the last shown list
-or any combination of the following:
+  or any combination of the following:
     * `n/` – Name
     * `e/` – Email
     * `p/` – Phone number
@@ -184,66 +170,61 @@ or any combination of the following:
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
 * The `--force` flag (optional) bypasses confirmation prompts and deletes the applicant immediately.
 
-Examples:
-* `delete n/John Doe e/johndoe@example.com` deletes the applicant with the name "John Doe" and email "johndoe@example.com".
-* `delete id/3 --force` deletes the 3rd applicant in the last shown list without confirmation.
-* `delete p/12345678` deletes the applicant with the phone number "12345678".
-  ![delete command](images/deleteCommand.png)
-  ![delete confirmation](images/deleteConfirmation.png)
+**Example**:
+```bash
+delete n/Alex Yeoh --force
+```
+💡 **Pro Tip**: Adding `--force` skips confirmation for quick removal.
 
-### Updating the application status of an applicant: `update`
+Command Input:\
+<img title="deleteCommand" alt="Command Input" src="./images/deleteCommand_before.png"><br/><br/>
+Result:\
+<img title="deleteCommand" alt="Result" src="./images/deleteCommand_after.png"><br/><br/>
 
-Updates the status of the specified applicant from the applicant records.
+--------------------------------------------------------------------------------------------------------------------
 
-Format: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS`
+## Tracking Progress
 
+### 🔄 Updating Status
+Move candidates through your pipeline:
+
+**Command Format**: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]`
 * Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then updates their application status to the provided `STATUS`.
-* The `IDENTIFIER_TYPE` can be one of the following:
-    * `n/` – Name
-    * `e/` – Email
-    * `p/` – Phone number
-    * `id/` – The index of the applicant in the last shown list
+* The `IDENTIFIER_TYPE` must include `s/` for status AND either `id/` – the ID in the last shown list
+  or any combination of the following:
+  * `n/` – Name
+  * `e/` – Email
+  * `p/` – Phone number
+  * `bfr/` - Date added (before the specified date)
+  * `aft/` - Date added (after the specified date).
+  * `j/` - Job Position
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
-* The `STATUS` should contain only alphanumeric characters and spaces.
+* The `--force` flag (optional) bypasses confirmation prompts and updates the applicant immediately.
 
-Note: The date specified after `/bfr` and/or `/aft` must be in YYYY-MM-DD format.
+**Common Statuses**:
+1. `Applied` 🆕
+2. `Screening` 🔍
+3. `Interview Scheduled` 💬
+4. `Offered` ✉️
+5. `Failed` ❌
+6. `Offer Accepted` 🎉
+7. `Offer Rejected` ❎
 
-Examples:
-* `update n/John Doe s/Interview Scheduled` updates the status of the applicant with the name "John Doe" to "Interview Scheduled".
-* `update e/johndoe@example.com s/Pending Review` updates the status of the applicant with the email "johndoe@example.com" to "Pending Review".
-* `update id/3 s/Offer Accepted` updates the status of the 3rd applicant in the last shown list to "Offer Accepted".
-* `update p/12345678 s/Failed` updates the status of the applicant with the phone number "+6512345678" to "Failed".
-  ![update command before](images/updateCommand_before.png)
-  ![update command after](images/updateCommand_after.png)
+**Example**:
+```bash
+update n/John Doe s/Job Offered --force
+```
+💡 **Pro Tip**: Adding `--force` skips confirmation for quick update.
 
-### Sorting applicant list: `sort`
+Command Input:\
+<img title="updateCommand" alt="Command Input" src="./images/updateCommand_before.png"><br/><br/>
+Result:\
+<img title="updateCommand" alt="Result" src="./images/updateCommand_after.png"><br/><br/>
 
-Sort the applicant list based on the criteria.
+### ⭐ Rating Candidates
+Give 1-5 star ratings:
 
-Format: `sort CRITERIA/`
-
-* Sort the applicant list by the sorting `CRITERIA/`. The supported `CRITERIA/` are:
-  * `n/`: Applicant's name
-  * `e/`: Applicant's email address
-  * `time/`: The time the applicant was added to the list.
-  * `j/`: Job position
-  * `s/`: Hiring stage
-* Only one sorting criterion can be provided at a time.
-* The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
-
-Examples:
-* `sort time/` sorts the list by the time the applicant was added.
-* `sort n/` sorts the list by name.
-  ![sort command before](images/sortCommandByNameBefore.png)
-  ![sort command after](images/sortCommandByNameAfter.png)
-
-
-### Assigning a rating of 1 to 5 to an applicant: `rate`
-
-Assign a rating of 1 to 5 to the specified applicant from the applicant records, possibly based on their suitability for the position.
-
-Format: `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`
-
+**Command Format**: `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`
 * Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then assigns the provided `RATING` to them.
 * The `IDENTIFIER_TYPE` can be one of the following:
     * `n/` – Name
@@ -251,125 +232,168 @@ Format: `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`
     * `p/` – Phone number
     * `id/` – The index of the applicant in the last shown list
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
-* The `RATING` should be an integer from 1 to 5, decimal values are not accepted.
+* The `RATING` should be an integer from **1 to 5**, decimal values are not accepted.
 
-Examples:
-* `rate n/Amy Lee r/5` assigns a rating of 5 / 5 to the applicant with the name "Amy Lee".
-* `rate e/alexy@example.com r/3` assigns a rating of 3 / 5 to the applicant with the email "alexy@example.com".
-* `rate id/3 r/2` assigns a rating of 2 / 5 to the 3rd applicant in the last shown list.
-* `rate n/Amy Lee r/5` assigns a rating of 1 / 5 to the applicant with the phone number "+6592345678".
-  ![rate command before](images/rateCommand_before.png)
-  ![rate command after](images/rateCommand_after.png)
+**Example**:
+```bash
+rate id/2 r/4
+```
+Now candidate #2 has a shiny 4-star rating!
+
+Command Input:\
+<img title="rateCommand" alt="Command Input" src="./images/rateCommand_before.png"><br/><br/>
+Result:\
+<img title="rateCommand" alt="Result" src="./images/rateCommand_after.png"><br/><br/>
 
 
+[🔝 Back to top](#🌟-recruittrack-user-guide)
 
-### Summarising applicants: `summary`
-Summarize all the applicants' details. (Filtered by identifiers)
+--------------------------------------------------------------------------------------------------------------------
 
-Format: `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`
+## Finding Your Perfect Hire
 
+### 📋 Listing Everyone
+Simple command to see all candidates:
+```bash
+list
+```
+
+### 🔎 Smart Searching
+Find candidates by any detail:
+
+**Command Format**: `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`
+* The search is **case-insensitive**. e.g. `hans` will match `Hans`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only applicants that match any provided criteria are returned (i.e. logical `OR` search, applicant that match **any** specified field values will appear in the results).<br>
+  e.g. `search n/John e/john@example.com` searches by name or email
+
+**Example**:
+```bash
+search j/Frontend SWE
+```
+Shows all frontend developers.
+
+Command Input:\
+<img title="searchCommand" alt="Command Input" src="./images/searchCommand_before.png"><br/><br/>
+Result:\
+<img title="searchCommand" alt="Result" src="./images/searchCommand_after.png"><br/><br/>
+
+### 🔄 Sorting Your View
+Organize by what matters most:
+
+**Command Format**: `sort CRITERIA/ ORDER/`
+* Sort the applicant list by the sorting `CRITERIA/`. 
+* The supported `CRITERIA/` are:
+    * `n/`: Applicant's name
+    * `e/`: Applicant's email address
+    * `time/`: The time the applicant was added to the list.
+    * `j/`: Job position
+    * `s/`: Application status
+* The `ORDER/` is optional, with the default being ascending:
+    * `a/`: Ascending order
+    * `d/`: Descending order
+* Only one sorting criterion can be provided at a time.
+* The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
+
+**Example**:
+```bash
+sort n/
+```
+Shows applicants in alphabetical order.
+
+Command Input:\
+<img title="sortCommand" alt="Command Input" src="./images/sortCommand_before.png"><br/><br/>
+Result:\
+<img title="sortCommand" alt="Result" src="./images/sortCommand_after.png"><br/><br/>
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Power User Tools
+
+### 📤 Exporting Data
+Export the **currently displayed** applicant data into a CSV (Comma-Separated Values) file for sharing:
+
+**Command Format**: `export [FILE-NAME]`
+* `FILE-NAME`: The name of the CSV file to be created. It can include a relative folder path (e.g., `data/export.csv`), but the folder must already exist.
+* File extension `.csv` is recommended for proper formatting.
+
+**Example**:
+```bash
+export candidates.csv
+```
+<br/>
+
+### 📊 Summary Reports
+Get quick statistics:
+
+**Command Format**: `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`
 * Having no identifiers will summarize all applicants
 * The filter is case-insensitive. e.g. `hans` will match `Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Only applicants that match all provided identifiers are returned (i.e. `AND` search).<br>
-  e.g. `summary s/Rejected a/Bishan` summarizes applicants with the status "Rejected" and the address "Bishan".
+  e.g. `summary s/Rejected j/Data Analyst` summarizes applicants applying for the role of Data Analyst with the status "Rejected".
 
-Examples:
-* `summary` summarizes all the applicants
-* `summary j/Software Engineer` returns
-```commandline
-Summarized 22 / 45 Applicants 
-Job Positions -> 
-[Software Engineer: 1] 
-Statuses -> 
-[Online Assessment: 5, Round 1: 7, Resume Screening: 3, Rejected: 3, Accepted: 2, Final interview: 2]
+**Example Output**:
+```
+Summarized 4 / 4 Applicants
+Job Positions ->
+[Data Scientist: 1, AI Engineer: 1, Frontend SWE: 1, Backend SWE: 1]
+Statuses ->
+[Interview Scheduled: 1, Pending Review: 2, Offer Rejected: 1]
 ```
 
-
-
-### Adding/Changing an Applicant's Profile Picture
-
-Update the applicant's **profile picture** through the GUI.
-
-#### Steps:
-1. Click on the applicant’s **profile picture** in the GUI.
-2. A file selection window will pop up.
-3. Choose an image file from your computer and confirm your selection.
-4. The selected image will be set as the applicant's profile picture.
-
-#### Notes:
-* If no image is selected, **no change** will be made to the profile picture.
-* The supported image formats are **JPG, JPEG, PNG, GIF**.
-* The image will be automatically resized to fit the profile display.
-
-#### Example:
-![edit applicant photo](images/editApplicantPhoto.gif)
-
-
-### Exporting applicant data: `export`
-
-Allow users to export the candidate data into a CSV file
-
-Format: `export [FILE-NAME]`
-
-* Filename is the name of the CSV file to be generated
-* The exported data includes all applicants in the list. Each row represents one
-  applicant and includes fields such as : name, email, phone number,
-  job position, status, and tags.
-
-Examples:
-* `export applicants_data.csv` Export the current applicant data into a file named applicants_data.csv and download for the user.
-
-
-
-### Clearing all entries: `clear`
-
-Clears all entries from the applicant records.
-
-Format: `clear`
-
-### Exiting the program: `exit`
-
-Exits the program.
-
-Format: `exit`
-
-### Saving the data
-
-RecruitTrack data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-### Editing the data file
-
-RecruitTrack data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
-
-<box type="warning" seamless>
-
-**Caution:**
-If your changes to the data file makes its format invalid, RecruitTrack will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the RecruitTrack to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</box>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
+[🔝 Back to top](#🌟-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
-## FAQ
+## Miscellaneous
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous RecruitTrack home folder.
+### Adding/Updating Profile Picture
+
+* This is not a command.
+* To change the profile picture, click on the existing picture.
+* A pop-up window will appear, allowing you to select an image for the applicant.
+  * Ensure the image size is below 2MB.
+<br/><br/>
+
+### Clear All Records
+
+Clears all applicant data from the application.<br/>
+
+❗️**Warning:** This is an **irreversible** action that removes **ALL** entries from the applicant records
+
+**Command Format:** `clear`
+<br/><br/>
+
+### Exit the Application  
+
+**Command Format:** `exit`
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Known issues
+## 💾 Your Data is Safe With Us
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+🔒 **Automatic Saving**: Every change is saved instantly  
+📂 **Easy Backups**: Just copy the `data/` folder  
+🔄 **Recovery**: Restore backups in a [single step](#how-do-i-import-my-data)
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## ❓ Frequently Asked Questions
+
+### How do I import my data?
+Just copy the `data/` folder into the folder containing `recruittrack.jar` - it's that easy!
+
+### Can I undo a deletion?
+Not directly, but if you have a backup of your data file, you can restore it by following the steps [above](#how-do-i-import-my-data).
+
+### Can I change the colors?
+Not yet, but we're working on theme options for a future update!
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Cheat Sheet
+
 
 | Action      | Format, Examples                                                                                                                                                                                                                      |
 |-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -378,12 +402,25 @@ _Details coming soon ..._
 | **List**    | `list`                                                                                                                                                                                                                                |
 | **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
 | **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
-| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `search n/James Jake`                                                                                                                                               |
+| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                                               |
 | **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
-| **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                                       |
+| **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
 | **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
-| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB_POSITION] [s/STATUS]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
+| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
 | **Rate**    | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                   |
 | **Clear**   | `clear`                                                                                                                                                                                                                               |
 | **Exit**    | `exit`                                                                                                                                                                                                                                |
 
+<br/>
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Final Thoughts
+
+We hope you enjoy using RecruitTrack as much as we enjoyed making it! Remember:
+
+✨ Happy recruiting = Happy hiring! ✨
+
+Need help? Just type `help` in the app or reach out to our friendly support team.
+
+[🔝 Back to top](#🌟-recruittrack-user-guide)

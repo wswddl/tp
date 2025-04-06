@@ -1,6 +1,9 @@
 package seedu.address.model.applicant;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -9,7 +12,11 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -173,7 +180,7 @@ public class UniqueApplicantListTest {
     }
 
     @Test
-    public void sortPersons_basedOnName_caseSensitiveLexicographical_success() {
+    public void sortPersons_nameCaseSensitive_success() {
         Email email = new Email("123@gmail.com");
         Phone phone = new Phone("1234567890");
         JobPosition jp = new JobPosition("job");
@@ -201,7 +208,7 @@ public class UniqueApplicantListTest {
     }
 
     @Test
-    public void sortPersons_basedOnName_lexicographicalOnly_fail() {
+    public void sortPersons_nameLexOnly_failure() {
         Email email = new Email("123@gmail.com");
         Phone phone = new Phone("1234567890");
         JobPosition jp = new JobPosition("job");

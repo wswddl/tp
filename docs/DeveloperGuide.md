@@ -536,7 +536,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 - **Mainstream OS** - Windows, Linux, Unix, MacOS
 - **Private contact detail** - A contact detail that is not meant to be shared with others
-- **Applicant** – A applicant who has applied for a job and is stored as a contact in the system.
+- **Applicant** – An applicant who has applied for a job and is stored as a contact in the system.
 - **Application Metadata** – Information related to an applicant’s job application, such as job position, status, and contact details.
 - **Contact** – A stored applicant or candidate with essential details such as name, email, phone, job position, and application status.
 - **Custom Status** – A user-defined application status when the `--custom` flag is used.
@@ -656,9 +656,9 @@ Expected: No applicant is deleted. Error message is shown.
 2. Searching by Multiple Fields
 
    1. Test case: `search n/John j/Software`  
-      Expected: Applicants whose name contains "John" **and** job position contains "Software" are shown.
+      Expected: Applicants whose name contains "John" **or** job position contains "Software" are shown.
    2. Test case: `search s/Rejected p/123`  
-      Expected: Applicants whose status is "Rejected" and phone number contains "123" are shown.
+      Expected: Applicants whose status is "Rejected" or phone number contains "123" are shown.
 
 3. Search with No Results
 
@@ -671,6 +671,30 @@ Expected: No applicant is deleted. Error message is shown.
       Expected: Error message shown indicating that at least one field must be specified.
    2. Test case: `search x/unknown`  
       Expected: Error message shown due to unrecognized prefix `x/`.
+
+### Sorting Applicants
+
+1. Sort by Name, Email, Added Time, Job Position, or Status
+
+    1. Test case: `sort n/`
+       Expected: Applicant list has been sorted successfully based on Name.
+    2. Test case: `sort e/`
+       Expected: Applicant list has been sorted successfully based on Email Address.
+    3. Test case: `sort time/`
+       Expected: Applicant list has been sorted successfully based on Added Time.
+    4. Test case: `sort n/`
+       Expected: Applicant list has been sorted successfully based on Job Position.
+    5. Test case: `sort s/`
+       Expected: Applicant list has been sorted successfully based on Application Status.
+
+2. Invalid sorting criteria
+
+    1. Test case: `sort`
+       Expected: Error message shown indicating that sorting criteria field must be specified
+    2. Test case: `sort zzz/`
+       Expected: Error message shown due to unrecognized criteria `zzz/`.
+    3. Test case: `sort n/ e/`
+       Expected: Error message shown indicating that only one criterion can be specified.
 
 ### Saving data
 
