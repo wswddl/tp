@@ -31,7 +31,6 @@ public class SortCommandParser implements Parser<SortCommand> {
                 throw new ParseException(String.format(
                         MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE));
             }
-            
             // if user didn't specify the order, sort in ascending order by default
             boolean isAscendingOrder = true;
 
