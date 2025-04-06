@@ -29,7 +29,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.applicant.Applicant;
 
 /**
- * An UI component that displays information of a {@code Applicant}.
+ * A UI component that displays information of a {@code Applicant}.
  */
 public class PersonCard extends UiPart<Region> {
 
@@ -42,9 +42,9 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-    private static boolean isProfilePicClicked = false; // allow only one window pop up in a given moment
     private static final long MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
     private static final String MAX_FILE_SIZE_STRING = "2MB";
+    private static Stage stage = new Stage();
     private MainWindow mainWindow;
     private Applicant applicant;
     private final Logger logger = LogsCenter.getLogger(PersonCard.class);
@@ -188,14 +188,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private void handleImageClick() {
 
-        // prevent multiple window pop up
-        if (isProfilePicClicked) {
-            return;
-        }
-
         File selectedFile = this.chooseProfilePicture();
 
-        // if user didn't select a file OR selected file is too big
         if (selectedFile == null) {
             return;
         }
@@ -254,10 +248,8 @@ public class PersonCard extends UiPart<Region> {
                 new FileChooser.ExtensionFilter("Image Files",
                         "*.png", "*.jpg", "*.jpeg", "*.gif", ".tiff", "*.bmp", "*.webp"));
 
-        isProfilePicClicked = true;
         // open file chooser and return the selected file
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
-        isProfilePicClicked = false;
+        File selectedFile = fileChooser.showOpenDialog(mainWindow.getPrimaryStage());
 
         if (selectedFile == null) {
             logger.info("User didn't select an image file");
@@ -266,7 +258,7 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // check if the chosen file is too big
-        if (selectedFile != null && selectedFile.length() > MAX_FILE_SIZE) {
+        if (selectedFile.length() > MAX_FILE_SIZE) {
             logger.info("The selected image file exceeds " + MAX_FILE_SIZE_STRING);
             mainWindow.displayOversizeImageError(MAX_FILE_SIZE_STRING);
             return null;
