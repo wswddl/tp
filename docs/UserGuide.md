@@ -222,7 +222,7 @@ Result:\
 <img title="updateCommand" alt="Result" src="./images/updateCommand_after.png"><br/><br/>
 
 ### ⭐ Rating Candidates
-Give 1-5 star ratings:
+Give 1-5 star ratings, or set it as unassigned if you're still unsure:
 
 **Command Format**: `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`
 * Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then assigns the provided `RATING` to them.
@@ -232,7 +232,9 @@ Give 1-5 star ratings:
     * `p/` – Phone number
     * `id/` – The index of the applicant in the last shown list
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
-* The `RATING` should be an integer from **1 to 5**, decimal values are not accepted.
+* The `RATING` should be either:
+    * an integer from **1 to 5**, decimal values are not accepted, or
+    * `-1`, which will set the rating as `unassigned`.
 
 **Example**:
 ```bash
