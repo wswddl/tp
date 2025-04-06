@@ -94,18 +94,18 @@ Type in the command box:
 ### 📜 Applicant Data Model
 RecruitTrack stores applicants with the following fields, each with strict validation rules:
 
-| **Field**                  | **Format & Validation Rules**                                                  | **Example**                                               |
-|----------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------------|
-| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. Not blank.                            | `n/John Doe`                                              |
-| **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**.                  | `p/98765432`                                              |
-| **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**.                     | `e/john@example.com`                                      |
-| **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                            | `j/Data Scientist`                                        |
-| **Status** (`s/`)          | Alphanumeric + spaces, case-insensitive. Not blank.                            | `s/Interview Scheduled`                                   |
-| **Address** (`a/`)         | Alphanumeric + spaces. Not blank.                                              | `a/123 Main St, Singapore`                                |
-| **Tags** (`t/`)            | Space-separated, alphanumeric (hyphens allowed). Stored *without* `t/` prefix. | Input: `t/Tech t/Urgent` → Stored as `["Tech", "Urgent"]` |
-| **Rating** (`r/`)          | Integer **1-5**.                                                               | `r/4`                                                     |
-| **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).                     | `time/2025-03-12T14:30:15`                                |
-| **Index** (`id/`)          | Auto-assigned unique integer (GUI display).                                    | `id/1`                                                    |
+| **Field**                  | **Format & Validation Rules**                                                                        | **Example**                                               |
+|----------------------------|------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. Not blank.                                                  | `n/John Doe`                                              |
+| **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**.                                        | `p/98765432`                                              |
+| **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**.                                           | `e/john@example.com`                                      |
+| **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                                                  | `j/Data Scientist`                                        |
+| **Status** (`s/`)          | Alphanumeric + spaces, case-insensitive. Not blank.                                                  | `s/Interview Scheduled`                                   |
+| **Address** (`a/`)         | Alphanumeric + spaces. Not blank.                                                                    | `a/123 Main St, Singapore`                                |
+| **Tags** (`t/`)            | Space-separated, alphanumeric (hyphens allowed). Stored *without* `t/` prefix.                       | Input: `t/Tech t/Urgent` → Stored as `["Tech", "Urgent"]` |
+| **Rating** (`r/`)          | Integer **1-5**, or **-1** for unassigned                                                            | `r/4`                                                     |
+| **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).                                           | `time/2025-03-12T14:30:15`                                |
+| **Index** (`id/`)          | Integer index of applicant in **currently displayed list** (beside applicant's name in GUI display). | `id/1`                                                    |
 
 **Email Validation Rules**:
 
@@ -158,7 +158,7 @@ Result:\
 ### 🗑️ Removing Applicants
 **Command Format**: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 * Deletes the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`.
-* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the last shown list
+* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the **currently displayed list**
   or any combination of the following:
     * `n/` – Name
     * `e/` – Email
@@ -190,7 +190,7 @@ Move candidates through your pipeline:
 
 **Command Format**: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]`
 * Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then updates their application status to the provided `STATUS`.
-* The `IDENTIFIER_TYPE` must include `s/` for status AND either `id/` – the ID in the last shown list
+* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the **currently displayed list**
   or any combination of the following:
   * `n/` – Name
   * `e/` – Email
@@ -199,6 +199,7 @@ Move candidates through your pipeline:
   * `aft/` - Date added (after the specified date).
   * `j/` - Job Position
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
+* The `STATUS` must contain only alphanumeric characters and spaces, and must not be blank.
 * The `--force` flag (optional) bypasses confirmation prompts and updates the applicant immediately.
 
 **Common Statuses**:
@@ -230,7 +231,7 @@ Give 1-5 star ratings, or set it as unassigned if you're still unsure:
     * `n/` – Name
     * `e/` – Email
     * `p/` – Phone number
-    * `id/` – The index of the applicant in the last shown list
+    * `id/` – The index of the applicant in the **currently displayed list**
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
 * The `RATING` should be either:
     * an integer from **1 to 5**, decimal values are not accepted, or
