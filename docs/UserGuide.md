@@ -105,9 +105,14 @@ RecruitTrack stores applicants with the following fields, each with strict valid
 | **Tags** (`t/`)            | Space-separated, alphanumeric (hyphens allowed). Stored *without* `t/` prefix. | Input: `t/Tech t/Urgent` → Stored as `["Tech", "Urgent"]` |
 | **Rating** (`r/`)          | Integer **1-5**.                                                               | `r/4`                                                     |
 | **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).                     | `time/2025-03-12T14:30:15`                                |
-| **Before Date** (`bfr/`)   | Date in ISO format (`YYYY-MM-DD`).                                             | `bfr/2025-04-01`                                          |
-| **After Date** (`aft/`)    | Date in ISO format (`YYYY-MM-DD`).                                             | `aft/2025-04-01`                                          |
 | **Index** (`id/`)          | Auto-assigned unique integer (GUI display).                                    | `id/1`                                                    |
+
+Other identifiers used to identify applicants:
+
+| **Field**                  | **Format & Validation Rules**                                                                              | **Example**                                               |
+|----------------------------|------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| **Before Date** (`bfr/`)   | Date in ISO format (`YYYY-MM-DD`). Applicant(s) with an application date before this date will be matched. | `bfr/2025-04-01`                                          |
+| **After Date** (`aft/`)    | Date in ISO format (`YYYY-MM-DD`). Applicant(s) with an application date after this date be matched.       | `aft/2025-04-01`                                          |
 
 **Email Validation Rules**:
 
