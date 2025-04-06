@@ -97,6 +97,9 @@
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 10 20 10 10;
 }
 
 .list-cell:filled:even {
@@ -109,11 +112,11 @@
 
 .list-cell:filled:selected {
     -fx-background-color: #88c2ff;
-}
-
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: #0087ff;
+    -fx-border-color: #0087ff; /*0087ff*/
     -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 20 20 20 10;
 }
 
 .list-cell .label {
