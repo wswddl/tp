@@ -44,7 +44,6 @@ public class PersonCard extends UiPart<Region> {
      */
     private static final long MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
     private static final String MAX_FILE_SIZE_STRING = "2MB";
-    private static Stage stage = new Stage();
     private MainWindow mainWindow;
     private Applicant applicant;
     private final Logger logger = LogsCenter.getLogger(PersonCard.class);
