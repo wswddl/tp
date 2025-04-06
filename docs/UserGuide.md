@@ -289,17 +289,24 @@ Organize by what matters most:
     * `time/`: The time the applicant was added to the list.
     * `j/`: Job position
     * `s/`: Application status
+    * `r/`: Rating
+
+
 * The `ORDER/` is optional, with the default being ascending:
     * `a/`: Ascending order
     * `d/`: Descending order
-* Only one sorting criterion can be provided at a time.
-* The list will be sorted in case-sensitive lexicographical order based on the chosen criterion.
+
+  
+* For `n/`, `e/`, `j/` and `s/`, the list will be sorted in case-insensitive lexicographical order following this sequence:
+  `0–9 → A → a → B → b → C → c → ... → Z → z`.
+* For `time/`, the list will be sorted in chronological order.
+* For `r/`, the list will be sorted by the rating, with unassigned rating placed at the end of the list.
 
 **Example**:
 ```bash
-sort n/
+sort n/ a/
 ```
-Sorts applicants by their names in case-sensitive lexicographical order.
+Sorts applicants by their names in ascending, case-insensitive lexicographical order.
 
 Command Input:\
 <img title="sortCommand" alt="Command Input" src="./images/sortCommand_before.png"><br/><br/>
