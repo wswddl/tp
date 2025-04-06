@@ -39,10 +39,10 @@ public class UpdateCommand extends ConfirmationRequiredCommand {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_JOB_POSITION + "JOB_POSITION] "
             + "[" + PREFIX_BEFORE + "YYYY-MM-DD] "
             + "[" + PREFIX_AFTER + "YYYY-MM-DD] "
+            + PREFIX_STATUS + "STATUS "
             + "[--force]\n"
             + "Example: " + COMMAND_WORD + " n/Alex Yeoh s/Interview Scheduled";
 
