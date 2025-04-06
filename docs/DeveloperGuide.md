@@ -543,7 +543,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 - **Error Message** – A notification displayed when an invalid input or operation occurs (e.g., invalid email format, missing required fields).
 - **Email Validation** – A process ensuring the provided email follows a valid format (e.g., `user@domain.com`).
 - **`--force` Flag** – A command option that allows updating an existing contact if a duplicate email or phone number is found.
-- **Identifier Type** – A flag (`-n`, `-e`, `-p`, `-id`) used to specify whether a contact is searched by name, email, phone number, or system ID.
+- **Identifier Type** – A flag (`n/`, `e/`, `p/`, `id/`) used to specify whether a contact is searched by name, email, phone number, or ID in the last shown list.
 - **Job Position** – The role or position that an applicant is applying for, stored in the system.
 - **Parameter** – A required or optional value provided in a command (e.g., `NAME`, `EMAIL`, `STATUS`).
 - **Status Update** – A change in an applicant’s application stage using the `update` command.
