@@ -42,8 +42,8 @@ public class DeleteCommand extends ConfirmationRequiredCommand {
             + "[" + PREFIX_BEFORE + "YYYY-MM-DD] "
             + "[" + PREFIX_AFTER + "YYYY-MM-DD] "
             + "[--force]\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John Doe"
-            + PREFIX_PHONE + "98765432" + "--force";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John Doe "
+            + PREFIX_PHONE + "98765432" + " --force";
 
     /** Confirmation message for bulk deletion */
     static final String MESSAGE_DELETE_CONFIRMATION =
