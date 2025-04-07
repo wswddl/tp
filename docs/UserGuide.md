@@ -85,7 +85,7 @@ Type in the command box:
 - `export` - Take data elsewhere
 - Profile pics - Add friendly faces
 
-[🔝 Back to top](#🌟-recruittrack-user-guide)
+[🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -256,7 +256,7 @@ Result:\
 <img title="rateCommand" alt="Result" src="./images/rateCommand_after.png"><br/><br/>
 
 
-[🔝 Back to top](#🌟-recruittrack-user-guide)
+[🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -364,7 +364,7 @@ Statuses ->
 [Interview Scheduled: 1, Pending Review: 2, Offer Rejected: 1]
 ```
 
-[🔝 Back to top](#🌟-recruittrack-user-guide)
+[🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -445,4 +445,4 @@ We hope you enjoy using RecruitTrack as much as we enjoyed making it! Remember:
 
 Need help? Just type `help` in the app or reach out to our friendly support team.
 
-[🔝 Back to top](#🌟-recruittrack-user-guide)
+[🔝 Back to top](#-recruittrack-user-guide)
