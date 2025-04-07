@@ -15,6 +15,7 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_NO_RESULT = "No applicants found.";
     public static final String MESSAGE_UNKNOWN_FLAG = "Unknown flag: %1$s";
+    public static final String MESSAGE_INVALID_EXPORT_FORMAT = "File name must end with .csv";
     public static final String MESSAGE_INVALID_CHARACTER_FILENAME_FORMAT =
                 "Invalid filename. Only letters, digits, '-', '_', '.', and spaces are allowed.";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT =
