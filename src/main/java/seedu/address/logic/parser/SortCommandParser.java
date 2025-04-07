@@ -31,7 +31,6 @@ public class SortCommandParser implements Parser<SortCommand> {
                 throw new ParseException(String.format(
                         MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE));
             }
-            
             // if user didn't specify the order, sort in ascending order by default
             boolean isAscendingOrder = true;
 
@@ -46,7 +45,6 @@ public class SortCommandParser implements Parser<SortCommand> {
                             MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE));
                 }
             }
-
             String criteria = parts[0];
             Prefix p = new Prefix(criteria);
             return new SortCommand(p, isAscendingOrder);
@@ -54,7 +52,5 @@ public class SortCommandParser implements Parser<SortCommand> {
         } catch (CommandException e) {
             throw new ParseException(e.getMessage());
         }
-
     }
-
 }

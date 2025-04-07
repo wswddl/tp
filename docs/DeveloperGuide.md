@@ -106,7 +106,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <box type="info" seamless>
 
-**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+**Note:** The lifeline for `SummaryCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </box>
 
 How the `Logic` component works:
@@ -422,7 +422,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC04 - Update an applicant**
 
-* Similar to UC03 except the user can only update some information of the applicant.
+* Similar to UC03 except the user can only update status of the applicant.
 
 <br>
 
@@ -658,7 +658,7 @@ Expected: No applicant is deleted. Error message is shown.
    1. Test case: `search n/John j/Software`  
       Expected: Applicants whose name contains "John" **or** job position contains "Software" are shown.
    2. Test case: `search s/Rejected p/123`  
-      Expected: Applicants whose status is "Rejected" or phone number contains "123" are shown.
+      Expected: Applicants whose status is "Rejected" **or** phone number contains "123" are shown.
 
 3. Search with No Results
 
