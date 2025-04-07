@@ -80,7 +80,7 @@ public class UniqueApplicantList implements Iterable<Applicant> {
     }
 
     /**
-     * Removes the equivalent applicant from the list and delete their profile picture in the save folder.
+     * Removes the equivalent applicant from the list and delete their profile picture in the save folder
      * The applicant must exist in the list.
      */
     public void remove(Applicant toRemove) {
@@ -177,11 +177,10 @@ public class UniqueApplicantList implements Iterable<Applicant> {
         } else if (prefix.equals(PREFIX_RATING)) {
             // sort by rating
             internalList.sort((p1, p2) -> p1.getRating().compareTo(p2.getRating(), true));
-
         } // ignore non-sorting prefix
     }
     /**
-     * Similar to {@code sortPersonsByAscendingOrder} but in descending order.
+     * Similar to {@code sortPersonsByAscendingOrder} but sorts in descending order.
      */
     public void sortPersonsByDescendingOrder(Prefix prefix) {
         // sort String based on lexicographic order with case sensitivity (A, a, B, b, ..., Z, z)
@@ -228,7 +227,6 @@ public class UniqueApplicantList implements Iterable<Applicant> {
         } else if (prefix.equals(PREFIX_RATING)) {
             // sort by rating
             internalList.sort((p1, p2) -> p1.getRating().compareTo(p2.getRating(), false));
-
         } // ignore non-sorting prefix
     }
 
