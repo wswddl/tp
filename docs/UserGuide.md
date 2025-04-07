@@ -266,9 +266,9 @@ Find candidates by any detail:
 
 **Command Format**: `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`
 * The search is **case-insensitive**. e.g. `hans` will match `Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only full names will be matched e.g. `John` will not match `John Doe`
 * Only applicants that match any provided criteria are returned (i.e. logical `OR` search, applicant that match **any** specified field values will appear in the results).<br>
-  e.g. `search n/John e/john@example.com` searches by name or email
+  e.g. `search n/John Doe e/john@example.com` searches by name or email
 
 **Example**:
 ```bash
