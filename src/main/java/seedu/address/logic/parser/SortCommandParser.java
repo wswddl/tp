@@ -12,7 +12,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new SortCommand object
  */
-@SuppressWarnings("checkstyle:Regexp")
 public class SortCommandParser implements Parser<SortCommand> {
 
     /**
