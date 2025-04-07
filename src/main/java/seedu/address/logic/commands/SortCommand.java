@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -67,6 +68,8 @@ public class SortCommand extends Command {
             this.criteria = "job position";
         } else if (prefix.equals(PREFIX_STATUS)) {
             this.criteria = "application status";
+        } else if (prefix.equals(PREFIX_RATING)) {
+            this.criteria = "rating";
         } else {
             throw new CommandException(String.format(
                     MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE));
