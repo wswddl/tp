@@ -296,17 +296,24 @@ Organize by what matters most:
     * `time/`: The time the applicant was added to the list.
     * `j/`: Job position
     * `s/`: Application status
+    * `r/`: Rating
+
+
 * The `ORDER/` is optional, with the default being ascending:
     * `a/`: Ascending order
     * `d/`: Descending order
-* Only one sorting criterion can be provided at a time.
-* The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
+
+  
+* For `n/`, `e/`, `j/` and `s/`, the list will be sorted in case-insensitive lexicographical order following this sequence:
+  `0–9 → A → a → B → b → C → c → ... → Z → z`.
+* For `time/`, the list will be sorted in chronological order.
+* For `r/`, the list will be sorted by the rating, with unassigned rating placed at the end of the list.
 
 **Example**:
 ```bash
-sort n/
+sort n/ a/
 ```
-Shows applicants in alphabetical order.
+Sorts applicants by their names in ascending, case-insensitive lexicographical order.
 
 Command Input:\
 <img title="sortCommand" alt="Command Input" src="./images/sortCommand_before.png"><br/><br/>
@@ -321,7 +328,7 @@ Result:\
 Export the **currently displayed** applicant data into a CSV (Comma-Separated Values) file for sharing:
 
 **Command Format**: `export [FILE-NAME]`
-* `FILE-NAME`: The name of the CSV file to be created. It can include a relative folder path (e.g., `data/export.csv`), but the folder must already exist.
+* `FILE-NAME`: The name of the CSV file to be created.
 * File extension `.csv` is recommended for proper formatting.
 
 **Example**:
@@ -409,11 +416,11 @@ Not yet, but we're working on theme options for a future update!
 | **List**    | `list`                                                                                                                                                                                                                                |
 | **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
 | **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
-| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                                               |
+| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                     |
 | **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
 | **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
-| **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
-| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                                                      |
+| **Sort**    | `sort CRITERIA/ [ORDER/]`<br> e.g., `sort n/ a/`                                                                                                                                                                                      |
+| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                            |
 | **Rate**    | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                   |
 | **Clear**   | `clear`                                                                                                                                                                                                                               |
 | **Exit**    | `exit`                                                                                                                                                                                                                                |

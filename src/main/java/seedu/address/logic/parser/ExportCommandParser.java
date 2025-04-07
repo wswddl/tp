@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CHARACTER_FILENAME_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_EMPTY_FILENAME_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_EXPORT_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_LONG_FILENAME_FORMAT;
 
 import seedu.address.logic.commands.ExportCommand;
@@ -25,9 +26,9 @@ public class ExportCommandParser implements Parser<ExportCommand> {
             throw new ParseException(MESSAGE_INVALID_CHARACTER_FILENAME_FORMAT);
         }
 
-        // Append .csv if not already there
+        // Check if file is a csv
         if (!trimmed.endsWith(".csv")) {
-            trimmed += ".csv";
+            throw new ParseException(MESSAGE_INVALID_EXPORT_FORMAT);
         }
 
         // Avoid file name too long
