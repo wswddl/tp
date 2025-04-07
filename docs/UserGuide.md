@@ -321,7 +321,7 @@ Result:\
 Export the **currently displayed** applicant data into a CSV (Comma-Separated Values) file for sharing:
 
 **Command Format**: `export [FILE-NAME]`
-* `FILE-NAME`: The name of the CSV file to be created. It can include a relative folder path (e.g., `data/export.csv`), but the folder must already exist.
+* `FILE-NAME`: The name of the CSV file to be created.
 * File extension `.csv` is recommended for proper formatting.
 
 **Example**:
