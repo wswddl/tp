@@ -246,7 +246,7 @@ public class SortCommandTest {
     @Test
     public void execute_sortByUnknownCriteria_throwCommandException() {
         // Undefined prefix
-        Prefix prefix = new Prefix("z/");
+        Prefix prefix = new Prefix("z/ d/");
         try {
             SortCommand sortCommand = new SortCommand(prefix, true);
             fail();

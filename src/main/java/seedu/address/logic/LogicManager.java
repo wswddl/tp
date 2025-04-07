@@ -64,8 +64,8 @@ public class LogicManager implements Logic {
                 }
             } else {
                 String cancelMessage = pendingCommand instanceof DeleteCommand
-                        ? "Deletion cancelled."
-                        : "Update cancelled.";
+                        ? "Deletion cancelled. Type 'list' to see the list of applicants."
+                        : "Update cancelled. Type 'list' to see the list of applicants.";
                 pendingCommand = null;
                 return new CommandResult(cancelMessage);
             }
