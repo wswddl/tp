@@ -175,7 +175,7 @@ public class UniqueApplicantList implements Iterable<Applicant> {
                     .compare(p1.getStatus().value, p2.getStatus().value));
 
         } else if (prefix.equals(PREFIX_RATING)) {
-            // sort by status
+            // sort by rating
             internalList.sort((p1, p2) -> p1.getRating().compareTo(p2.getRating(), true));
 
         } // ignore non-sorting prefix
@@ -235,7 +235,7 @@ public class UniqueApplicantList implements Iterable<Applicant> {
                     .compare(p2.getStatus().value, p1.getStatus().value));
 
         } else if (prefix.equals(PREFIX_RATING)) {
-            // sort by status
+            // sort by rating
             internalList.sort((p1, p2) -> p1.getRating().compareTo(p2.getRating(), false));
 
         } // ignore non-sorting prefix
