@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_CRITERIA_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -254,6 +256,43 @@ public class SortCommandTest {
             String expectedExceptionMessage = String.format(
                     MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE);
             assertEquals(expectedExceptionMessage, e.getMessage());
+        }
+    }
+    @Test
+    public void equals() {
+        try {
+            boolean isAscendingOrder = true;
+            final SortCommand sortByNameCommand = new SortCommand(PREFIX_NAME, isAscendingOrder);
+
+            // same values -> returns true
+            Prefix prefixName = new Prefix(PREFIX_NAME.getPrefix());
+            final SortCommand commandWithSameValues = new SortCommand(prefixName, isAscendingOrder);
+            assertTrue(sortByNameCommand.equals(commandWithSameValues));
+            // same object -> returns true
+            assertTrue(sortByNameCommand.equals(sortByNameCommand));
+            // null -> returns false
+            assertFalse(sortByNameCommand.equals(null));
+            // different types -> returns false
+            assertFalse(sortByNameCommand.equals(new ClearCommand()));
+            // different sorting criteria -> returns false
+            assertFalse(sortByNameCommand.equals(new SortCommand(PREFIX_STATUS, isAscendingOrder)));
+            // different ascending order -> returns false
+            assertFalse(sortByNameCommand.equals((new SortCommand(PREFIX_NAME, !isAscendingOrder))));
+        } catch (CommandException e) {
+            fail();
+        }
+    }
+    @Test
+    public void toStringMethod() {
+        try {
+            Prefix prefix = new Prefix("n/");
+            boolean isAscendingOrder = true;
+            SortCommand sortCommand = new SortCommand(prefix, isAscendingOrder);
+            String expected = SortCommand.class.getCanonicalName() + "{prefix=" + prefix + ", isAscendingOrder="
+                    + isAscendingOrder + "}";
+            assertEquals(expected, sortCommand.toString());
+        } catch (CommandException e) {
+            fail();
         }
     }
 }

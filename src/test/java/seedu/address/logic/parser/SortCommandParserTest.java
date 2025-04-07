@@ -220,4 +220,5 @@ public class SortCommandParserTest {
                 MESSAGE_INVALID_CRITERIA_FORMAT, "sorting", SortCommand.MESSAGE_USAGE);
         assertParseFailure(parser, invalidInput, expectedExceptionMessage);
     }
+
 }
