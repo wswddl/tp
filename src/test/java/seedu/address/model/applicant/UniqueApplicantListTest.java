@@ -212,7 +212,7 @@ public class UniqueApplicantListTest {
         uniqueApplicantList.sortPersonsByAscendingOrder(PREFIX_NAME);
         assertEquals(expectedListInAscendingOrder, uniqueApplicantList);
 
-        // Ascending order
+        // Descending order
         UniqueApplicantList expectedListInDescendingOrder = new UniqueApplicantList();
         expectedListInDescendingOrder.add(p4); // bbB
         expectedListInDescendingOrder.add(p3); // Bbb
@@ -220,6 +220,7 @@ public class UniqueApplicantListTest {
         expectedListInDescendingOrder.add(p1); // Aa
         uniqueApplicantList.sortPersonsByDescendingOrder(PREFIX_NAME);
         assertEquals(expectedListInDescendingOrder, uniqueApplicantList);
+
     }
 
     @Test
