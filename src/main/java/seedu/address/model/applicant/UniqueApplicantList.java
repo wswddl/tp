@@ -180,17 +180,8 @@ public class UniqueApplicantList implements Iterable<Applicant> {
 
         } // ignore non-sorting prefix
     }
-
     /**
-     * Sorts the list of persons based on the given prefix in descending order.
-     * The sorting works as follows:
-     * - If sorting by name, email, job position, status, or rating, the list is sorted in
-     *   lexicographic order with case sensitivity (0, 1, ..., 9, A, a, B, b, ..., Z, z).
-     * - If sorting by added time, the list is sorted in chronological order,
-     *   with the earliest added applicant appearing first.
-     * - If the prefix is not recognized, the list remains unchanged.
-     *
-     * @param prefix The prefix that determines how the list should be sorted.
+     * Similar to {@code sortPersonsByAscendingOrder} but in descending order.
      */
     public void sortPersonsByDescendingOrder(Prefix prefix) {
         // sort String based on lexicographic order with case sensitivity (A, a, B, b, ..., Z, z)
