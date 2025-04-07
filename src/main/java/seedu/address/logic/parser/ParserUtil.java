@@ -115,12 +115,9 @@ public class ParserUtil {
 
         // If all validations passed, create the predicates
         PREFIX_MAPPING.forEach((prefix, predicateConstructor) ->
-                argMultimap.getValue(prefix).ifPresent(value ->
-                        predicates.add(predicateConstructor.apply(value))
-                ));
-
+                argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
+        );
         extractPredicateFromDates(argMultimap, predicates);
-
         return predicates;
     }
 
