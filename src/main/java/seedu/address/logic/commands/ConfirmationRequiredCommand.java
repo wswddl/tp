@@ -112,7 +112,7 @@ public abstract class ConfirmationRequiredCommand extends Command {
 
         String processedApplicants = applicantsToProcess.stream()
                 .map(Messages::format)
-                .collect(Collectors.joining("\n\n"));
+                .collect(Collectors.joining("\n"));
 
         return new CommandResult(String.format(getSuccessMessage(), processedApplicants));
     }
