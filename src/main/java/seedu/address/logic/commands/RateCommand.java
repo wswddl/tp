@@ -22,7 +22,7 @@ public class RateCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a rating of 1 to 5 to the applicant "
             + "identified by the specified contact identifier (name, email, or phone).\n"
             + "Parameters: IDENTIFIER_TYPE/KEYWORD r/RATING\n"
-            + "Example: " + COMMAND_WORD + " n/Alex Yeoh + r/4";
+            + "Example: " + COMMAND_WORD + " n/Alex Yeoh r/4";
 
     public static final String MESSAGE_MULTIPLE_MATCHES = "%1$d persons matched keyword. Please be more specific!";
 
