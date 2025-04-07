@@ -18,6 +18,7 @@ Class Address
 Class Email
 Class Name
 Class Phone
+Class Set
 Class Tag
 Class JobPosition
 Class Status
@@ -49,7 +50,8 @@ Applicant *--> JobPosition
 Applicant *--> Address
 Applicant *--> Status
 Applicant *--> Rating
-Applicant *--> "*" Tag
+Applicant *--> Set
+Set *--> "*" Tag
 Applicant *--> LocalDateTime
 Applicant *--> String: profilePicturePath
 
