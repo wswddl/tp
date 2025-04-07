@@ -95,12 +95,29 @@ public class ParserUtil {
     public static List<IdentifierPredicate> extractPredicates(ArgumentMultimap argMultimap) throws ParseException {
         List<IdentifierPredicate> predicates = new ArrayList<>();
 
+        // First validate all inputs before creating any predicates
+        for (Prefix prefix : PREFIX_MAPPING.keySet()) {
+            if (argMultimap.getValue(prefix).isPresent()) {
+                String value = argMultimap.getValue(prefix).get();
+                if (prefix.equals(PREFIX_NAME)) {
+                    ParserUtil.parseName(value);
+                } else if (prefix.equals(PREFIX_PHONE)) {
+                    ParserUtil.parsePhone(value);
+                } else if (prefix.equals(PREFIX_EMAIL)) {
+                    ParserUtil.parseEmail(value);
+                } else if (prefix.equals(PREFIX_JOB_POSITION)) {
+                    ParserUtil.parseJobPosition(value);
+                } else if (prefix.equals(PREFIX_STATUS)) {
+                    ParserUtil.parseStatus(value);
+                }
+            }
+        }
+
+        // If all validations passed, create the predicates
         PREFIX_MAPPING.forEach((prefix, predicateConstructor) ->
                 argMultimap.getValue(prefix).ifPresent(value -> predicates.add(predicateConstructor.apply(value)))
         );
-
         extractPredicateFromDates(argMultimap, predicates);
-
         return predicates;
     }
 

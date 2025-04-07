@@ -271,8 +271,8 @@ Find candidates by any detail:
 **Command Format**: `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`
 * The search is **case-insensitive**. e.g. `hans` will match `Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Only applicants that match any provided criteria are returned (i.e. logical `OR` search, applicant that match **any** specified field values will appear in the results).<br>
-  e.g. `search n/John e/john@example.com` searches by name or email
+* Applicant(s) that match any provided criteria are returned (i.e. logical `OR` search, applicant that match **any** specified field values will appear in the results, but duplicate identifiers are not allowed.).<br>
+  e.g. `search n/John e/david@example.com` searches by name or email, but `search n/John n/David` contains duplicate identifiers and thus is not allowed.
 
 **Example**:
 ```bash
