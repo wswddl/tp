@@ -11,7 +11,7 @@ Welcome to **RecruitTrack**, your efficient companion for managing job applicant
 With RecruitTrack, you can:  
 ✅ Quickly add, edit, and remove applicants from your records.  
 ✅ Track the progress of candidates throughout the hiring process.  
-✅ Search, filter, and sort applicants based on various criteria.  
+✅ Search and sort applicants based on various criteria.  
 ✅ Organize and manage candidate information efficiently—all without relying on a mouse.
 
 RecruitTrack is lightweight, runs on **Java 17 or later**, and requires no internet connection. Whether you're an HR professional, a recruiter, or part of a hiring team, RecruitTrack simplifies applicant tracking so you can focus on finding the best talent.
@@ -94,18 +94,18 @@ Type in the command box:
 ### 📜 Applicant Data Model
 RecruitTrack stores applicants with the following fields, each with strict validation rules:
 
-| **Field**                  | **Format & Validation Rules**                                                  | **Example**                                               |
-|----------------------------|--------------------------------------------------------------------------------|-----------------------------------------------------------|
-| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. Not blank.                            | `n/John Doe`                                              |
-| **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**.                  | `p/98765432`                                              |
-| **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**.                     | `e/john@example.com`                                      |
-| **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                            | `j/Data Scientist`                                        |
-| **Status** (`s/`)          | Alphanumeric + spaces, case-insensitive. Not blank.                            | `s/Interview Scheduled`                                   |
-| **Address** (`a/`)         | Alphanumeric + spaces. Not blank.                                              | `a/123 Main St, Singapore`                                |
-| **Tags** (`t/`)            | Space-separated, alphanumeric (hyphens allowed). Stored *without* `t/` prefix. | Input: `t/Tech t/Urgent` → Stored as `["Tech", "Urgent"]` |
-| **Rating** (`r/`)          | Integer **1-5**.                                                               | `r/4`                                                     |
-| **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).                     | `time/2025-03-12T14:30:15`                                |
-| **Index** (`id/`)          | Auto-assigned unique integer (GUI display).                                    | `id/1`                                                    |
+| **Field**                  | **Format & Validation Rules**                                           | **Example**                                               |
+|----------------------------|-------------------------------------------------------------------------|-----------------------------------------------------------|
+| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. Not blank.                     | `n/John Doe`                                              |
+| **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**. Not blank | `p/98765432`                                              |
+| **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**. Not blank.   | `e/john@example.com`                                      |
+| **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                     | `j/Data Scientist`                                        |
+| **Status** (`s/`)          | Alphanumeric + spaces, case-insensitive. Not blank.                     | `s/Interview Scheduled`                                   |
+| **Address** (`a/`)         | Alphanumeric + spaces. Not blank.                                       | `a/123 Main St, Singapore`                                |
+| **Tags** (`t/`)            | Space-separated, alphanumeric. Stored *without* `t/` prefix.            | Input: `t/Tech t/Urgent` → Stored as `["Tech", "Urgent"]` |
+| **Rating** (`r/`)          | Integer **1-5**.                                                        | `r/4`                                                     |
+| **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).              | `time/2025-03-12T14:30:15`                                |
+| **Index** (`id/`)          | Auto-assigned unique integer (GUI display).                             | `id/1`                                                    |
 
 Other identifiers used to identify applicants:
 

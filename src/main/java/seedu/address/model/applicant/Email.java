@@ -1,5 +1,7 @@
 package seedu.address.model.applicant;
 
+import java.util.Locale;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -41,7 +43,8 @@ public class Email {
     public Email(String email) {
         requireNonNull(email);
         checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
-        value = email;
+        // Make sure all email is reflected as lowercase (And be case insensitive)
+        value = email.toLowerCase();
     }
 
     /**
