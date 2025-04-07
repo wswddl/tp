@@ -50,14 +50,21 @@ public class Messages {
      */
     public static String format(Applicant applicant) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(applicant.getName())
-                .append("; Phone: ")
+        builder.append("\n")
+                .append(applicant.getName())
+                .append(";\n  Phone: ")
                 .append(applicant.getPhone())
-                .append("; Email: ")
+                .append(";\n  Email: ")
                 .append(applicant.getEmail())
-                .append("; Address: ")
+                .append(";\n  Job Position: ")
+                .append(applicant.getJobPosition())
+                .append(";\n  Status: ")
+                .append(applicant.getStatus())
+                .append(";\n  Rating: ")
+                .append(applicant.getRating())
+                .append(";\n  Address: ")
                 .append(applicant.getAddress())
-                .append("; Tags: ");
+                .append(";\n  Tags: ");
         applicant.getTags().forEach(builder::append);
         return builder.toString();
     }
