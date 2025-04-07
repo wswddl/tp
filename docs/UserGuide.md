@@ -303,10 +303,15 @@ Organize by what matters most:
     * `a/`: Ascending order
     * `d/`: Descending order
 
-  
+
 * For `n/`, `e/`, `j/` and `s/`, the list will be sorted in case-paired alphanumeric order following this sequence:
   `0–9 → A → a → B → b → C → c → ... → Z → z`.
+  * Since application statuses can vary widely, they are also sorted in case-paired alphanumeric order for consistency.
+
+
 * For `time/`, the list will be sorted in chronological order.
+
+
 * For `r/`, the list will be sorted by the rating, with unassigned rating placed at the end of the list.
 
 **Example**:
