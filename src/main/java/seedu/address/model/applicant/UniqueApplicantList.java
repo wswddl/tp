@@ -47,7 +47,7 @@ public class UniqueApplicantList implements Iterable<Applicant> {
     }
 
     /**
-     * Adds a applicant to the list.
+     * Adds an applicant to the list.
      * The applicant must not already exist in the list.
      */
     public void add(Applicant toAdd) {
@@ -93,6 +93,12 @@ public class UniqueApplicantList implements Iterable<Applicant> {
         }
     }
 
+    public void removeAllProfilePicture() {
+        for (Applicant applicant : internalList) {
+            applicant.deleteProfilePic();
+        }
+    }
+
     public void setPersons(UniqueApplicantList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
@@ -122,7 +128,7 @@ public class UniqueApplicantList implements Iterable<Applicant> {
      *
      * @param prefix The prefix that determines how the list should be sorted.
      */
-    public void sortPersons(Prefix prefix) {
+    public void sortPersonsByAscendingOrder(Prefix prefix) {
         // sort String based on lexicographic order with case sensitivity (A, a, B, b, ..., Z, z)
         Comparator<String> caseSensitiveLexicographicComparator = (s1, s2) -> {
             for (int i = 0; i < Math.min(s1.length(), s2.length()); i++) {
@@ -163,6 +169,51 @@ public class UniqueApplicantList implements Iterable<Applicant> {
             // sort by status
             internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
                     .compare(p1.getStatus().value, p2.getStatus().value));
+
+        } // ignore non-sorting prefix
+    }
+
+    public void sortPersonsByDescendingOrder(Prefix prefix) {
+        // sort String based on lexicographic order with case sensitivity (A, a, B, b, ..., Z, z)
+        Comparator<String> caseSensitiveLexicographicComparator = (s1, s2) -> {
+            for (int i = 0; i < Math.min(s1.length(), s2.length()); i++) {
+                char c1 = s1.charAt(i);
+                char c2 = s2.charAt(i);
+
+                if (c1 != c2) {
+                    if (Character.toLowerCase(c1) == Character.toLowerCase(c2)) {
+                        return Character.compare(c1, c2);
+                    }
+                    return Character.compare(Character.toLowerCase(c1), Character.toLowerCase(c2));
+                }
+
+            }
+            return Integer.compare(s1.length(), s2.length());
+        };
+
+        if (prefix.equals(PREFIX_NAME)) {
+            // sort by name
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p2.getName().fullName, p1.getName().fullName));
+
+        } else if (prefix.equals(PREFIX_EMAIL)) {
+            // sort by email address
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p2.getEmail().value, p1.getEmail().value));
+
+        } else if (prefix.equals(PREFIX_ADDED_TIME)) {
+            // sort by added time, first added appear at the top
+            internalList.sort((p1, p2) -> p2.getAddedTime().compareTo(p1.getAddedTime()));
+
+        } else if (prefix.equals(PREFIX_JOB_POSITION)) {
+            // sort by job position
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p2.getJobPosition().jobPosition, p1.getJobPosition().jobPosition));
+
+        } else if (prefix.equals(PREFIX_STATUS)) {
+            // sort by status
+            internalList.sort((p1, p2) -> caseSensitiveLexicographicComparator
+                    .compare(p2.getStatus().value, p1.getStatus().value));
 
         } // ignore non-sorting prefix
     }

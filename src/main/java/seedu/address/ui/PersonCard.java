@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.UiManager.CUSTOM_PROFILE_PIC_FOLDER;
+import static seedu.address.ui.UiManager.DEFAULT_PROFILE_PIC;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,14 +28,8 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.applicant.Applicant;
 
-
-import javax.imageio.ImageIO;
-
-import static seedu.address.ui.UiManager.CUSTOM_PROFILE_PIC_FOLDER;
-import static seedu.address.ui.UiManager.DEFAULT_PROFILE_PIC;
-
 /**
- * An UI component that displays information of a {@code Applicant}.
+ * A UI component that displays information of a {@code Applicant}.
  */
 public class PersonCard extends UiPart<Region> {
 
@@ -45,11 +42,11 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
+    private static final long MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
+    private static final String MAX_FILE_SIZE_STRING = "2MB";
     private MainWindow mainWindow;
     private Applicant applicant;
     private final Logger logger = LogsCenter.getLogger(PersonCard.class);
-
     @FXML
     private HBox cardPane;
     @FXML
@@ -75,6 +72,12 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private ImageView profileImageView;
 
+    /**
+     * Creates a {@code PersonCard} to display the given {@code Applicant}'s information.
+     *
+     * @param applicant The applicant whose information is to be displayed.
+     * @param displayedIndex The index number to be shown beside the applicant's name.
+     */
     private PersonCard(Applicant applicant, int displayedIndex) {
         super(FXML);
 
@@ -165,17 +168,27 @@ public class PersonCard extends UiPart<Region> {
         profileImageView.setViewport(new Rectangle2D(cropX, cropY, squareSize, squareSize));
     }
 
+    /**
+     * Sets a circular clipping mask on the profile image view,
+     * so that the image is displayed as a circle.
+     */
     private void setCircularImageView() {
         double radius = Math.min(profileImageView.getFitWidth(), profileImageView.getFitHeight()) / 2;
         Circle clip = new Circle(radius, radius, radius);
         profileImageView.setClip(clip);
     }
 
+    /**
+     * Handles the logic when the user clicks on the profile image view.
+     * Opens a file chooser to select an image, saves the selected image
+     * to the custom profile picture folder, updates the image display,
+     * and updates the applicant's profile picture path.
+     */
     @FXML
     private void handleImageClick() {
+
         File selectedFile = this.chooseProfilePicture();
 
-        // check if user did NOT select a file
         if (selectedFile == null) {
             return;
         }
@@ -216,20 +229,51 @@ public class PersonCard extends UiPart<Region> {
         mainWindow.saveAddressBook();
     }
 
+
+    /**
+     * Opens a file chooser dialog for the user to select an image file.
+     *
+     * @return the selected image file, or {@code null} if no file was selected.
+     */
     private File chooseProfilePicture() {
         FileChooser fileChooser = new FileChooser();
 
         // Set title of file chooser window
-        fileChooser.setTitle("Choose Profile Picture");
+        String applicantName = applicant.getName().fullName;
+        fileChooser.setTitle("Choose Profile Picture for " + applicantName);
 
-        // Restrict to image file types
+        // Restrict to image file types only
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+                new FileChooser.ExtensionFilter("Image Files",
+                        "*.png", "*.jpg", "*.jpeg", "*.gif", ".tiff", "*.bmp", "*.webp"));
 
         // open file chooser and return the selected file
-        return fileChooser.showOpenDialog(new Stage());
+        File selectedFile = fileChooser.showOpenDialog(mainWindow.getPrimaryStage());
+
+        if (selectedFile == null) {
+            logger.info("User didn't select an image file");
+            mainWindow.displayNoFileChosenError(applicantName);
+            return null;
+        }
+
+        // check if the chosen file is too big
+        if (selectedFile.length() > MAX_FILE_SIZE) {
+            logger.info("The selected image file exceeds " + MAX_FILE_SIZE_STRING);
+            mainWindow.displayOversizeImageError(MAX_FILE_SIZE_STRING);
+            return null;
+        }
+
+        logger.info("User successfully selected an image file");
+        mainWindow.displaySuccessfulFileSelection(applicantName);
+        return selectedFile;
     }
 
+    /**
+     * Copies the selected profile picture file to the application's profile picture folder.
+     *
+     * @param sourcePath the original path of the selected image file.
+     * @param savedFilePath the destination path to save the copied image.
+     */
     private void saveProfilePicture(Path sourcePath, Path savedFilePath) {
         try {
             // Copy the file

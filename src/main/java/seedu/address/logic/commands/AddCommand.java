@@ -16,13 +16,13 @@ import seedu.address.model.Model;
 import seedu.address.model.applicant.Applicant;
 
 /**
- * Adds a applicant to the address book.
+ * Adds an applicant to the address book.
  */
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a applicant to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an applicant to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -42,18 +42,28 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "busy";
 
     public static final String MESSAGE_SUCCESS = "New applicant added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This applicant already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON =
+            "This applicant already exists in the address book (Duplicate Email or Phone Number)";
 
     private final Applicant toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Applicant}
+     * Creates an {@code AddCommand} to add the specified {@code Applicant}.
+     *
+     * @param applicant The applicant to be added.
      */
     public AddCommand(Applicant applicant) {
         requireNonNull(applicant);
         toAdd = applicant;
     }
 
+    /**
+     * Executes the add command by adding the applicant to the model.
+     *
+     * @param model The model which the command should operate on.
+     * @return A {@code CommandResult} indicating the outcome of the operation.
+     * @throws CommandException If the applicant already exists in the address book.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -66,6 +76,12 @@ public class AddCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
+    /**
+     * Checks if this command is equal to another add command.
+     *
+     * @param other The object to compare to.
+     * @return {@code true} if both are {@code AddCommand} and add the same applicant.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -73,14 +89,18 @@ public class AddCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddCommand)) {
+        if (!(other instanceof AddCommand otherAddCommand)) {
             return false;
         }
 
-        AddCommand otherAddCommand = (AddCommand) other;
         return toAdd.equals(otherAddCommand.toAdd);
     }
 
+    /**
+     * Returns the string representation of this command, primarily for debugging.
+     *
+     * @return A string representation of the AddCommand.
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)

@@ -145,7 +145,7 @@ public class Applicant {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both persons have the same email or phone number.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Applicant otherApplicant) {
@@ -154,17 +154,19 @@ public class Applicant {
         }
 
         return otherApplicant != null
-                && otherApplicant.getName().equals(getName());
+                && (otherApplicant.getEmail().equals(getEmail()) || otherApplicant.getPhone().equals(getPhone()));
     }
 
     /**
-     * Delete the image file in the profile pictures folder if it is not the default profile picture.
+     * Deletes the image file in the profile pictures folder if it is not the default profile picture.
      */
     public void deleteProfilePic() {
         if (!profilePicturePath.equals(DEFAULT_PROFILE_PIC)) {
             Path photoPath = Paths.get(profilePicturePath);
             try {
                 Files.delete(photoPath);
+                // set it to default profile picture
+                profilePicturePath = DEFAULT_PROFILE_PIC;
             } catch (IOException e) {
                 System.err.println("Error deleting photo: " + e.getMessage());
             }
@@ -188,6 +190,7 @@ public class Applicant {
         }
 
         Applicant otherApplicant = (Applicant) other;
+        // don't compare the added time
         return name.equals(otherApplicant.name)
                 && phone.equals(otherApplicant.phone)
                 && email.equals(otherApplicant.email)
@@ -195,7 +198,8 @@ public class Applicant {
                 && status.equals(otherApplicant.status)
                 && address.equals(otherApplicant.address)
                 && tags.equals(otherApplicant.tags)
-                && rating.equals((otherApplicant.rating));
+                && rating.equals((otherApplicant.rating))
+                && profilePicturePath.equals(otherApplicant.profilePicturePath);
     }
 
     @Override

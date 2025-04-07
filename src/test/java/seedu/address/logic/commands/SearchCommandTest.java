@@ -29,8 +29,10 @@ public class SearchCommandTest {
 
     @Test
     public void equals() {
-        List<IdentifierPredicate> firstPredicate = Collections.singletonList(new NameMatchesKeywordPredicate("first"));
-        List<IdentifierPredicate> secondPredicate = Collections.singletonList(new NameMatchesKeywordPredicate("second"));
+        List<IdentifierPredicate> firstPredicate = Collections.singletonList(
+            new NameMatchesKeywordPredicate("first"));
+        List<IdentifierPredicate> secondPredicate = Collections.singletonList(
+            new NameMatchesKeywordPredicate("second"));
 
         SearchCommand findFirstCommand = new SearchCommand(firstPredicate);
         SearchCommand findSecondCommand = new SearchCommand(secondPredicate);
@@ -56,16 +58,15 @@ public class SearchCommandTest {
     public void execute_zeroKeywords_allPersonsReturned() {
         int totalPersons = model.getAddressBook().getPersonList().size();
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, totalPersons);
-    
+
         List<IdentifierPredicate> predicate = preparePredicate("");
         SearchCommand command = new SearchCommand(predicate);
-    
-        expectedModel.updateFilteredPersonList(p -> true); 
-    
+
+        expectedModel.updateFilteredPersonList(p -> true);
+
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(model.getAddressBook().getPersonList(), model.getFilteredPersonList());
     }
-    
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {

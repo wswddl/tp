@@ -536,14 +536,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 - **Mainstream OS** - Windows, Linux, Unix, MacOS
 - **Private contact detail** - A contact detail that is not meant to be shared with others
-- **Applicant** – A applicant who has applied for a job and is stored as a contact in the system.
+- **Applicant** – An applicant who has applied for a job and is stored as a contact in the system.
 - **Application Metadata** – Information related to an applicant’s job application, such as job position, status, and contact details.
 - **Contact** – A stored applicant or candidate with essential details such as name, email, phone, job position, and application status.
 - **Custom Status** – A user-defined application status when the `--custom` flag is used.
 - **Error Message** – A notification displayed when an invalid input or operation occurs (e.g., invalid email format, missing required fields).
 - **Email Validation** – A process ensuring the provided email follows a valid format (e.g., `user@domain.com`).
 - **`--force` Flag** – A command option that allows updating an existing contact if a duplicate email or phone number is found.
-- **Identifier Type** – A flag (`-n`, `-e`, `-p`, `-id`) used to specify whether a contact is searched by name, email, phone number, or system ID.
+- **Identifier Type** – A flag (`n/`, `e/`, `p/`, `id/`) used to specify whether a contact is searched by name, email, phone number, or ID in the last shown list.
 - **Job Position** – The role or position that an applicant is applying for, stored in the system.
 - **Parameter** – A required or optional value provided in a command (e.g., `NAME`, `EMAIL`, `STATUS`).
 - **Status Update** – A change in an applicant’s application stage using the `update` command.
@@ -656,9 +656,9 @@ Expected: No applicant is deleted. Error message is shown.
 2. Searching by Multiple Fields
 
    1. Test case: `search n/John j/Software`  
-      Expected: Applicants whose name contains "John" **and** job position contains "Software" are shown.
+      Expected: Applicants whose name contains "John" **or** job position contains "Software" are shown.
    2. Test case: `search s/Rejected p/123`  
-      Expected: Applicants whose status is "Rejected" and phone number contains "123" are shown.
+      Expected: Applicants whose status is "Rejected" or phone number contains "123" are shown.
 
 3. Search with No Results
 

@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_NO_RESULT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -11,23 +12,24 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.applicant.Applicant;
 import seedu.address.model.applicant.IdentifierPredicate;
 
 /**
- * Deletes an applicant identified using the specified contact identifier from the address book.
+ * Deletes applicants identified by index or by matching a set of criteria.
+ * <p>
+ * Supports both individual deletion by index and bulk deletion using multiple
+ * filtering criteria. Includes confirmation prompts unless --force flag is used.
  */
-public class DeleteCommand extends Command {
+public class DeleteCommand extends ConfirmationRequiredCommand {
 
     public static final String COMMAND_WORD = "delete";
 
+    /** Message explaining the command usage and parameters */
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the applicant(s) identified by the provided identifier(s).\n"
             + "Parameters: (Use ONLY id or any combination of other identifiers) "
@@ -40,105 +42,90 @@ public class DeleteCommand extends Command {
             + "[" + PREFIX_BEFORE + "YYYY-MM-DD] "
             + "[" + PREFIX_AFTER + "YYYY-MM-DD] "
             + "[--force]\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John Doe"
-            + PREFIX_PHONE + "98765432" + "--force";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John Doe "
+            + PREFIX_PHONE + "98765432" + " --force";
 
-    static final String MESSAGE_CONFIRMATION_REQUIRED =
+    /** Confirmation message for bulk deletion */
+    static final String MESSAGE_DELETE_CONFIRMATION =
             "Are you sure you want to delete the following applicant(s)?\n"
                     + "Type 'yes' to continue\n"
                     + "Type anything else to cancel the deletion";
-    static final String MESSAGE_NO_MATCHING_PERSON = "No matching applicant found.";
-    static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Applicant(s): %1$s";
 
-    private final List<IdentifierPredicate> predicates;
-    private boolean isForceDelete;
-    private final Index targetIndex;
+    /** Success message after deletion */
+    static final String MESSAGE_DELETE_SUCCESS = "Deleted Applicant(s): %1$s";
+
+    /** Confirmation message for index-based deletion */
+    static final String MESSAGE_ID_DELETE_CONFIRMATION =
+            "Are you sure you want to delete applicant %d in the list?\n"
+                    + "Type 'yes' to continue\n"
+                    + "Type anything else to cancel the deletion";
 
     /**
-     * @param predicates     The predicates used to identify the {@code Applicant} to be deleted.
-     * @param targetIndex    The index in the last shown list used to identify the {@code Applicant} to be deleted.
-     * @param isForceDelete  The flag to specify whether it is force deletion or not.
+     * Creates a DeleteCommand that deletes applicants matching the given predicates.
+     *
+     * @param predicates The criteria to filter applicants, must not be null
+     * @param isForceOperation Whether to skip confirmation
+     * @throws NullPointerException if predicates is null
      */
-    public DeleteCommand(List<IdentifierPredicate> predicates, Index targetIndex, boolean isForceDelete) {
-        this.predicates = predicates;
-        this.targetIndex = targetIndex;
-        this.isForceDelete = isForceDelete;
+    public DeleteCommand(List<IdentifierPredicate> predicates, boolean isForceOperation) {
+        super(predicates, isForceOperation);
+    }
+
+    /**
+     * Creates a DeleteCommand that deletes the applicant at the given index.
+     *
+     * @param targetIndex The index of the applicant to delete, must not be null
+     * @param isForceOperation Whether to skip confirmation
+     * @throws NullPointerException if targetIndex is null
+     */
+    public DeleteCommand(Index targetIndex, boolean isForceOperation) {
+        super(targetIndex, isForceOperation);
     }
 
     @Override
-    public CommandResult execute(Model model) throws CommandException {
+    protected String getNoResultMessage() {
+        return MESSAGE_NO_RESULT;
+    }
+
+    @Override
+    protected String getConfirmationMessage() {
+        return MESSAGE_DELETE_CONFIRMATION;
+    }
+
+    @Override
+    protected String getIndexConfirmationMessage() {
+        return MESSAGE_ID_DELETE_CONFIRMATION;
+    }
+
+    @Override
+    protected String getSuccessMessage() {
+        return MESSAGE_DELETE_SUCCESS;
+    }
+
+    @Override
+    protected void processApplicants(Model model, List<Applicant> applicants) throws CommandException {
         requireNonNull(model);
+        requireNonNull(applicants);
 
-        if (targetIndex != null) {
-            return deleteByIndex(model);
-        } else {
-            return deleteByPredicates(model);
-        }
-    }
-
-    private CommandResult deleteByIndex(Model model) throws CommandException {
-        List<Applicant> lastShownList = model.getFilteredPersonList();
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Applicant applicantToDelete = lastShownList.get(targetIndex.getZeroBased());
-        if (!isForceDelete) {
-            model.updateFilteredPersonList(a -> a.equals(applicantToDelete));
-            return new CommandResult(MESSAGE_CONFIRMATION_REQUIRED);
-        }
-
-        model.deletePerson(applicantToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(applicantToDelete)));
-    }
-
-    private CommandResult deleteByPredicates(Model model) throws CommandException {
-        requireNonNull(predicates);
-
-        // Apply filtering predicates
-        model.updateFilteredPersonList(applicant ->
-                predicates.stream().allMatch(predicate -> predicate.test(applicant)));
-
-        List<Applicant> filteredList = model.getFilteredPersonList();
-        if (filteredList.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_MATCHING_PERSON);
-        }
-
-        if (!isForceDelete) {
-            return new CommandResult(MESSAGE_CONFIRMATION_REQUIRED);
-        }
-
-        // Create a copy of the list to avoid concurrent modification
-        List<Applicant> applicantsToDelete = List.copyOf(filteredList);
-        for (Applicant applicant : applicantsToDelete) {
+        for (Applicant applicant : applicants) {
             model.deletePerson(applicant);
         }
-
-        String deletedApplicants = applicantsToDelete.stream()
-                .map(Messages::format)
-                .collect(Collectors.joining("\n"));
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedApplicants));
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
+    protected void processApplicant(Model model, Applicant applicant) throws CommandException {
+        requireNonNull(model);
+        requireNonNull(applicant);
 
-        if (!(other instanceof DeleteCommand)) {
-            return false;
-        }
-
-        DeleteCommand otherCommand = (DeleteCommand) other;
-        return Objects.equals(predicates, otherCommand.predicates)
-                && Objects.equals(targetIndex, otherCommand.targetIndex)
-                && isForceDelete == otherCommand.isForceDelete;
+        model.deletePerson(applicant);
     }
 
+    /**
+     * Sets the force deletion flag.
+     *
+     * @param isForceDelete Whether to skip confirmation
+     */
     public void setForceDelete(boolean isForceDelete) {
-        this.isForceDelete = isForceDelete;
+        setForceOperation(isForceDelete);
     }
 }
