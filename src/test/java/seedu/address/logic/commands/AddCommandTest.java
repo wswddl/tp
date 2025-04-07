@@ -152,7 +152,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortPersons(Prefix prefix) {
+        public void sortPersons(Prefix prefix, boolean isAscendingOrder) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -178,6 +178,11 @@ public class AddCommandTest {
 
         @Override
         public Applicant setRating(Applicant applicant, Rating rating) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteAllProfilePicture() {
             throw new AssertionError("This method should not be called.");
         }
     }
