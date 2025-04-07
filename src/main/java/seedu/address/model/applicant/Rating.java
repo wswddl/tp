@@ -38,6 +38,17 @@ public class Rating {
         return test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Compares this rating, ratings with value -1 are treated as lowest and always placed last.
+     */
+    public int compareTo(Rating otherRating, boolean isAscending) {
+        int thisValue = Integer.parseInt(this.value);
+        int otherValue = Integer.parseInt(otherRating.value);
+        if (thisValue == -1 || otherValue == -1) {
+            return thisValue == otherValue ? 0 : (thisValue == -1 ? 1 : -1);
+        }
+        return isAscending ? Integer.compare(thisValue, otherValue) : Integer.compare(otherValue, thisValue);
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {
