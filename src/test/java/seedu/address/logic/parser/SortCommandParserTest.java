@@ -21,8 +21,8 @@ public class SortCommandParserTest {
     @Test
     public void parse_validNameArgs_returnsSortCommand() {
         try {
-            String input = " n/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_NAME);
+            String input = " n/ a/";
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_NAME, true);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -32,8 +32,8 @@ public class SortCommandParserTest {
     @Test
     public void parse_validEmailAddressArgs_returnsSortCommand() {
         try {
-            String input = " e/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_EMAIL);
+            String input = " e/ a/";
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_EMAIL, true);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -43,8 +43,8 @@ public class SortCommandParserTest {
     @Test
     public void parse_validJobPositionArgs_returnsSortCommand() {
         try {
-            String input = " j/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_JOB_POSITION);
+            String input = " j/ d/";
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_JOB_POSITION, false);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -54,8 +54,8 @@ public class SortCommandParserTest {
     @Test
     public void parse_validStatusArgs_returnsSortCommand() {
         try {
-            String input = " s/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_STATUS);
+            String input = " s/ d/";
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_STATUS, false);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -65,8 +65,8 @@ public class SortCommandParserTest {
     @Test
     public void parse_validAddedTimeArgs_returnsSortCommand() {
         try {
-            String input = " time/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_ADDED_TIME);
+            String input = " time/ d/";
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_ADDED_TIME, false);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
