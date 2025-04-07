@@ -96,7 +96,7 @@ RecruitTrack stores applicants with the following fields, each with strict valid
 
 | **Field**                  | **Format & Validation Rules**                                                                        | **Example**                                               |
 |----------------------------|------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
-| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. Not blank.                                                  | `n/John Doe`                                              |
+| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. **Does not have to be unique.** Not blank.                  | `n/John Doe`                                              |
 | **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**. Not blank                              | `p/98765432`                                              |
 | **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**. Not blank                                 | `e/john@example.com`                                      |
 | **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                                                  | `j/Data Scientist`                                        |
