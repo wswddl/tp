@@ -72,7 +72,10 @@ public class UniqueApplicantList implements Iterable<Applicant> {
             throw new PersonNotFoundException();
         }
 
-        if (!target.isSamePerson(editedApplicant) && contains(editedApplicant)) {
+        internalList.set(index, null);
+
+        if (contains(editedApplicant)) {
+            internalList.set(index, target);
             throw new DuplicatePersonException();
         }
 
