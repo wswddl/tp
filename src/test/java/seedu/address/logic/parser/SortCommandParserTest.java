@@ -43,7 +43,7 @@ public class SortCommandParserTest {
     public void parse_validNameArgsDescendingOrder_returnsSortCommand() {
         try {
             String input = " n/ d/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_NAME, true);
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_NAME, false);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -73,7 +73,7 @@ public class SortCommandParserTest {
     public void parse_validEmailAddressArgsDescendingOrder_returnsSortCommand() {
         try {
             String input = " e/ d/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_EMAIL, true);
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_EMAIL, false);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -103,7 +103,7 @@ public class SortCommandParserTest {
     public void parse_validJobPositionArgsDescendingOrder_returnsSortCommand() {
         try {
             String input = " j/ d/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_JOB_POSITION, true);
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_JOB_POSITION, false);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -133,7 +133,7 @@ public class SortCommandParserTest {
     public void parse_validStatusArgsDescendingOrder_returnsSortCommand() {
         try {
             String input = " s/ d/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_STATUS, true);
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_STATUS, false);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -163,7 +163,7 @@ public class SortCommandParserTest {
     public void parse_validAddedTimeArgsDescendingOrder_returnsSortCommand() {
         try {
             String input = " time/ d/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_ADDED_TIME, true);
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_ADDED_TIME, false);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();
@@ -193,7 +193,7 @@ public class SortCommandParserTest {
     public void parse_validRatingArgsDescendingOrder_returnsSortCommand() {
         try {
             String input = " r/ d/";
-            SortCommand expectedSortCommand = new SortCommand(PREFIX_RATING, true);
+            SortCommand expectedSortCommand = new SortCommand(PREFIX_RATING, false);
             assertParseSuccess(parser, input, expectedSortCommand);
         } catch (CommandException pe) {
             fail();

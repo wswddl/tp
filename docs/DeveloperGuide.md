@@ -9,7 +9,7 @@
 <!-- * Table of Contents -->
 <page-nav-print />
 
---------------------------------------------------------------------------------------------------------------------
+--------------------    ------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
 
@@ -347,8 +347,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1.  User requests to add an applicant by providing the details
-2.  RecruitTrack adds the applicant with the details into the list
+1.  User requests to add an applicant by providing the details.
+2.  RecruitTrack adds the applicant with the details into the list.
 
     Use case ends.
 
@@ -368,10 +368,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1.  User requests to list applicants
-2.  RecruitTrack shows a list of applicants
-3.  User requests to delete a specific applicant
-4.  RecruitTrack deletes the applicant
+1.  User requests to list applicants.
+2.  RecruitTrack shows a list of applicants.
+3.  User requests to delete a specific applicant.
+4.  RecruitTrack deletes the applicant.
 
     Use case ends.
 
@@ -393,10 +393,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1.  User requests to list applicants
-2.  RecruitTrack shows a list of applicants
-3.  User requests to edit a specific applicant in the list and provides the new details for that applicant
-4.  RecruitTrack edits the applicant's details
+1.  User requests to list applicants.
+2.  RecruitTrack shows a list of applicants.
+3.  User requests to edit a specific applicant in the list and provides the new details for that applicant.
+4.  RecruitTrack edits the applicant's details.
 
     Use case ends.
 
@@ -430,8 +430,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1.  User requests to search an applicant by providing the applicant's details.
-2.  RecruitTrack finds applicants with the given details.
+1.  User requests to search applicant(s) by providing their details.
+2.  RecruitTrack finds applicant(s) with the given details.
+3.  RecruitTrack returns a list of applicants that match the details.
 
     Use case ends.
 
@@ -441,16 +442,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
+* 2b. No applicant with the given details is found.
+  
+    * 2b1. RecruitTrack indicates that no applicant is found.
+    
+    Use case ends.
+
 <br>
 
 **Use case: UC06 - Rate an applicant**
 
 **MSS:**
 
-1.  User requests to list applicants
-2.  RecruitTrack shows a list of applicants
-3.  User requests to rate an applicant by providing the applicant's details and rating number
-4.  RecruitTrack rates applicants with the given details
+1.  User requests to list applicants.
+2.  RecruitTrack shows a list of applicants.
+3.  User requests to rate an applicant by providing the applicant's details and rating number.
+4.  RecruitTrack rates applicants with the given details.
 
     Use case ends.
 
@@ -472,8 +479,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1.  User requests to summarize the applicant records without specifying any filter
-2.  RecruitTrack output the summary of all the applicants' details
+1.  User requests to summarize the applicant records without specifying any filter.
+2.  RecruitTrack output the summary of all the applicants' details.
 
 <br>
 
@@ -481,8 +488,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1.  User requests to summarize the applicant records and specify the filters
-2.  RecruitTrack output the summary of all applicants that meet the specified filters
+1.  User requests to summarize the applicant records and specify the filters.
+2.  RecruitTrack output the summary of all applicants that meet the specified filters.
 
 <br>
 
@@ -490,9 +497,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1.  User requests to export the applicants data
-2.  RecruitTrack requests the user to specify the location to save the exported data
-3.  RecruitTrack save the exported data in the specify location
+1.  User requests to export the applicants data.
+2.  RecruitTrack requests the user to specify the location to save the exported data.
+3.  RecruitTrack save the exported data in the specify location.
 
 **Extensions:**
 

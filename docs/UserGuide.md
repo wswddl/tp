@@ -304,7 +304,7 @@ Organize by what matters most:
     * `d/`: Descending order
 
   
-* For `n/`, `e/`, `j/` and `s/`, the list will be sorted in case-insensitive lexicographical order following this sequence:
+* For `n/`, `e/`, `j/` and `s/`, the list will be sorted in case-paired alphanumeric order following this sequence:
   `0–9 → A → a → B → b → C → c → ... → Z → z`.
 * For `time/`, the list will be sorted in chronological order.
 * For `r/`, the list will be sorted by the rating, with unassigned rating placed at the end of the list.

@@ -180,46 +180,67 @@ public class UniqueApplicantListTest {
     }
 
     @Test
-    public void sortPersons_nameCaseSensitive_success() {
-        Email email = new Email("123@gmail.com");
-        Phone phone = new Phone("1234567890");
+    public void sortPersonsByName_casePairedAlphanumericOrder_success() {
+        Email email1 = new Email("test1@gmail.com");
+        Email email2 = new Email("test2@gmail.com");
+        Email email3 = new Email("test3@gmail.com");
+        Email email4 = new Email("test4@gmail.com");
+        Phone phone1 = new Phone("1234567890");
+        Phone phone2 = new Phone("1234567891");
+        Phone phone3 = new Phone("1234567892");
+        Phone phone4 = new Phone("1234567893");
         JobPosition jp = new JobPosition("job");
         Status status = new Status("status");
         Address address = new Address("happy street");
         LocalDateTime addedTime = LocalDateTime.now();
         Set<Tag> tags = new HashSet<>();
-        Applicant p1 = new Applicant(new Name("Aa"), phone, email, jp, status, address, addedTime, tags);
-        Applicant p2 = new Applicant(new Name("aaa"), phone, email, jp, status, address, addedTime, tags);
-        Applicant p3 = new Applicant(new Name("Bbb"), phone, email, jp, status, address, addedTime, tags);
-        Applicant p4 = new Applicant(new Name("bbB"), phone, email, jp, status, address, addedTime, tags);
+        Applicant p1 = new Applicant(new Name("Aa"), phone1, email1, jp, status, address, addedTime, tags);
+        Applicant p2 = new Applicant(new Name("aaa"), phone2, email2, jp, status, address, addedTime, tags);
+        Applicant p3 = new Applicant(new Name("Bbb"), phone3, email3, jp, status, address, addedTime, tags);
+        Applicant p4 = new Applicant(new Name("bbB"), phone4, email4, jp, status, address, addedTime, tags);
         uniqueApplicantList.add(p3);
         uniqueApplicantList.add(p2);
         uniqueApplicantList.add(p1);
         uniqueApplicantList.add(p4);
 
-        UniqueApplicantList expectedList = new UniqueApplicantList();
-        expectedList.add(p1); // Aa
-        expectedList.add(p2); // aaa
-        expectedList.add(p3); // Bbb
-        expectedList.add(p4); // bbB
-
+        // Ascending order
+        UniqueApplicantList expectedListInAscendingOrder = new UniqueApplicantList();
+        expectedListInAscendingOrder.add(p1); // Aa
+        expectedListInAscendingOrder.add(p2); // aaa
+        expectedListInAscendingOrder.add(p3); // Bbb
+        expectedListInAscendingOrder.add(p4); // bbB
         uniqueApplicantList.sortPersonsByAscendingOrder(PREFIX_NAME);
-        assertEquals(expectedList, uniqueApplicantList);
+        assertEquals(expectedListInAscendingOrder, uniqueApplicantList);
+
+        // Ascending order
+        UniqueApplicantList expectedListInDescendingOrder = new UniqueApplicantList();
+        expectedListInDescendingOrder.add(p4); // bbB
+        expectedListInDescendingOrder.add(p3); // Bbb
+        expectedListInDescendingOrder.add(p2); // aaa
+        expectedListInDescendingOrder.add(p1); // Aa
+        uniqueApplicantList.sortPersonsByDescendingOrder(PREFIX_NAME);
+        assertEquals(expectedListInDescendingOrder, uniqueApplicantList);
     }
 
     @Test
-    public void sortPersons_nameLexOnly_failure() {
-        Email email = new Email("123@gmail.com");
-        Phone phone = new Phone("1234567890");
+    public void sortPersonsByName_lexicographicalOrder_failure() {
+        Email email1 = new Email("test1@gmail.com");
+        Email email2 = new Email("test2@gmail.com");
+        Email email3 = new Email("test3@gmail.com");
+        Email email4 = new Email("test4@gmail.com");
+        Phone phone1 = new Phone("1234567890");
+        Phone phone2 = new Phone("1234567891");
+        Phone phone3 = new Phone("1234567892");
+        Phone phone4 = new Phone("1234567893");
         JobPosition jp = new JobPosition("job");
         Status status = new Status("status");
         Address address = new Address("happy street");
         LocalDateTime addedTime = LocalDateTime.now();
         Set<Tag> tags = new HashSet<>();
-        Applicant p1 = new Applicant(new Name("Aa"), phone, email, jp, status, address, addedTime, tags);
-        Applicant p2 = new Applicant(new Name("aaa"), phone, email, jp, status, address, addedTime, tags);
-        Applicant p3 = new Applicant(new Name("Bbb"), phone, email, jp, status, address, addedTime, tags);
-        Applicant p4 = new Applicant(new Name("bbB"), phone, email, jp, status, address, addedTime, tags);
+        Applicant p1 = new Applicant(new Name("Aa"), phone1, email1, jp, status, address, addedTime, tags);
+        Applicant p2 = new Applicant(new Name("aaa"), phone2, email2, jp, status, address, addedTime, tags);
+        Applicant p3 = new Applicant(new Name("Bbb"), phone3, email3, jp, status, address, addedTime, tags);
+        Applicant p4 = new Applicant(new Name("bbB"), phone4, email4, jp, status, address, addedTime, tags);
         uniqueApplicantList.add(p3);
         uniqueApplicantList.add(p2);
         uniqueApplicantList.add(p1);
@@ -232,7 +253,7 @@ public class UniqueApplicantListTest {
         wronglySortedList.add(p2); // aaa
         wronglySortedList.add(p4); // bbB
 
-        uniqueApplicantList.sortPersons(PREFIX_NAME);
+        uniqueApplicantList.sortPersonsByAscendingOrder(PREFIX_NAME);
         assertNotEquals(wronglySortedList, uniqueApplicantList);
     }
 
