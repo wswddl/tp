@@ -32,7 +32,8 @@ public class SearchCommand extends Command {
      * Usage message displayed when the user provides an incorrect format for the search command.
      */
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Searches for applicants who match at least one of the specified criteria (logical OR).\n"
+            + ": Searches for applicants who match at least one of the specified criteria (logical OR),"
+            + " but duplicate identifiers are not allowed.\n"
             + "Parameters: [" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
