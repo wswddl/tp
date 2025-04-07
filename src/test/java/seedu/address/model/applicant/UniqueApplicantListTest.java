@@ -203,7 +203,7 @@ public class UniqueApplicantListTest {
         expectedList.add(p3); // Bbb
         expectedList.add(p4); // bbB
 
-        uniqueApplicantList.sortPersons(PREFIX_NAME);
+        uniqueApplicantList.sortPersonsByAscendingOrder(PREFIX_NAME);
         assertEquals(expectedList, uniqueApplicantList);
     }
 
