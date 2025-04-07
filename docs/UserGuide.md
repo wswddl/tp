@@ -107,6 +107,13 @@ RecruitTrack stores applicants with the following fields, each with strict valid
 | **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).                                           | `time/2025-03-12T14:30:15`                                |
 | **Index** (`id/`)          | Integer index of applicant in **currently displayed list** (beside applicant's name in GUI display). | `id/1`                                                    |
 
+Other identifiers used to identify applicants:
+
+| **Field**                  | **Format & Validation Rules**                                                                              | **Example**                                               |
+|----------------------------|------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| **Before Date** (`bfr/`)   | Date in ISO format (`YYYY-MM-DD`). Applicant(s) with an application date before this date will be matched. | `bfr/2025-04-01`                                          |
+| **After Date** (`aft/`)    | Date in ISO format (`YYYY-MM-DD`). Applicant(s) with an application date after this date be matched.       | `aft/2025-04-01`                                          |
+
 **Email Validation Rules**:
 
 Emails should be of the format `local-part@domain` and adhere to the following constraints:
@@ -292,17 +299,24 @@ Organize by what matters most:
     * `time/`: The time the applicant was added to the list.
     * `j/`: Job position
     * `s/`: Application status
+    * `r/`: Rating
+
+
 * The `ORDER/` is optional, with the default being ascending:
     * `a/`: Ascending order
     * `d/`: Descending order
-* Only one sorting criterion can be provided at a time.
-* The list will be sorted in lexicographical order with case sensitivity based on the chosen criterion.
+
+  
+* For `n/`, `e/`, `j/` and `s/`, the list will be sorted in case-insensitive lexicographical order following this sequence:
+  `0–9 → A → a → B → b → C → c → ... → Z → z`.
+* For `time/`, the list will be sorted in chronological order.
+* For `r/`, the list will be sorted by the rating, with unassigned rating placed at the end of the list.
 
 **Example**:
 ```bash
-sort n/
+sort n/ a/
 ```
-Shows applicants in alphabetical order.
+Sorts applicants by their names in ascending, case-insensitive lexicographical order.
 
 Command Input:\
 <img title="sortCommand" alt="Command Input" src="./images/sortCommand_before.png"><br/><br/>
@@ -408,7 +422,7 @@ Not yet, but we're working on theme options for a future update!
 | **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                     |
 | **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
 | **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
-| **Sort**    | `sort CRITERIA/`<br> e.g., `sort n/`                                                                                                                                                                                                  |
+| **Sort**    | `sort CRITERIA/ [ORDER/]`<br> e.g., `sort n/ a/`                                                                                                                                                                                      |
 | **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                            |
 | **Rate**    | `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                     |
 | **Clear**   | `clear`                                                                                                                                                                                                                               |
