@@ -147,6 +147,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteAllProfilePicture() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setPerson(Applicant target, Applicant editedApplicant) {
             throw new AssertionError("This method should not be called.");
         }
