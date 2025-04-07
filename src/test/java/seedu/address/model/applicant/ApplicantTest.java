@@ -43,7 +43,7 @@ public class ApplicantTest {
         assertTrue(AMY.isSamePerson(editedAmy));
 
         // different phone, all other attributes same -> returns true
-        editedAmy = new PersonBuilder(AMY).withName(VALID_PHONE_BOB).build();
+        editedAmy = new PersonBuilder(AMY).withPhone(VALID_PHONE_BOB).build();
         assertTrue(AMY.isSamePerson(editedAmy));
 
         // different phone and email, all other attributes same -> returns false
