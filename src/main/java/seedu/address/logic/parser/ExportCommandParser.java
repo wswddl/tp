@@ -26,7 +26,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
             throw new ParseException(MESSAGE_INVALID_CHARACTER_FILENAME_FORMAT);
         }
 
-        // Append .csv if not already there
+        // Check if file is a csv
         if (!trimmed.endsWith(".csv")) {
             throw new ParseException(MESSAGE_INVALID_EXPORT_FORMAT);
         }
