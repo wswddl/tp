@@ -422,7 +422,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC04 - Update an applicant**
 
-* Similar to UC03 except the user can only update some information of the applicant.
+* Similar to UC03 except the user can only update status of the applicant.
 
 <br>
 
