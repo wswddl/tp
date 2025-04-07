@@ -27,7 +27,7 @@ public class DeleteCommandParserTest {
 
     private final DeleteCommandParser parser = new DeleteCommandParser();
 
-    // ===== Valid Input Tests =====
+    // ===== Single Valid Identifier Tests =====
 
     /**
      * EP: Valid ID input

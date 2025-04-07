@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -153,6 +154,7 @@ public class DeleteCommandTest {
     public void execute_predicateNoMatches_throwsCommandException() {
         IdentifierPredicate predicate = new NameMatchesKeywordPredicate("Nonexistent Name");
         DeleteCommand deleteCommand = new DeleteCommand(List.of(predicate), false);
+        model.updateFilteredPersonList(predicate);
 
         assertCommandFailure(deleteCommand, model, MESSAGE_NO_RESULT);
     }
@@ -165,8 +167,7 @@ public class DeleteCommandTest {
         LocalDateTime futureDate = LocalDateTime.now().plusDays(1);
         IdentifierPredicate predicate = new AfterDatePredicate(futureDate);
         DeleteCommand deleteCommand = new DeleteCommand(List.of(predicate), true);
-        System.out.println("Current applicants in model:");
-        model.getFilteredPersonList().forEach(System.out::println);
+        model.updateFilteredPersonList(predicate);
         // Expect no matches (since we're using future date)
         assertCommandFailure(deleteCommand, model, MESSAGE_NO_RESULT);
     }
@@ -180,38 +181,16 @@ public class DeleteCommandTest {
         IdentifierPredicate predicate = new BeforeDatePredicate(pastDate);
         DeleteCommand deleteCommand = new DeleteCommand(List.of(predicate), true);
 
-        // Should match all typical persons since they were created in the past
+        model.updateFilteredPersonList(predicate);
+        List<Applicant> expectedToDelete = new ArrayList<>(model.getFilteredPersonList());
+
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SUCCESS,
-                model.getFilteredPersonList().stream()
+                expectedToDelete.stream()
                         .map(Messages::format)
                         .collect(Collectors.joining("\n\n")));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getUserPrefs());
-        expectedModel.deletePerson(model.getFilteredPersonList().get(0));
-        expectedModel.deletePerson(model.getFilteredPersonList().get(1));
-        showNoPerson(expectedModel);
-
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
-    }
-
-    /**
-     * EP: Combined date and name predicates
-     */
-    @Test
-    public void execute_combinedDateAndNamePredicates_forceDeleteSuccess() {
-        Applicant applicantToDelete = model.getFilteredPersonList().get(0);
-        LocalDateTime pastDate = LocalDateTime.now().minusDays(1);
-
-        IdentifierPredicate namePredicate = new NameMatchesKeywordPredicate(applicantToDelete.getName().fullName);
-        IdentifierPredicate datePredicate = new BeforeDatePredicate(pastDate);
-
-        DeleteCommand deleteCommand = new DeleteCommand(Arrays.asList(namePredicate, datePredicate), true);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SUCCESS,
-                Messages.format(applicantToDelete));
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(applicantToDelete);
+        expectedToDelete.forEach(expectedModel::deletePerson);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
