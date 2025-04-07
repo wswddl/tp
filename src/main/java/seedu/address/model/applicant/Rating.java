@@ -39,26 +39,15 @@ public class Rating {
     }
 
     /**
-     * Compares this rating to another for sorting, with optional order.
-     * Ratings with value -1 are treated as lowest and always placed last.
-     *
-     * @param isAscending true for ascending, false for descending order
+     * Compares this rating, ratings with value -1 are treated as lowest and always placed last.
      */
     public int compareTo(Rating otherRating, boolean isAscending) {
-        // rating value of -1 will be at the end of the list when sorting
         int thisValue = Integer.parseInt(this.value);
         int otherValue = Integer.parseInt(otherRating.value);
-        if (thisValue == -1 && otherValue == -1) {
-            return 0; // Both are "-1", considered equal
-        } else if (thisValue == -1) {
-            return 1; // "-1" should come last
-        } else if (otherValue == -1) {
-            return -1; // "-1" should come last
-        } else if (isAscending) {
-            return Integer.compare(thisValue, otherValue); // Compare numerically in ascending order
-        } else {
-            return Integer.compare(otherValue, thisValue); // Compare numerically in descending order
+        if (thisValue == -1 || otherValue == -1) {
+            return thisValue == otherValue ? 0 : (thisValue == -1 ? 1 : -1);
         }
+        return isAscending ? Integer.compare(thisValue, otherValue) : Integer.compare(otherValue, thisValue);
     }
     @Override
     public boolean equals(Object other) {
