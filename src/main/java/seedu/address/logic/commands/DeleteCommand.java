@@ -12,8 +12,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.applicant.Applicant;
@@ -118,6 +120,41 @@ public class DeleteCommand extends ConfirmationRequiredCommand {
         requireNonNull(applicant);
 
         model.deletePerson(applicant);
+    }
+
+    @Override
+    protected CommandResult executeWithPredicates(Model model) throws CommandException {
+        requireNonNull(model);
+        model.updateFilteredPersonList(applicant ->
+                predicates.stream().allMatch(predicate -> predicate.test(applicant)));
+        List<Applicant> filteredList = model.getFilteredPersonList();
+        if (filteredList.isEmpty()) {
+            throw new CommandException(getNoResultMessage());
+        }
+        if (!isForceOperation) {
+            return new CommandResult(getConfirmationMessage());
+        }
+        List<Applicant> applicantsToProcess = List.copyOf(filteredList);
+        processApplicants(model, applicantsToProcess);
+        String processedApplicants = applicantsToProcess.stream()
+                .map(Messages::format)
+                .collect(Collectors.joining("\n"));
+        return new CommandResult(String.format(getSuccessMessage(), processedApplicants));
+    }
+
+    @Override
+    protected CommandResult executeWithIndex(Model model) throws CommandException {
+        requireNonNull(model);
+        List<Applicant> lastShownList = model.getFilteredPersonList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        Applicant applicantToProcess = lastShownList.get(targetIndex.getZeroBased());
+        if (!isForceOperation) {
+            return new CommandResult(String.format(getIndexConfirmationMessage(), targetIndex.getOneBased()));
+        }
+        processApplicant(model, applicantToProcess);
+        return new CommandResult(String.format(getSuccessMessage(), Messages.format(applicantToProcess)));
     }
 
     /**
