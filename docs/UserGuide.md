@@ -214,7 +214,7 @@ Move candidates through your pipeline:
 
 **Example**:
 ```bash
-update n/John Doe s/Job Offered --force
+update n/John Doe s/Pending Review --force
 ```
 💡 **Pro Tip**: Adding `--force` skips confirmation for quick update.
 
