@@ -433,4 +433,4 @@ We hope you enjoy using RecruitTrack as much as we enjoyed making it! Remember:
 
 Need help? Just type `help` in the app or reach out to our friendly support team.
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top](#recruittrack-user-guide)
