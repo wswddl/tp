@@ -384,8 +384,11 @@ Clears all applicant data from the application.<br/>
 ## 💾 Your Data is Safe With Us
 
 🔒 **Automatic Saving**: Every change is saved instantly
+<br>
 📂 **Easy Backups**: Just copy the `data/` folder
-🔄 **Recovery**: Restore backups in a [single step](#how-do-i-import-my-data)
+<br>
+🔄 **Recovery**: Restore backups by importing your data
+<br>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -395,7 +398,7 @@ Clears all applicant data from the application.<br/>
 Just copy the `data/` folder into the folder containing `recruittrack.jar` - it's that easy!
 
 ### Can I undo a deletion?
-Not directly, but if you have a backup of your data file, you can restore it by following the steps [above](#how-do-i-import-my-data).
+Not directly, but if you have a backup of your data file, you can restore it by importing your past data.
 
 ### Can I change the colors?
 Not yet, but we're working on theme options for a future update!
