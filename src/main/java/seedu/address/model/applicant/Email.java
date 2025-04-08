@@ -1,7 +1,5 @@
 package seedu.address.model.applicant;
 
-import java.util.Locale;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -43,7 +41,7 @@ public class Email {
     public Email(String email) {
         requireNonNull(email);
         checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
-        // Make sure all email is reflected as lowercase (And be case insensitive)
+        // Make sure all email is reflected as lowercase (And be case-insensitive)
         value = email.toLowerCase();
     }
 
@@ -66,11 +64,10 @@ public class Email {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Email)) {
+        if (!(other instanceof Email otherEmail)) {
             return false;
         }
 
-        Email otherEmail = (Email) other;
         return value.equals(otherEmail.value);
     }
 
