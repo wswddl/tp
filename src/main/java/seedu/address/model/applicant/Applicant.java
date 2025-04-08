@@ -22,6 +22,10 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Applicant {
+    public static final Applicant NULL_APPLICANT = new Applicant(
+            new Name("name"), new Phone("12345678"), new Email("null@mail.com"),
+            new JobPosition("job"), new Status("status"), new Address("address"),
+            LocalDateTime.now(), new HashSet<>(), new Rating("-1"), "path");
 
     // Identity fields
     private final Name name;
@@ -36,11 +40,6 @@ public class Applicant {
     private final Set<Tag> tags = new HashSet<>();
     private final Rating rating;
     private String profilePicturePath;
-
-    public static final Applicant NULL_APPLICANT = new Applicant(
-            new Name("name"), new Phone("12345678"), new Email("null@mail.com"),
-            new JobPosition("job"), new Status("status"), new Address("address"),
-            LocalDateTime.now(), new HashSet<>(), new Rating("-1"), "path");
 
     /**
      * Constructor of Applicant.
