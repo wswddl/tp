@@ -47,7 +47,7 @@ The bulk of the app's work is done by the following four components:
 * [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
-
+<br>
 **How the architecture components interact with each other**
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete id/1 --force`.
@@ -124,6 +124,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+<br>
 
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2425S2-CS2103T-W09-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -492,7 +493,6 @@ Expected: Confirmation message will be displayed (assuming there are at least 3 
       2. Test case: delete n/Nonexistent Applicant --force<br>
 Expected: No applicant is deleted. Error message is shown.
 
-4. _{ more test cases …​ }_
 
 ### Exporting Applicant Data
 
@@ -502,13 +502,13 @@ Expected: No applicant is deleted. Error message is shown.
       Expected: A CSV file named `applicants.csv` is created in the home directory. It contains details of all currently displayed applicants.
    2. Test case: `export export_folder/candidates.csv`
       Expected: The file `candidates.csv` is created inside the `export_folder` directory (must exist beforehand).
-
+<br>
 2. Exporting an Empty List
 
    1. Prerequisites: Ensure the displayed list is empty (e.g., after searching for a non-existent applicant).
    2. Test case: `export empty.csv`
       Expected: A CSV file is created, but it only contains the header row. A message indicating zero applicants exported is shown.
-
+<br>
 3. Invalid Export File Names
 
    1. Test case: `export`
@@ -517,7 +517,7 @@ Expected: No applicant is deleted. Error message is shown.
       Expected: Error message is shown due to invalid file path (OS-dependent).
    3. Test case: `export /root/protected.csv` (Linux/macOS) or `export C:\Windows\System32\protected.csv` (Windows)
       Expected: Error message is shown due to insufficient permissions.
-
+<br>
 4. Overwriting an Existing File
 
    1. Prerequisite: Make sure a file with the same name already exists.
@@ -538,19 +538,19 @@ Expected: No applicant is deleted. Error message is shown.
       Expected: All applicants applying for positions with "SWE" in the title are shown.
    5. Test case: `search s/Interviewing`
       Expected: All applicants currently in the "Interviewing" status are shown.
-
+<br>
 2. Searching by Multiple Fields
 
    1. Test case: `search n/John j/Software`
       Expected: Applicants whose name contains "John" **or** job position contains "Software" are shown.
    2. Test case: `search s/Rejected p/123`
       Expected: Applicants whose status is "Rejected" **or** phone number contains "123" are shown.
-
+<br>
 3. Search with No Results
 
    1. Test case: `search n/NotExist`
       Expected: "0 applicants listed!" message shown. Displayed list is empty.
-
+<br>
 4. Invalid Search Commands
 
    1. Test case: `search`
@@ -572,7 +572,7 @@ Expected: No applicant is deleted. Error message is shown.
        Expected: Applicant list has been sorted successfully based on Job Position.
     5. Test case: `sort s/`
        Expected: Applicant list has been sorted successfully based on Application Status.
-
+<br>
 2. Invalid sorting criteria
 
     1. Test case: `sort`
