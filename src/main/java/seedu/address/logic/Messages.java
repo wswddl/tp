@@ -50,7 +50,7 @@ public class Messages {
      */
     public static String format(Applicant applicant) {
         final StringBuilder builder = new StringBuilder();
-        builder.append("\n")
+        builder.append("\n  ")
                 .append(applicant.getName())
                 .append(";\n  Phone: ")
                 .append(applicant.getPhone())
