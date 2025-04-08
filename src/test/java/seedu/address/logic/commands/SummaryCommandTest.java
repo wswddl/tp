@@ -1,17 +1,19 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.applicant.IdentifierPredicate;
 import seedu.address.model.applicant.NameMatchesKeywordPredicate;
-
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class SummaryCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

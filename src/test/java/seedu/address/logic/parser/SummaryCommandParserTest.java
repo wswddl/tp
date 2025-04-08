@@ -1,18 +1,18 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
-import seedu.address.logic.commands.SearchCommand;
+
 import seedu.address.logic.commands.SummaryCommand;
 import seedu.address.model.applicant.EmailMatchesKeywordPredicate;
 import seedu.address.model.applicant.JobPositionMatchesPredicate;
 import seedu.address.model.applicant.NameMatchesKeywordPredicate;
 import seedu.address.model.applicant.StatusMatchesPredicate;
-
-import java.util.List;
-
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 public class SummaryCommandParserTest {
     private final SummaryCommandParser parser = new SummaryCommandParser();
