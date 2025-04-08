@@ -110,7 +110,9 @@ public abstract class ConfirmationRequiredCommand extends Command {
         List<Applicant> applicantsToProcess = List.copyOf(filteredList);
         processApplicants(model, applicantsToProcess);
 
-        String processedApplicants = applicantsToProcess.stream()
+        List<Applicant> updatedApplicants = model.getFilteredPersonList();
+
+        String processedApplicants = updatedApplicants.stream()
                 .map(Messages::format)
                 .collect(Collectors.joining("\n"));
 
@@ -136,12 +138,15 @@ public abstract class ConfirmationRequiredCommand extends Command {
         }
 
         Applicant applicantToProcess = lastShownList.get(targetIndex.getZeroBased());
+
         if (!isForceOperation) {
             return new CommandResult(String.format(getIndexConfirmationMessage(), targetIndex.getOneBased()));
         }
 
         processApplicant(model, applicantToProcess);
-        return new CommandResult(String.format(getSuccessMessage(), Messages.format(applicantToProcess)));
+        Applicant updatedApplicants = lastShownList.get(targetIndex.getZeroBased());
+
+        return new CommandResult(String.format(getSuccessMessage(), Messages.format(updatedApplicants)));
     }
 
     // Abstract methods to be implemented by subclasses
