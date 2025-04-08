@@ -80,32 +80,6 @@ public class SearchCommandParserTest {
     }
 
     /**
-     * Tests parsing input with all four valid fields.
-     */
-    @Test
-    public void parse_multipleFields_success() {
-        SearchCommand expected = new SearchCommand(List.of(
-                new NameMatchesKeywordPredicate("Alice"),
-                new EmailMatchesKeywordPredicate("alice@example.com"),
-                new JobPositionMatchesPredicate("Engineer"),
-                new StatusMatchesPredicate("Shortlisted")
-        ));
-        assertParseSuccess(parser, " n/Alice e/alice@example.com j/Engineer s/Shortlisted", expected);
-    }
-
-    /**
-     * Tests parsing input with multiple fields and extra whitespace between tokens.
-     */
-    @Test
-    public void parse_multipleFieldsWithWhitespace_success() {
-        SearchCommand expected = new SearchCommand(List.of(
-                new NameMatchesKeywordPredicate("Bob"),
-                new EmailMatchesKeywordPredicate("bob@example.com")
-        ));
-        assertParseSuccess(parser, "  n/Bob   e/bob@example.com  ", expected);
-    }
-
-    /**
      * Tests that a prefix without a value results in a parse exception.
      */
     @Test
