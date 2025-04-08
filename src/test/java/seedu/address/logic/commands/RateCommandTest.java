@@ -52,7 +52,7 @@ public class RateCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_forceDeleteSuccess() {    
+    public void execute_validIndexFilteredList_forceDeleteSuccess() {
         Applicant applicantToRate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Rating rating = new Rating("-1");
         RateCommand rateCommand = new RateCommand(INDEX_FIRST_PERSON, rating);
@@ -65,7 +65,6 @@ public class RateCommandTest {
 
         assertCommandSuccess(rateCommand, model, expectedMessage, expectedModel);
     }
-    
 
     @Test
     public void equals() {
