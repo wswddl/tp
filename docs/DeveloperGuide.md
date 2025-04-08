@@ -560,20 +560,28 @@ Expected: No applicant is deleted. Error message is shown.
 
 ### Sorting Applicants
 
-1. Sort by Name, Email, Added Time, Job Position, or Status
+1. Sort by Name and Email without specifying ordering.
 
     1. Test case: `sort n/`
-       Expected: Applicant list has been sorted successfully based on Name.
+       Expected: Applicant list has been sorted successfully based on name in ascending order.
     2. Test case: `sort e/`
-       Expected: Applicant list has been sorted successfully based on Email Address.
-    3. Test case: `sort time/`
-       Expected: Applicant list has been sorted successfully based on Added Time.
-    4. Test case: `sort n/`
-       Expected: Applicant list has been sorted successfully based on Job Position.
-    5. Test case: `sort s/`
-       Expected: Applicant list has been sorted successfully based on Application Status.
+       Expected: Applicant list has been sorted successfully based on email address in ascending order.
 <br>
-2. Invalid sorting criteria
+2. Sort by Added Time and Job Position in ascending order.
+
+    1. Test case: `sort time/ a/`
+       Expected: Applicant list has been sorted successfully based on added time in ascending order.
+    2. Test case: `sort j/ a/`
+       Expected: Applicant list has been sorted successfully based on job position in ascending order.
+<br>
+4. Sort by Status and Rating in descending order.
+
+    1. Test case: `sort s/ d/`
+       Expected: Applicant list has been sorted successfully based on application status in descending order.
+    2. Test case: `sort r/ d/`
+      Expected: Applicant list has been sorted successfully based on rating in descending order.
+<br>
+4. Invalid sorting criteria
 
     1. Test case: `sort`
        Expected: Error message shown indicating that sorting criteria field must be specified
