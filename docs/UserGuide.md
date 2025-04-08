@@ -8,10 +8,10 @@ pageNav: 3
 
 Welcome to **RecruitTrack**, your efficient companion for managing job applicants! ✨ RecruitTrack is a **desktop application designed for recruiters and hiring managers** who prefer a fast and streamlined workflow. It is optimized for users who can type quickly, leveraging a **Command Line Interface (CLI)** while still offering the benefits of a **Graphical User Interface (GUI)**.
 
-With RecruitTrack, you can:
-✅ Quickly add, edit, and remove applicants from your records.
-✅ Track the progress of candidates throughout the hiring process.
-✅ Search and sort applicants based on various criteria.
+With RecruitTrack, you can: </br>
+✅ Quickly add, edit, and remove applicants from your records. </br>
+✅ Track the progress of candidates throughout the hiring process. </br>
+✅ Search and sort applicants based on various criteria. </br>
 ✅ Organize and manage candidate information efficiently—all without relying on a mouse.
 
 RecruitTrack is lightweight, runs on **Java 17 or later**, and requires no internet connection. Whether you're an HR professional, a recruiter, or part of a hiring team, RecruitTrack simplifies applicant tracking so you can focus on finding the best talent.
