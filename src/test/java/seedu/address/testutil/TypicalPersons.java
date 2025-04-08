@@ -37,7 +37,7 @@ public class TypicalPersons {
             .withTags("friends")
             .withJobPosition("Frontend Engineer")
             .withStatus("Resume Screening")
-            .withAddedTime(LocalDateTime.of(2025, 3, 13, 00, 00, 00))
+            .withAddedTime(LocalDateTime.of(2025, 3, 13, 0, 0, 0))
             .withRating("-1")
             .build();
     public static final Applicant BENSON = new PersonBuilder().withName("Benson Meier")
@@ -46,36 +46,37 @@ public class TypicalPersons {
             .withTags("owesMoney", "friends")
             .withJobPosition("Senior Frontend Engineer")
             .withStatus("Technical Interview Round 1")
-            .withAddedTime(LocalDateTime.of(2025, 3, 13, 1, 0, 0))
+            .withAddedTime(LocalDateTime.of(2025, 3, 13, 0, 0, 0))
             .withRating("4")
             .build();
     public static final Applicant CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
-            .withAddedTime(LocalDateTime.of(2025, 3, 13, 2, 0, 0))
+            .withAddedTime(LocalDateTime.of(2025, 3, 13, 0, 0, 0))
             .build();
     public static final Applicant DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
             .withJobPosition("Systems Developer")
-            .withAddedTime(LocalDateTime.of(2025, 3, 13, 3, 0, 0))
+            .withAddedTime(LocalDateTime.of(2025, 3, 20, 0, 0, 0))
             .build();
     public static final Applicant ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
             .withStatus("Offer Given")
-            .withAddedTime(LocalDateTime.of(2025, 3, 13, 4, 0, 0))
+            .withAddedTime(LocalDateTime.of(2025, 3, 13, 0, 0, 0))
             .build();
     public static final Applicant FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
             .withJobPosition("UI UX")
             .withStatus("Signed")
-            .withAddedTime(LocalDateTime.of(2025, 3, 13, 5, 0, 0))
+            .withAddedTime(LocalDateTime.of(2025, 3, 13, 0, 0, 0))
+            .withRating("3")
             .build();
     public static final Applicant GABRIELLA = new PersonBuilder().withName("Gabriella").withPhone("1234543")
             .withEmail("ella@example.com").withAddress("1st street")
-            .withAddedTime(LocalDateTime.of(2025, 3, 13, 5, 1, 0))
+            .withAddedTime(LocalDateTime.of(2025, 3, 13, 0, 0, 0))
             .build();
     public static final Applicant GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
-            .withAddedTime(LocalDateTime.of(2025, 3, 13, 6, 0, 0))
+            .withAddedTime(LocalDateTime.of(2025, 3, 13, 0, 0, 0))
             .build();
 
 
