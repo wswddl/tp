@@ -66,24 +66,28 @@ Type in the command box:
 
 ## Feature Highlights
 
-### 👥 People Management
+### 👥 Working With Applicants
 - `add` - Welcome new candidates
 - `edit` - Update details
 - `delete` - Remove applicants
+- Profile pics - Add friendly faces
+
+### 📈 Tracking Progress
+- `update` - Move candidates through stages
+- `rate` - Give star ratings
 
 ### 🔍 Finding Talent
 - `search` - Find needles in haystacks
 - `sort` - Organize your view
 - `list` - See everyone at once
 
-### 📈 Tracking Progress
-- `update` - Move candidates through stages
-- `rate` - Give star ratings
-- `summary` - Get the big picture
-
 ### 🛠️ Advanced Tools
 - `export` - Take data elsewhere
-- Profile pics - Add friendly faces
+- `summary` - Get the big picture
+
+### 🤷 Miscellaneous
+- `clear` - Clear all applicant data
+- `exit` - Exit the application
 
 [🔝 Back to top](#recruittrack-user-guide)
 
@@ -182,6 +186,15 @@ delete n/Alex Yeoh --force
 Result:\
 <img title="deleteCommand" alt="Result" src="./images/deleteCommand_result.png" width=500><br/><br/>
 
+### Adding/Updating Profile Picture
+
+* This is not a command.
+* To change the profile picture, click on the picture of the selected applicant (highlighted).
+* A pop-up window will appear, allowing you to select an image for the applicant.
+  * Ensure the image size is below 2MB.
+<br/><br/>
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Tracking Progress
@@ -252,7 +265,7 @@ Result:\
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Finding Your Perfect Hire
+## Finding Talent
 
 ### 📋 Listing Everyone
 Simple command to see all candidates:
@@ -318,7 +331,7 @@ Result:\
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Power User Tools
+## Advanced Tools
 
 ### 📤 Exporting Data
 Export the **currently displayed** applicant data into a CSV (Comma-Separated Values) file for sharing:
@@ -358,14 +371,6 @@ Statuses ->
 
 ## Miscellaneous
 
-### Adding/Updating Profile Picture
-
-* This is not a command.
-* To change the profile picture, click on the picture of the selected applicant (highlighted).
-* A pop-up window will appear, allowing you to select an image for the applicant.
-  * Ensure the image size is below 2MB.
-<br/><br/>
-
 ### Clear All Records
 
 Clears all applicant data from the application.<br/>
@@ -384,8 +389,11 @@ Clears all applicant data from the application.<br/>
 ## 💾 Your Data is Safe With Us
 
 🔒 **Automatic Saving**: Every change is saved instantly
+<br>
 📂 **Easy Backups**: Just copy the `data/` folder
-🔄 **Recovery**: Restore backups in a [single step](#how-do-i-import-my-data)
+<br>
+🔄 **Recovery**: Restore backups by importing your data
+<br>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -395,7 +403,7 @@ Clears all applicant data from the application.<br/>
 Just copy the `data/` folder into the folder containing `recruittrack.jar` - it's that easy!
 
 ### Can I undo a deletion?
-Not directly, but if you have a backup of your data file, you can restore it by following the steps [above](#how-do-i-import-my-data).
+Not directly, but if you have a backup of your data file, you can restore it by importing your past data.
 
 ### Can I change the colors?
 Not yet, but we're working on theme options for a future update!
@@ -409,15 +417,15 @@ Not yet, but we're working on theme options for a future update!
 |-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Help**    | `help`                                                                                                                                                                                                                                |
 | **Add**     | `add n/NAME p/PHONE_NUMBER e/EMAIL j/JOB_POSITION s/STATUS a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com j/Frontend Engineer s/Online Assessment a/123, Clementi Rd, 1234665 t/friend t/SQLExpert` |
-| **List**    | `list`                                                                                                                                                                                                                                |
 | **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
-| **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
-| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                     |
 | **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
 | **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
-| **Sort**    | `sort CRITERIA/ [ORDER/]`<br> e.g., `sort n/ a/`                                                                                                                                                                                      |
-| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                            |
 | **Rate**    | `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                     |
+| **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                     |
+| **Sort**    | `sort CRITERIA/ [ORDER/]`<br> e.g., `sort n/ a/`                                                                                                                                                                                      |
+| **List**    | `list`                                                                                                                                                                                                                                |
+| **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
+| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                            |
 | **Clear**   | `clear`                                                                                                                                                                                                                               |
 | **Exit**    | `exit`                                                                                                                                                                                                                                |
 
