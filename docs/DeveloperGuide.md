@@ -594,11 +594,11 @@ Expected: No applicant is deleted. Error message is shown.
 
 Team Size: 5
 
-1. **Preset Application Stages**
+1. **Preset Application Stages** </br>
     Define a list of preset application stage statuses for users to select from when using `update`. This will also provide support for sorting and filtering of applicants by application stage.
-2. **Extend sorting and searching capabilities**
+2. **Extend sorting and searching capabilities** </br>
    Allow for more ways to search and sort applicants, such as by their `Tags`.
-3. **Improve clarity of error messages**
+3. **Improve clarity of error messages** </br>
    Currently, only general error messages are displayed upon inputting invalid command formats. By specifying exactly what parameters are missing or invalid, users will have an easier time identifying what's wrong with their command input.
-4. **Built-in Command Summary**
+4. **Built-in Command Summary** </br>
    Instead of only providing a link to the User Guide as a response to the `help` command, we can directly display the command summary as provided in the User Guide, so that users will not have to navigate through the entire User Guide.
