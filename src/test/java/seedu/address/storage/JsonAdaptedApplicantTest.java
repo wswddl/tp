@@ -147,7 +147,6 @@ public class JsonAdaptedApplicantTest {
         JsonAdaptedApplicant person = new JsonAdaptedApplicant(VALID_NAME, VALID_PHONE, VALID_EMAIL,
                 VALID_JOB_POSITION, VALID_STATUS, INVALID_ADDRESS, VALID_ADDED_TIME, VALID_TAGS,
                 VALID_RATING, VALID_PROFILE_PIC_PATH);
-        System.out.println(VALID_STATUS);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }

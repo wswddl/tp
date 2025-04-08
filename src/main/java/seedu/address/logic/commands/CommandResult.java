@@ -70,7 +70,6 @@ public class CommandResult {
      * Currently used specifically for deletion confirmation.
      */
     public boolean isConfirmation() {
-        System.out.println(feedbackToUser.matches("(?s)^Are you sure you want to.*"));
         return feedbackToUser.matches("(?s)^Are you sure you want to.*");
     }
 

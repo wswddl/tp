@@ -361,7 +361,7 @@ Statuses ->
 ### Adding/Updating Profile Picture
 
 * This is not a command.
-* To change the profile picture, click on the existing picture.
+* To change the profile picture, click on the picture of the selected applicant (highlighted).
 * A pop-up window will appear, allowing you to select an image for the applicant.
   * Ensure the image size is below 2MB.
 <br/><br/>
