@@ -53,7 +53,7 @@ public class DeleteCommandTest {
                 Messages.format(applicantToDelete));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.updateFilteredPersonList(p -> p.equals(applicantToDelete));
+        expectedModel.deletePerson(applicantToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
@@ -187,7 +187,7 @@ public class DeleteCommandTest {
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SUCCESS,
                 expectedToDelete.stream()
                         .map(Messages::format)
-                        .collect(Collectors.joining("\n\n")));
+                        .collect(Collectors.joining("\n")));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getUserPrefs());
         expectedToDelete.forEach(expectedModel::deletePerson);
