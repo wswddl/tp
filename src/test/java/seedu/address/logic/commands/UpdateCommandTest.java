@@ -39,11 +39,11 @@ public class UpdateCommandTest {
         Applicant applicantToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, newStatus, true);
 
-        String expectedMessage = String.format(UpdateCommand.MESSAGE_UPDATE_STATUS_SUCCESS,
-                Messages.format(applicantToUpdate));
-
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setStatus(applicantToUpdate, newStatus);
+        Applicant updatedApplicant = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        String expectedMessage = String.format(UpdateCommand.MESSAGE_UPDATE_STATUS_SUCCESS,
+                Messages.format(updatedApplicant));
 
         assertCommandSuccess(updateCommand, model, expectedMessage, expectedModel);
     }
@@ -59,8 +59,9 @@ public class UpdateCommandTest {
 
         String expectedMessage = String.format(UpdateCommand.MESSAGE_ID_UPDATE_CONFIRMATION,
                 lastIndex.getOneBased());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        assertCommandSuccess(updateCommand, model, expectedMessage, null);
+        assertCommandSuccess(updateCommand, model, expectedMessage, expectedModel);
     }
 
     /**
@@ -85,12 +86,14 @@ public class UpdateCommandTest {
         Applicant applicantToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, newStatus, true);
 
-        String expectedMessage = String.format(UpdateCommand.MESSAGE_UPDATE_STATUS_SUCCESS,
-                Messages.format(applicantToUpdate));
-
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
+
         expectedModel.setStatus(applicantToUpdate, newStatus);
-        showNoPerson(expectedModel);
+        Applicant updatedApplicant = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        String expectedMessage = String.format(UpdateCommand.MESSAGE_UPDATE_STATUS_SUCCESS,
+                Messages.format(updatedApplicant));
 
         assertCommandSuccess(updateCommand, model, expectedMessage, expectedModel);
     }
@@ -138,7 +141,8 @@ public class UpdateCommandTest {
         Status status = new Status("Interview Scheduled");
         UpdateCommand updateCommand = new UpdateCommand(targetIndex, status, false);
         String expected = UpdateCommand.class.getCanonicalName()
-                + "{targetIndex=" + targetIndex
+                + "{predicates=null, "
+                + "targetIndex=" + targetIndex
                 + ", status=" + status
                 + ", isForceOperation=false}";
         assertEquals(expected, updateCommand.toString());
