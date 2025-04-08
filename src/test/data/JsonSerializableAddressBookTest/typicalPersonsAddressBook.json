@@ -7,8 +7,10 @@
     "jobPosition" : "Frontend Engineer",
     "status" : "Resume Screening",
     "address" : "123, Jurong West Ave 6, #08-111",
+    "addedTime" : "2025-03-13T00:00:00",
     "rating" : "-1",
-    "tags" : [ "friends" ]
+    "tags" : [ "friends" ],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
@@ -16,37 +18,75 @@
     "jobPosition" : "Senior Frontend Engineer",
     "status" : "Technical Interview Round 1",
     "address" : "311, Clementi Ave 2, #02-25",
+    "addedTime" : "2025-03-13T00:00:00",
     "rating" : "4",
-    "tags" : [ "owesMoney", "friends" ]
+    "tags" : [ "owesMoney", "friends" ],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
     "email" : "heinz@example.com",
+    "jobPosition" : "Frontend SWE",
+    "status" : "Resume Screening",
     "address" : "wall street",
-    "tags" : [ ]
+    "addedTime" : "2025-03-13T00:00:00",
+    "rating" : "-1",
+    "tags" : [ ],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
   }, {
     "name" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
+    "jobPosition" : "Systems Developer",
+    "status" : "Resume Screening",
     "address" : "10th street",
-    "tags" : [ "friends" ]
+    "addedTime" : "2025-03-20T00:00:00",
+    "rating" : "-1",
+    "tags" : [ "friends" ],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
   }, {
     "name" : "Elle Meyer",
     "phone" : "9482224",
     "email" : "werner@example.com",
+    "jobPosition" : "Frontend SWE",
+    "status" : "Offer Given",
     "address" : "michegan ave",
-    "tags" : [ ]
+    "addedTime" : "2025-03-13T00:00:00",
+    "rating" : "-1",
+    "tags" : [ ],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
   }, {
     "name" : "Fiona Kunz",
     "phone" : "9482427",
     "email" : "lydia@example.com",
+    "jobPosition" : "UI UX",
+    "status" : "Signed",
     "address" : "little tokyo",
-    "tags" : [ ]
+    "addedTime" : "2025-03-13T00:00:00",
+    "rating" : "3",
+    "tags" : [ ],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
+  }, {
+    "name" : "Gabriella",
+    "phone" : "1234543",
+    "email" : "ella@example.com",
+    "jobPosition" : "Frontend SWE",
+    "status" : "Resume Screening",
+    "address" : "1st street",
+    "addedTime" : "2025-03-13T00:00:00",
+    "rating" : "-1",
+    "tags" : [ ],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
   }, {
     "name" : "George Best",
     "phone" : "9482442",
     "email" : "anna@example.com",
+    "jobPosition" : "Frontend SWE",
+    "status" : "Resume Screening",
     "address" : "4th street",
-    "tags" : [ ]
+    "addedTime" : "2025-03-13T00:00:00",
+    "rating" : "-1",
+    "tags" : [ ],
+    "profilePicturePath" : "/images/profile_photos/default_profile_photo.png"
   } ]
 }

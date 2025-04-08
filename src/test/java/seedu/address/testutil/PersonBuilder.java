@@ -30,6 +30,7 @@ public class PersonBuilder {
     public static final String DEFAULT_STATUS = "Resume Screening";
     public static final LocalDateTime DEFAULT_ADDED_TIME = LocalDateTime.of(2031, 1, 1, 00, 30, 00);
     public static final String DEFAULT_RATING = "-1";
+    public static final String DEFAULT_PROFILE_PICTURE_PATH = "/images/profile_photos/default_profile_photo.png";
 
     private Name name;
     private Phone phone;
@@ -143,8 +144,12 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Returns an applicant with the provided attributes.
+     */
     public Applicant build() {
-        return new Applicant(name, phone, email, jobPosition, status, address, addedTime, tags, rating, null);
+        return new Applicant(name, phone, email, jobPosition,
+                status, address, addedTime, tags, rating, DEFAULT_PROFILE_PICTURE_PATH);
     }
 
 }
