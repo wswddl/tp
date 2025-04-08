@@ -85,7 +85,7 @@ Type in the command box:
 - `export` - Take data elsewhere
 - Profile pics - Add friendly faces
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top](#recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -248,7 +248,7 @@ Result:\
 <img title="rateCommand" alt="Result" src="./images/rateCommand_result.png" width=500><br/><br/>
 
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top](#recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -352,7 +352,7 @@ Statuses ->
 [Interview Scheduled: 1, Pending Review: 2, Offer Rejected: 1]
 ```
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top](#recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
