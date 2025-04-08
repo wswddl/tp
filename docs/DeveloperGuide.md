@@ -599,6 +599,6 @@ Team Size: 5
 2. **Extend sorting and searching capabilities**
    Allow for more ways to search and sort applicants, such as by their `Tags`.
 3. **Improve clarity of error messages**
-   Currently, Only general error messages are displayed upon inputting invalid command formats. By specifying exactly what parameters are missing or invalid, users will have an easier time identifying what's wrong with their command input.
+   Currently, only general error messages are displayed upon inputting invalid command formats. By specifying exactly what parameters are missing or invalid, users will have an easier time identifying what's wrong with their command input.
 4. **Built-in Command Summary**
    Instead of only providing a link to the User Guide as a response to the `help` command, we can directly display the command summary as provided in the User Guide, so that users will not have to navigate through the entire User Guide.
