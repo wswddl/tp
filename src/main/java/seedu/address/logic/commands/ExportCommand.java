@@ -28,49 +28,48 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_FAILURE = "Failed to export applicant list.";
 
     private final String fileName;
+    private final File overrideFile; // test-only override
     /**
      * Constructs an {@code ExportCommand} with the given file name.
-     *
-     * @param fileName The name of the CSV file to write to.
      */
     public ExportCommand(String fileName) {
+        this(fileName, null);
+    }
+
+    /**
+     * Test-only constructor for injecting a specific file path (bypasses FileChooser).
+     */
+    ExportCommand(String fileName, File overrideFile) {
         this.fileName = fileName;
+        this.overrideFile = overrideFile;
     }
-
-    /**
-     * Returns the file name specified for the export.
-     *
-     * @return The file name string.
-     */
-    public String getFileName() {
-        return fileName;
-    }
-
-    /**
-     * Executes the export command by writing the currently filtered applicant list to a CSV file.
-     *
-     * @param model The application's model containing the applicant list.
-     * @return A {@code CommandResult} indicating success or failure of the export.
-     * @throws CommandException If an I/O error occurs during file writing.
-     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Exported CSV");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
-        fileChooser.setInitialFileName(fileName);
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        File file;
 
-        File file = fileChooser.showSaveDialog(new Stage()); // open new dialog stage
+        if (overrideFile != null) {
+            file = overrideFile;
+        } else {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Exported CSV");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+            fileChooser.setInitialFileName(fileName);
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
-        if (file == null) {
-            return new CommandResult(MESSAGE_CANCELLED);
+            file = fileChooser.showSaveDialog(new Stage());
+
+            if (file == null) {
+                return new CommandResult(MESSAGE_CANCELLED);
+            }
+
+            if (!file.getName().endsWith(".csv")) {
+                file = new File(file.getAbsolutePath() + ".csv");
+            }
         }
+        return exportToFile(file, model);
+    }
 
-        if (!file.getName().endsWith(".csv")) {
-            file = new File(file.getAbsolutePath() + ".csv");
-        }
-
+    private CommandResult exportToFile(File file, Model model) throws CommandException {
         try (FileWriter writer = new FileWriter(file)) {
             writer.write("Name,Email,Phone,Address,Job Position,Status,Tags,Added Time,Rating\n");
 
