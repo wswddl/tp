@@ -144,9 +144,9 @@ public abstract class ConfirmationRequiredCommand extends Command {
         }
 
         processApplicant(model, applicantToProcess);
-        Applicant updatedApplicants = lastShownList.get(targetIndex.getZeroBased());
+        Applicant updatedApplicant = lastShownList.get(targetIndex.getZeroBased());
 
-        return new CommandResult(String.format(getSuccessMessage(), Messages.format(updatedApplicants)));
+        return new CommandResult(String.format(getSuccessMessage(), Messages.format(updatedApplicant)));
     }
 
     // Abstract methods to be implemented by subclasses
