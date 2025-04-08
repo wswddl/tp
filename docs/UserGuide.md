@@ -8,10 +8,10 @@ pageNav: 3
 
 Welcome to **RecruitTrack**, your efficient companion for managing job applicants! ✨ RecruitTrack is a **desktop application designed for recruiters and hiring managers** who prefer a fast and streamlined workflow. It is optimized for users who can type quickly, leveraging a **Command Line Interface (CLI)** while still offering the benefits of a **Graphical User Interface (GUI)**.
 
-With RecruitTrack, you can:  
-✅ Quickly add, edit, and remove applicants from your records.  
-✅ Track the progress of candidates throughout the hiring process.  
-✅ Search and sort applicants based on various criteria.  
+With RecruitTrack, you can:
+✅ Quickly add, edit, and remove applicants from your records.
+✅ Track the progress of candidates throughout the hiring process.
+✅ Search and sort applicants based on various criteria.
 ✅ Organize and manage candidate information efficiently—all without relying on a mouse.
 
 RecruitTrack is lightweight, runs on **Java 17 or later**, and requires no internet connection. Whether you're an HR professional, a recruiter, or part of a hiring team, RecruitTrack simplifies applicant tracking so you can focus on finding the best talent.
@@ -39,7 +39,7 @@ Let’s dive in and explore how RecruitTrack can help you streamline your hiring
 Let's get you up and running quickly!
 
 ### 1. Install Java
-First, ensure you have **Java 17 or later**.  
+First, ensure you have **Java 17 or later**.
 *Mac users:* Our [special guide](https://se-education.org/guides/tutorials/javaInstallationMac.html) has you covered!
 
 ### 2. Download the App
@@ -85,7 +85,7 @@ Type in the command box:
 - `export` - Take data elsewhere
 - Profile pics - Add friendly faces
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top]({{ baseURL }}/UserGuide.html#recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -124,7 +124,7 @@ Emails should be of the format `local-part@domain` and adhere to the following c
    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any
 
 ### ➕ Adding New Candidates
-**Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOBPOSITION s/STATUS a/ADDRESS [t/TAG]...`  
+**Command Format**: `add n/NAME p/PHONE e/EMAIL j/JOBPOSITION s/STATUS a/ADDRESS [t/TAG]...`
 
 * **Phone/Email**: Must be unique (rejects duplicates).
 * Details can be input in any order (e.g. `ADDRESS` before `EMAIL`)
@@ -248,7 +248,7 @@ Result:\
 <img title="rateCommand" alt="Result" src="./images/rateCommand_result.png" width=500><br/><br/>
 
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top]({{ baseURL }}/UserGuide.html#recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -282,7 +282,7 @@ Result:\
 Organize by what matters most:
 
 **Command Format**: `sort CRITERIA/ ORDER/`
-* Sort the applicant list by the sorting `CRITERIA/`. 
+* Sort the applicant list by the sorting `CRITERIA/`.
 * The supported `CRITERIA/` are:
     * `n/`: Applicant's name
     * `e/`: Applicant's email address
@@ -352,7 +352,7 @@ Statuses ->
 [Interview Scheduled: 1, Pending Review: 2, Offer Rejected: 1]
 ```
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top]({{ baseURL }}/UserGuide.html#recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -375,7 +375,7 @@ Clears all applicant data from the application.<br/>
 **Command Format:** `clear`
 <br/><br/>
 
-### Exit the Application  
+### Exit the Application
 
 **Command Format:** `exit`
 
@@ -383,8 +383,8 @@ Clears all applicant data from the application.<br/>
 
 ## 💾 Your Data is Safe With Us
 
-🔒 **Automatic Saving**: Every change is saved instantly  
-📂 **Easy Backups**: Just copy the `data/` folder  
+🔒 **Automatic Saving**: Every change is saved instantly
+📂 **Easy Backups**: Just copy the `data/` folder
 🔄 **Recovery**: Restore backups in a [single step](#how-do-i-import-my-data)
 
 --------------------------------------------------------------------------------------------------------------------
@@ -433,4 +433,4 @@ We hope you enjoy using RecruitTrack as much as we enjoyed making it! Remember:
 
 Need help? Just type `help` in the app or reach out to our friendly support team.
 
-[🔝 Back to top](#-recruittrack-user-guide)
+[🔝 Back to top]({{ baseURL }}/UserGuide.html#recruittrack-user-guide)
