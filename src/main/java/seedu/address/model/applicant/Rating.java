@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Rating {
     public static final String MESSAGE_CONSTRAINTS =
-            "Ratings should be on a scale of 1 to 5, with 5 being the most promising.";
+            "Ratings should be on a scale of 1 to 5, with 5 being the most promising. (-1 can be given for a Unassigned rating)";
 
     /*
      * Assigned rating should be an integer in range 1 to 5.
