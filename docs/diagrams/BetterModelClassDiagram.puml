@@ -22,4 +22,5 @@ Applicant *--> Address
 Applicant *--> Status
 Applicant *--> Rating
 Applicant *--> LocalDateTime
+Applicant *--> String: profilePicturePath
 @enduml

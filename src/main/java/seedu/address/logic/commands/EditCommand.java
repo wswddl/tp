@@ -31,6 +31,7 @@ import seedu.address.model.applicant.Name;
 import seedu.address.model.applicant.Phone;
 import seedu.address.model.applicant.Rating;
 import seedu.address.model.applicant.Status;
+import seedu.address.model.applicant.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -93,11 +94,12 @@ public class EditCommand extends Command {
         Applicant applicantToEdit = lastShownList.get(index.getZeroBased());
         Applicant editedApplicant = createEditedPerson(applicantToEdit, editPersonDescriptor);
 
-        if (model.hasPerson(editedApplicant)) {
+        try {
+            model.setPerson(applicantToEdit, editedApplicant);
+        } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPerson(applicantToEdit, editedApplicant);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedApplicant)));
     }

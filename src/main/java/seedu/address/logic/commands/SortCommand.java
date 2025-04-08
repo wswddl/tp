@@ -124,7 +124,7 @@ public class SortCommand extends Command {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("prefix", prefix)
-                .add("sortingOrder", isAscendingOrder)
+                .add("isAscendingOrder", isAscendingOrder)
                 .toString();
     }
 }

@@ -23,7 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.applicant.Applicant;
@@ -80,16 +79,15 @@ public class PersonCard extends UiPart<Region> {
      */
     private PersonCard(Applicant applicant, int displayedIndex) {
         super(FXML);
-
         id.setText(displayedIndex + ". ");
         name.setText(applicant.getName().fullName);
         phone.setText(applicant.getPhone().value);
         address.setText(applicant.getAddress().value);
         email.setText(applicant.getEmail().value);
-        jobPosition.setText(applicant.getJobPosition().jobPosition);
-        status.setText(applicant.getStatus().value);
+        jobPosition.setText("Position:  " + applicant.getJobPosition().jobPosition);
+        status.setText("Status:  " + applicant.getStatus().value);
         addedTime.setText(applicant.getFormattedAddedTime());
-        rating.setText("Rating: " + applicant.getRating().toString());
+        rating.setText("Rating:  " + applicant.getRating().toString());
 
         applicant.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

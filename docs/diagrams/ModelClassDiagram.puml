@@ -18,11 +18,13 @@ Class Address
 Class Email
 Class Name
 Class Phone
+Class Set
 Class Tag
 Class JobPosition
 Class Status
 Class Rating
 Class LocalDateTime
+Class String
 
 Class I #FFFFFF
 }
@@ -48,8 +50,10 @@ Applicant *--> JobPosition
 Applicant *--> Address
 Applicant *--> Status
 Applicant *--> Rating
-Applicant *--> "*" Tag
+Applicant *--> Set
+Set *--> "*" Tag
 Applicant *--> LocalDateTime
+Applicant *--> String: profilePicturePath
 
 Applicant -[hidden]up--> I
 UniqueApplicantList -[hidden]right-> I

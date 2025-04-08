@@ -85,7 +85,7 @@ Type in the command box:
 - `export` - Take data elsewhere
 - Profile pics - Add friendly faces
 
-[🔝 Back to top](#🌟-recruittrack-user-guide)
+[🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -94,18 +94,18 @@ Type in the command box:
 ### 📜 Applicant Data Model
 RecruitTrack stores applicants with the following fields, each with strict validation rules:
 
-| **Field**                  | **Format & Validation Rules**                                           | **Example**                                               |
-|----------------------------|-------------------------------------------------------------------------|-----------------------------------------------------------|
-| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. Not blank.                     | `n/John Doe`                                              |
-| **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**. Not blank | `p/98765432`                                              |
-| **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**. Not blank.   | `e/john@example.com`                                      |
-| **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                     | `j/Data Scientist`                                        |
-| **Status** (`s/`)          | Alphanumeric + spaces, case-insensitive. Not blank.                     | `s/Interview Scheduled`                                   |
-| **Address** (`a/`)         | Alphanumeric + spaces. Not blank.                                       | `a/123 Main St, Singapore`                                |
-| **Tags** (`t/`)            | Space-separated, alphanumeric. Stored *without* `t/` prefix.            | Input: `t/Tech t/Urgent` → Stored as `["Tech", "Urgent"]` |
-| **Rating** (`r/`)          | Integer **1-5**.                                                        | `r/4`                                                     |
-| **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).              | `time/2025-03-12T14:30:15`                                |
-| **Index** (`id/`)          | Auto-assigned unique integer (GUI display).                             | `id/1`                                                    |
+| **Field**                  | **Format & Validation Rules**                                                                        | **Example**                                               |
+|----------------------------|------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. **Does not have to be unique.** Not blank.                  | `n/John Doe`                                              |
+| **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**. Not blank                              | `p/98765432`                                              |
+| **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**. Not blank                                 | `e/john@example.com`                                      |
+| **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                                                  | `j/Data Scientist`                                        |
+| **Status** (`s/`)          | Alphanumeric + spaces, case-insensitive. Not blank.                                                  | `s/Interview Scheduled`                                   |
+| **Address** (`a/`)         | Alphanumeric + spaces. Not blank.                                                                    | `a/123 Main St, Singapore`                                |
+| **Tags** (`t/`)            | Space-separated, alphanumeric (hyphens allowed). Stored *without* `t/` prefix.                       | Input: `t/Tech t/Urgent` → Stored as `["Tech", "Urgent"]` |
+| **Rating** (`r/`)          | Integer **1-5**, or **-1** for unassigned                                                            | `r/4`                                                     |
+| **Time Created** (`time/`) | Auto-generated in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`).                                           | `time/2025-03-12T14:30:15`                                |
+| **Index** (`id/`)          | Integer index of applicant in **currently displayed list** (beside applicant's name in GUI display). | `id/1`                                                    |
 
 Other identifiers used to identify applicants:
 
@@ -136,10 +136,8 @@ Emails should be of the format `local-part@domain` and adhere to the following c
 add n/Alex Yeoh p/91237654 e/alexy@example.com a/34, Chartwell Drive j/Data Analyst s/Interview Scheduled t/Recommended
 ```
 
-Command Input:\
-<img title="addCommand" alt="Command Input" src="./images/addCommand_before.png"><br/><br/>
 Result:\
-<img title="addCommand" alt="Result" src="./images/addCommand_after.png"><br/><br/>
+<img title="addCommand" alt="Result" src="./images/addCommand_result.png" width=500><br/><br/>
 
 ### ✏️ Editing Details
 **Command Format**: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [j/JOBPOSITION] [a/ADDRESS] [t/TAG]…`
@@ -157,15 +155,13 @@ edit 4 j/Data Scientist p/91238765
 ```
 Updates phone number and job position for candidate #4.
 
-Command Input:\
-<img title="editCommand" alt="Command Input" src="./images/editCommand_before.png"><br/><br/>
 Result:\
-<img title="editCommand" alt="Result" src="./images/editCommand_after.png"><br/><br/>
+<img title="editCommand" alt="Result" src="./images/editCommand_result.png" width=500><br/><br/>
 
 ### 🗑️ Removing Applicants
 **Command Format**: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
 * Deletes the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`.
-* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the last shown list
+* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the **currently displayed list**
   or any combination of the following:
     * `n/` – Name
     * `e/` – Email
@@ -183,10 +179,8 @@ delete n/Alex Yeoh --force
 ```
 💡 **Pro Tip**: Adding `--force` skips confirmation for quick removal.
 
-Command Input:\
-<img title="deleteCommand" alt="Command Input" src="./images/deleteCommand_before.png"><br/><br/>
 Result:\
-<img title="deleteCommand" alt="Result" src="./images/deleteCommand_after.png"><br/><br/>
+<img title="deleteCommand" alt="Result" src="./images/deleteCommand_result.png" width=500><br/><br/>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -197,7 +191,7 @@ Move candidates through your pipeline:
 
 **Command Format**: `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]`
 * Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then updates their application status to the provided `STATUS`.
-* The `IDENTIFIER_TYPE` must include `s/` for status AND either `id/` – the ID in the last shown list
+* The `IDENTIFIER_TYPE` can be either `id/` – the ID in the **currently displayed list**
   or any combination of the following:
   * `n/` – Name
   * `e/` – Email
@@ -206,6 +200,7 @@ Move candidates through your pipeline:
   * `aft/` - Date added (after the specified date).
   * `j/` - Job Position
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
+* The `STATUS` must contain only alphanumeric characters and spaces, and must not be blank.
 * The `--force` flag (optional) bypasses confirmation prompts and updates the applicant immediately.
 
 **Common Statuses**:
@@ -223,13 +218,11 @@ update n/John Doe s/Job Offered --force
 ```
 💡 **Pro Tip**: Adding `--force` skips confirmation for quick update.
 
-Command Input:\
-<img title="updateCommand" alt="Command Input" src="./images/updateCommand_before.png"><br/><br/>
 Result:\
-<img title="updateCommand" alt="Result" src="./images/updateCommand_after.png"><br/><br/>
+<img title="updateCommand" alt="Result" src="./images/updateCommand_result.png" width=500><br/><br/>
 
 ### ⭐ Rating Candidates
-Give 1-5 star ratings:
+Give 1-5 star ratings, or set it as unassigned if you're still unsure:
 
 **Command Format**: `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`
 * Identifies the applicant based on the specified `IDENTIFIER_TYPE` and `CONTACT_IDENTIFIER`, then assigns the provided `RATING` to them.
@@ -237,9 +230,11 @@ Give 1-5 star ratings:
     * `n/` – Name
     * `e/` – Email
     * `p/` – Phone number
-    * `id/` – The index of the applicant in the last shown list
+    * `id/` – The index of the applicant in the **currently displayed list**
 * The `CONTACT_IDENTIFIER` must match the corresponding identifier type (e.g., a name for `n/`, an email for `e/`, etc.).
-* The `RATING` should be an integer from **1 to 5**, decimal values are not accepted.
+* The `RATING` should be either:
+    * an integer from **1 to 5**, decimal values are not accepted, or
+    * `-1`, which will set the rating as `unassigned`.
 
 **Example**:
 ```bash
@@ -247,13 +242,13 @@ rate id/2 r/4
 ```
 Now candidate #2 has a shiny 4-star rating!
 
-Command Input:\
-<img title="rateCommand" alt="Command Input" src="./images/rateCommand_before.png"><br/><br/>
+Initial State:\
+<img title="rateCommand" alt="Command Input" src="./images/rateCommand_start.png" width=500><br/><br/>
 Result:\
-<img title="rateCommand" alt="Result" src="./images/rateCommand_after.png"><br/><br/>
+<img title="rateCommand" alt="Result" src="./images/rateCommand_result.png" width=500><br/><br/>
 
 
-[🔝 Back to top](#🌟-recruittrack-user-guide)
+[🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -270,9 +265,9 @@ Find candidates by any detail:
 
 **Command Format**: `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`
 * The search is **case-insensitive**. e.g. `hans` will match `Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only full names will be matched e.g. `John` will not match `John Doe`
 * Applicant(s) that match any provided criteria are returned (i.e. logical `OR` search, applicant that match **any** specified field values will appear in the results, but duplicate identifiers are not allowed.).<br>
-  e.g. `search n/John e/david@example.com` searches by name or email, but `search n/John n/David` contains duplicate identifiers and thus is not allowed.
+  e.g. `search n/John Doe e/david@example.com` searches by name or email, but `search n/John Doe n/David Li` contains duplicate identifiers and thus is not allowed.
 
 **Example**:
 ```bash
@@ -280,10 +275,8 @@ search j/Frontend SWE
 ```
 Shows all frontend developers.
 
-Command Input:\
-<img title="searchCommand" alt="Command Input" src="./images/searchCommand_before.png"><br/><br/>
 Result:\
-<img title="searchCommand" alt="Result" src="./images/searchCommand_after.png"><br/><br/>
+<img title="searchCommand" alt="Result" src="./images/searchCommand_result.png" width=500><br/><br/>
 
 ### 🔄 Sorting Your View
 Organize by what matters most:
@@ -303,10 +296,15 @@ Organize by what matters most:
     * `a/`: Ascending order
     * `d/`: Descending order
 
-  
-* For `n/`, `e/`, `j/` and `s/`, the list will be sorted in case-insensitive lexicographical order following this sequence:
+
+* For `n/`, `e/`, `j/` and `s/`, the list will be sorted in case-paired alphanumeric order following this sequence:
   `0–9 → A → a → B → b → C → c → ... → Z → z`.
+  * Since application statuses can vary widely, they are also sorted in case-paired alphanumeric order for consistency.
+
+
 * For `time/`, the list will be sorted in chronological order.
+
+
 * For `r/`, the list will be sorted by the rating, with unassigned rating placed at the end of the list.
 
 **Example**:
@@ -315,10 +313,8 @@ sort n/ a/
 ```
 Sorts applicants by their names in ascending, case-insensitive lexicographical order.
 
-Command Input:\
-<img title="sortCommand" alt="Command Input" src="./images/sortCommand_before.png"><br/><br/>
 Result:\
-<img title="sortCommand" alt="Result" src="./images/sortCommand_after.png"><br/><br/>
+<img title="sortCommand" alt="Result" src="./images/sortCommand_result.png" width=500><br/><br/>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -356,7 +352,7 @@ Statuses ->
 [Interview Scheduled: 1, Pending Review: 2, Offer Rejected: 1]
 ```
 
-[🔝 Back to top](#🌟-recruittrack-user-guide)
+[🔝 Back to top](#-recruittrack-user-guide)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -421,7 +417,7 @@ Not yet, but we're working on theme options for a future update!
 | **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
 | **Sort**    | `sort CRITERIA/ [ORDER/]`<br> e.g., `sort n/ a/`                                                                                                                                                                                      |
 | **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                            |
-| **Rate**    | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                   |
+| **Rate**    | `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                     |
 | **Clear**   | `clear`                                                                                                                                                                                                                               |
 | **Exit**    | `exit`                                                                                                                                                                                                                                |
 
@@ -437,4 +433,4 @@ We hope you enjoy using RecruitTrack as much as we enjoyed making it! Remember:
 
 Need help? Just type `help` in the app or reach out to our friendly support team.
 
-[🔝 Back to top](#🌟-recruittrack-user-guide)
+[🔝 Back to top](#-recruittrack-user-guide)
