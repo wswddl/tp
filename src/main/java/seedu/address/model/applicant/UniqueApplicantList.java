@@ -72,7 +72,7 @@ public class UniqueApplicantList implements Iterable<Applicant> {
             throw new PersonNotFoundException();
         }
 
-        internalList.set(index, null);
+        internalList.set(index, Applicant.NULL_APPLICANT);
 
         if (contains(editedApplicant)) {
             internalList.set(index, target);
