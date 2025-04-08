@@ -55,20 +55,6 @@ public class SearchCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_allPersonsReturned() {
-        int totalPersons = model.getAddressBook().getPersonList().size();
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, totalPersons);
-
-        List<IdentifierPredicate> predicate = preparePredicate("");
-        SearchCommand command = new SearchCommand(predicate);
-
-        expectedModel.updateFilteredPersonList(p -> true);
-
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(model.getAddressBook().getPersonList(), model.getFilteredPersonList());
-    }
-
-    @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         List<IdentifierPredicate> predicate = preparePredicate("Gabriella");

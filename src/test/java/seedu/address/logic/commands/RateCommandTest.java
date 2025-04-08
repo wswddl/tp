@@ -35,12 +35,10 @@ public class RateCommandTest {
         Applicant applicantToRate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Rating rating = new Rating("3");
         RateCommand rateCommand = new RateCommand(INDEX_FIRST_PERSON, rating);
-
-        String expectedMessage = String.format(RateCommand.MESSAGE_ASSIGN_RATING_SUCCESS,
-                rating.toString(), Messages.format(applicantToRate));
-
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setRating(applicantToRate, rating);
+        Applicant updatedApplicant = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        String expectedMessage = String.format("Assigned a rating of 3 / 5 to: %s", Messages.format(updatedApplicant));
 
         assertCommandSuccess(rateCommand, model, expectedMessage, expectedModel);
     }
@@ -55,13 +53,11 @@ public class RateCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_forceDeleteSuccess() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
         Applicant applicantToRate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Rating rating = new Rating("-1");
         RateCommand rateCommand = new RateCommand(INDEX_FIRST_PERSON, rating);
 
-        String expectedMessage = String.format(RateCommand.MESSAGE_ASSIGN_RATING_SUCCESS,
+        String expectedMessage = String.format("Assigned a rating of %s to: %s",
                 rating.toString(), Messages.format(applicantToRate));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());

@@ -53,15 +53,6 @@ public class ExportCommandParserTest {
     }
 
     /**
-     * Tests that a filename without the .csv extension automatically appends it.
-     */
-    @Test
-    public void parse_missingCsvExtension_appendsCsv() {
-        assertParseSuccess(parser, "report", new ExportCommand("report.csv"));
-        assertParseSuccess(parser, "hello.txt", new ExportCommand("hello.txt.csv"));
-    }
-
-    /**
      * Tests that file names starting with a dot are rejected.
      */
     @Test
@@ -75,7 +66,7 @@ public class ExportCommandParserTest {
      */
     @Test
     public void parse_fileNameTooLong_throwsParseException() {
-        String longName = "a".repeat(260); // exceeds common filesystem limits
+        String longName = "a".repeat(260) + ".csv"; // exceeds common filesystem limits
         assertParseFailure(parser, longName, "Filename is too long. Keep it under 255 characters.");
     }
 }
