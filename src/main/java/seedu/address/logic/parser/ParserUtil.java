@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_FLAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AFTER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BEFORE;
@@ -57,13 +56,6 @@ public class ParserUtil {
     public static final int MAX_INPUT_LENGTH = 50;
     public static final String MESSAGE_INVALID_DATE_FORMAT = "Invalid date format. Please use YYYY-MM-DD.";
 
-    private static void checkLength(String fieldName, String value) throws ParseException {
-        if (value.length() > MAX_INPUT_LENGTH) {
-            throw new ParseException(fieldName + " cannot exceed " + MAX_INPUT_LENGTH + " characters.");
-        }
-    }
-    
-
     /**
      * The order in which prefixes are parsed. This determines the order of
      * predicates in the final command.
@@ -85,6 +77,12 @@ public class ParserUtil {
             PREFIX_JOB_POSITION, JobPositionMatchesPredicate::new,
             PREFIX_STATUS, StatusMatchesPredicate::new
     );
+
+    private static void checkLength(String fieldName, String value) throws ParseException {
+        if (value.length() > MAX_INPUT_LENGTH) {
+            throw new ParseException(fieldName + " cannot exceed " + MAX_INPUT_LENGTH + " characters.");
+        }
+    }
 
     /**
      * Extracts predicates from the given {@code ArgumentMultimap}.
