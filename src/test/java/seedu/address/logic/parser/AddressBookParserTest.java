@@ -7,9 +7,7 @@ import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +22,6 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.applicant.Applicant;
-import seedu.address.model.applicant.IdentifierPredicate;
 import seedu.address.model.applicant.NameMatchesKeywordPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -73,15 +70,12 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        String namePredicate = "John";
         SearchCommand command = (SearchCommand) parser.parseCommand(
-                SearchCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new SearchCommand(
-                    keywords.stream()
-                            .map(NameMatchesKeywordPredicate::new)
-                            .map(p -> (IdentifierPredicate) p) // Ensure proper type conversion
-                            .toList()
-        ), command);
+                SearchCommand.COMMAND_WORD
+                       + " n/" + namePredicate);
+        assertEquals(new SearchCommand(List.of(new NameMatchesKeywordPredicate(namePredicate))),
+                command);
     }
 
     @Test
