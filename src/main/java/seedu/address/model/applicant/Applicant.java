@@ -37,6 +37,11 @@ public class Applicant {
     private final Rating rating;
     private String profilePicturePath;
 
+    public static final Applicant NULL_APPLICANT = new Applicant(
+            new Name("name"), new Phone("12345678"), new Email("null@mail.com"),
+            new JobPosition("job"), new Status("status"), new Address("address"),
+            LocalDateTime.now(), new HashSet<>(), new Rating("-1"), "path");
+
     /**
      * Constructor of Applicant.
      * Every field must be present and not null, except {@code profilePicturePath}.
