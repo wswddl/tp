@@ -156,12 +156,10 @@ public class ParserUtil {
     public static Pair<String, Boolean> checkFlag(String args) throws ParseException {
         // Check for --force flag
         boolean isForceOperation = args.contains("--force");
-        System.out.println("isForceOperation: " + isForceOperation);
         args = args.replace("--force", ""); // Remove --force from args
 
         // Flags other than --force that start with "--" are invalid
         if (args.matches(".*\\s--\\w+.*")) {
-            System.out.println("checkFlag: " + args);
             String unknownFlag = args.trim().replaceAll(".*(--\\w+).*", "$1");
             throw new ParseException(String.format(MESSAGE_UNKNOWN_FLAG, unknownFlag));
         }
