@@ -66,24 +66,28 @@ Type in the command box:
 
 ## Feature Highlights
 
-### 👥 People Management
+### 👥 Working With Applicants
 - `add` - Welcome new candidates
 - `edit` - Update details
 - `delete` - Remove applicants
+- Profile pics - Add friendly faces
+
+### 📈 Tracking Progress
+- `update` - Move candidates through stages
+- `rate` - Give star ratings
 
 ### 🔍 Finding Talent
 - `search` - Find needles in haystacks
 - `sort` - Organize your view
 - `list` - See everyone at once
 
-### 📈 Tracking Progress
-- `update` - Move candidates through stages
-- `rate` - Give star ratings
-- `summary` - Get the big picture
-
 ### 🛠️ Advanced Tools
 - `export` - Take data elsewhere
-- Profile pics - Add friendly faces
+- `summary` - Get the big picture
+
+### 🤷 Miscellaneous
+- `clear` - Clear all applicant data
+- `exit` - Exit the application
 
 [🔝 Back to top](#recruittrack-user-guide)
 
@@ -182,6 +186,15 @@ delete n/Alex Yeoh --force
 Result:\
 <img title="deleteCommand" alt="Result" src="./images/deleteCommand_result.png" width=500><br/><br/>
 
+### Adding/Updating Profile Picture
+
+* This is not a command.
+* To change the profile picture, click on the picture of the selected applicant (highlighted).
+* A pop-up window will appear, allowing you to select an image for the applicant.
+  * Ensure the image size is below 2MB.
+<br/><br/>
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Tracking Progress
@@ -252,7 +265,7 @@ Result:\
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Finding Your Perfect Hire
+## Finding Talent
 
 ### 📋 Listing Everyone
 Simple command to see all candidates:
@@ -318,7 +331,7 @@ Result:\
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Power User Tools
+## Advanced Tools
 
 ### 📤 Exporting Data
 Export the **currently displayed** applicant data into a CSV (Comma-Separated Values) file for sharing:
@@ -357,14 +370,6 @@ Statuses ->
 --------------------------------------------------------------------------------------------------------------------
 
 ## Miscellaneous
-
-### Adding/Updating Profile Picture
-
-* This is not a command.
-* To change the profile picture, click on the picture of the selected applicant (highlighted).
-* A pop-up window will appear, allowing you to select an image for the applicant.
-  * Ensure the image size is below 2MB.
-<br/><br/>
 
 ### Clear All Records
 
@@ -414,13 +419,13 @@ Not yet, but we're working on theme options for a future update!
 | **Add**     | `add n/NAME p/PHONE_NUMBER e/EMAIL j/JOB_POSITION s/STATUS a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com j/Frontend Engineer s/Online Assessment a/123, Clementi Rd, 1234665 t/friend t/SQLExpert` |
 | **Edit**    | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                           |
 | **Delete**  | `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`<br> e.g., `delete n/John Doe`<br> e.g., `delete id/3 --force`                                                                                                                   |
+| **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
+| **Rate**    | `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                     |
 | **Search**  | `search [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `search n/James Jake`                                                                                                                     |
 | **Sort**    | `sort CRITERIA/ [ORDER/]`<br> e.g., `sort n/ a/`                                                                                                                                                                                      |
 | **List**    | `list`                                                                                                                                                                                                                                |
-| **Update**  | `update IDENTIFIER_TYPE/CONTACT_IDENTIFIER s/STATUS [--force]` <br> e.g., `update e/johndoe@example.com s/Pending Review`                                                                                                             |
-| **Rate**    | `rate IDENTIFIER_TYPE/CONTACT_IDENTIFIER r/RATING`<br> e.g., `rate n/Amy Lee r/5`                                                                                                                                                     |
-| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                            |
 | **Export**  | `export [FILE-NAME]`<br> e.g., `export applicantData.csv`                                                                                                                                                                             |
+| **Summary** | `summary [n/NAME] [e/EMAIL] [j/JOB] [s/STATUS] [p/PHONE] [bfr/BEFORE] [aft/AFTER]`<br> e.g., `summary j/Frontend Engineer`                                                                                                            |
 | **Clear**   | `clear`                                                                                                                                                                                                                               |
 | **Exit**    | `exit`                                                                                                                                                                                                                                |
 
