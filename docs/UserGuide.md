@@ -96,7 +96,7 @@ RecruitTrack stores applicants with the following fields, each with strict valid
 
 | **Field**                  | **Format & Validation Rules**                                                                        | **Example**                                               |
 |----------------------------|------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
-| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. Not blank.                                                  | `n/John Doe`                                              |
+| **Name** (`n/`)            | Alphanumeric + spaces, case-insensitive. **Does not have to be unique.** Not blank.                  | `n/John Doe`                                              |
 | **Phone** (`p/`)           | Numeric only, min 3 digits. **Unique across all applicants**. Not blank                              | `p/98765432`                                              |
 | **Email** (`e/`)           | Valid format (see below). **Unique and case-insensitive**. Not blank                                 | `e/john@example.com`                                      |
 | **Job Position** (`j/`)    | Alphanumeric + spaces, case-insensitive. Not blank.                                                  | `j/Data Scientist`                                        |
@@ -136,10 +136,8 @@ Emails should be of the format `local-part@domain` and adhere to the following c
 add n/Alex Yeoh p/91237654 e/alexy@example.com a/34, Chartwell Drive j/Data Analyst s/Interview Scheduled t/Recommended
 ```
 
-Command Input:\
-<img title="addCommand" alt="Command Input" src="./images/addCommand_before.png"><br/><br/>
 Result:\
-<img title="addCommand" alt="Result" src="./images/addCommand_after.png"><br/><br/>
+<img title="addCommand" alt="Result" src="./images/addCommand_result.png" width=500><br/><br/>
 
 ### ✏️ Editing Details
 **Command Format**: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [j/JOBPOSITION] [a/ADDRESS] [t/TAG]…`
@@ -157,10 +155,8 @@ edit 4 j/Data Scientist p/91238765
 ```
 Updates phone number and job position for candidate #4.
 
-Command Input:\
-<img title="editCommand" alt="Command Input" src="./images/editCommand_before.png"><br/><br/>
 Result:\
-<img title="editCommand" alt="Result" src="./images/editCommand_after.png"><br/><br/>
+<img title="editCommand" alt="Result" src="./images/editCommand_result.png" width=500><br/><br/>
 
 ### 🗑️ Removing Applicants
 **Command Format**: `delete IDENTIFIER_TYPE/CONTACT_IDENTIFIER [--force]`
@@ -183,10 +179,8 @@ delete n/Alex Yeoh --force
 ```
 💡 **Pro Tip**: Adding `--force` skips confirmation for quick removal.
 
-Command Input:\
-<img title="deleteCommand" alt="Command Input" src="./images/deleteCommand_before.png"><br/><br/>
 Result:\
-<img title="deleteCommand" alt="Result" src="./images/deleteCommand_after.png"><br/><br/>
+<img title="deleteCommand" alt="Result" src="./images/deleteCommand_result.png" width=500><br/><br/>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -224,10 +218,8 @@ update n/John Doe s/Job Offered --force
 ```
 💡 **Pro Tip**: Adding `--force` skips confirmation for quick update.
 
-Command Input:\
-<img title="updateCommand" alt="Command Input" src="./images/updateCommand_before.png"><br/><br/>
 Result:\
-<img title="updateCommand" alt="Result" src="./images/updateCommand_after.png"><br/><br/>
+<img title="updateCommand" alt="Result" src="./images/updateCommand_result.png" width=500><br/><br/>
 
 ### ⭐ Rating Candidates
 Give 1-5 star ratings, or set it as unassigned if you're still unsure:
@@ -250,10 +242,10 @@ rate id/2 r/4
 ```
 Now candidate #2 has a shiny 4-star rating!
 
-Command Input:\
-<img title="rateCommand" alt="Command Input" src="./images/rateCommand_before.png"><br/><br/>
+Initial State:\
+<img title="rateCommand" alt="Command Input" src="./images/rateCommand_start.png" width=500><br/><br/>
 Result:\
-<img title="rateCommand" alt="Result" src="./images/rateCommand_after.png"><br/><br/>
+<img title="rateCommand" alt="Result" src="./images/rateCommand_result.png" width=500><br/><br/>
 
 
 [🔝 Back to top](#🌟-recruittrack-user-guide)
@@ -283,10 +275,8 @@ search j/Frontend SWE
 ```
 Shows all frontend developers.
 
-Command Input:\
-<img title="searchCommand" alt="Command Input" src="./images/searchCommand_before.png"><br/><br/>
 Result:\
-<img title="searchCommand" alt="Result" src="./images/searchCommand_after.png"><br/><br/>
+<img title="searchCommand" alt="Result" src="./images/searchCommand_result.png" width=500><br/><br/>
 
 ### 🔄 Sorting Your View
 Organize by what matters most:
@@ -323,10 +313,8 @@ sort n/ a/
 ```
 Sorts applicants by their names in ascending, case-insensitive lexicographical order.
 
-Command Input:\
-<img title="sortCommand" alt="Command Input" src="./images/sortCommand_before.png"><br/><br/>
 Result:\
-<img title="sortCommand" alt="Result" src="./images/sortCommand_after.png"><br/><br/>
+<img title="sortCommand" alt="Result" src="./images/sortCommand_result.png" width=500><br/><br/>
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -13,7 +13,7 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is based on the [AddressBook-Level3](https://se-education.org/addressbook-level3/) project created by the SE-EDU initiative
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -138,14 +138,6 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<box type="info" seamless>
-
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Applicant` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Applicant` needing their own `Tag` objects.<br>
-
-<puml src="diagrams/BetterModelClassDiagram.puml" width="600" />
-
-</box>
-
 
 ### Storage component
 
@@ -161,110 +153,6 @@ The `Storage` component,
 ### Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
-
---------------------------------------------------------------------------------------------------------------------
-
-## **Implementation**
-
-This section describes some noteworthy details on how certain features are implemented.
-
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete id/5 --force` command to delete the 5th applicant in the address book without confirmation. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete id/5 --force` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add n/David …​` to add a new applicant. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the applicant was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the applicant(s) being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -301,43 +189,35 @@ communication history, and hiring stages for quick access in a fast, no-frills C
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority      | As a …​                             | I want to …​                                                                         | So that I can…​                                   |
-|---------------|-------------------------------------|--------------------------------------------------------------------------------------|---------------------------------------------------|
-| `* * *`	| user	| specify the stage of the application process each applicant is in	| keep track of each applicant’s progress |
-| `* * *`	| user	| filter by an applicant’s application process	| keep track of which applicants are left in each stage |
-| `* * *`	| user	| search for a candidate by name or job position	| quickly find relevant information |
-| `* * *`	| user	| view a summary of all candidates in a specific hiring stage	| prioritize my workload |
-| `* * *`	| user	| view statistics (e.g., number of hired candidates, time needed in each stage)	| evaluate my recruitment process |
-| `* * *`	| user	| sort candidates by the date they applied	| review the most recent applications first |
-| `* * *`	| user	| add candidates’ details	| track them easily |
-| `* * *`	| user	| view a candidate’s status	| know their hiring progress |
-| `* * *`	| user	| move candidates to different stages	| manage the hiring process |
-| `* * `        | user                                | group applicants based on what jobs they are applying for                            | manage applicants from different jobs more easily |
-| `* *`  | 	power user	                        | delete multiple candidates with a single command                                     | 	keep my database clean                           |
-| `* *`  | 	power user	                        | tag candidates	                                                                      | easily classify and retrieve important applicants |
-| `* *`  | forgetful user                      | 	have timely reminders for scheduled interviews                                      | 	not miss them                                    |
-| `* *`  | user who is not familiar with CLIs  | have easy access to a list of supported commands, especially the commonly used ones  | get up to speed with using the CLI                |
-| `* *`	| user	| attach a photo to each applicant	| identify the applicants easily                    |
-| `* *`	| user	| add notes to each candidate’s profile	| record important details from interviews or assessments |
-| `* *`	| user	| bulk update candidate statuses	| save time |
-| `* *`	| user	| set deadlines for each hiring stage	| ensure the recruitment process stays on track |
-| `* *`	| user	| export candidate data as a CSV file	| analyze and share information easily with my team |
-| `* *`	| power user	| schedule automated status updates for candidates (e.g., send follow-up emails after a week)	| streamline my communication workflow |
-| `* *`	| user	| assign different access levels to team members	| protect sensitive candidate data while still allowing collaboration |
-| `* *`	| user	| add a simple rating (e.g., 1-5 stars) to candidates	| quickly assess their potential |
-| `* *`	| user	| assign a candidate to a specific recruiter	| ensure proper follow-up and accountability |
-| `*`	| user	| search for particular keywords in past communication history	| revisit specific conversations I’ve had |
-| `*`	| long-time user	| delete communication history for specific contacts	| free up storage space when needed |
-| `*`	| long-time user	| have the option to assign new shortcuts or keywords to my frequently used commands	| navigate the application more efficiently |
-| `*`	| user	| receive notifications when a candidate has been in a stage for too long	| take action to move them forward |
-| `*`	| user	| restore mistakenly deleted candidates within a certain time frame	| recover important information if needed |
-| `*`	| user	| integrate RecruitTrack with my email client	| track all correspondence with candidates in one place |
-| `*`	| user	| generate customized reports based on hiring trends and candidate performance	| make data-driven recruitment decisions |
-| `*`	| user	| log communication history	| remember past interactions |
-| `*`	| user	| send an email template from the CLI	| quickly communicate with candidates |
-| `*`	| user	| view a candidate’s resume and notes before an interview	| prepare relevant questions |
+| Priority | As a …​                            | I want to …​                                                                                 | So that I can…​                                       |
+|----------|------------------------------------|----------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| `* * *`	 | user	                              | specify the stage of the application process each applicant is in	                           | keep track of each applicant’s progress               |
+| `* * *`	 | user	                              | filter by an applicant’s application process	                                                | keep track of which applicants are left in each stage |
+| `* * *`	 | user	                              | search for a candidate by name or job position	                                              | quickly find relevant information                     |
+| `* * *`	 | user	                              | view a summary of all candidates in a specific hiring stage	                                 | keep track of the statistics easily                   |
+| `* * *`	 | user	                              | view statistics (e.g., number of hired candidates, time needed in each stage)	               | evaluate my recruitment process                       |
+| `* * *`	 | user	                              | sort candidates by the date they applied	                                                    | review the most recent applications first             |
+| `* * *`	 | user	                              | add candidates’ details	                                                                     | track them easily                                     |
+| `* * *`	 | user	                              | view a candidate’s status	                                                                   | know their hiring progress                            |
+| `* * *`	 | user	                              | move candidates to different stages	                                                         | manage the hiring process                             |
+| `* * `   | user                               | group applicants based on what jobs they are applying for                                    | manage applicants from different jobs more easily     |
+| `* *`    | 	power user	                       | delete multiple candidates with a single command                                             | 	keep my database clean                               |
+| `* *`    | 	power user	                       | tag candidates	                                                                              | easily classify and retrieve important applicants     |
+| `* *`    | user who is not familiar with CLIs | have easy access to a list of supported commands, especially the commonly used ones          | get up to speed with using the CLI                    |
+| `* *`	   | user	                              | attach a photo to each applicant	                                                            | identify the applicants easily                        |
+| `* *`	   | user	                              | bulk update candidate statuses	                                                              | save time                                             |
+| `* *`	   | user	                              | export candidate data as a CSV file	                                                         | analyze and share information easily with my team     |
+| `* *`	   | user	                              | add a simple rating (e.g., 1-5 stars) to candidates	                                         | quickly assess their potential                        |
+| `*`	     | user	                              | search for particular keywords in past communication history	                                | revisit specific conversations I’ve had               |
+| `*`	     | long-time user	                    | delete communication history for specific contacts	                                          | free up storage space when needed                     |
+| `*`	     | long-time user	                    | have the option to assign new shortcuts or keywords to my frequently used commands	          | navigate the application more efficiently             |
+| `*`	     | user	                              | receive notifications when a candidate has been in a stage for too long	                     | take action to move them forward                      |
+| `*`	     | user	                              | restore mistakenly deleted candidates within a certain time frame	                           | recover important information if needed               |
+| `*`	     | user	                              | integrate RecruitTrack with my email client	                                                 | track all correspondence with candidates in one place |
+| `*`	     | user	                              | generate customized reports based on hiring trends and candidate performance	                | make data-driven recruitment decisions                |
+| `*`	     | user	                              | send an email template from the CLI	                                                         | quickly communicate with candidates                   |
+| `*`	     | user	                              | view a candidate’s resume and notes before an interview	                                     | prepare relevant questions                            |
 
-*{More to be added}*
 
 ### Use cases
 
@@ -585,7 +465,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
 
 ### Deleting an Applicant
 1. Force Deleting an Applicant Using Different Identifiers (ID, Email, Phone, etc.)
@@ -703,10 +582,23 @@ Expected: No applicant is deleted. Error message is shown.
     3. Test case: `sort n/ e/`
        Expected: Error message shown indicating that only one criterion can be specified.
 
-### Saving data
+### Saving and Editing data
 
-1. Dealing with missing/corrupted data files
+1. Applicant details are stored in the `data` folder, in a file named `addressbook.json`.
+2. To manually edit the details, you can edit the `addressbook.json` file, but details must strictly follow the original format.
+3. If the applicant details in the `addressbook.json` file are corrupted or missing any fields, the application will wipe the stored data on launch, resulting in an empty applicant list.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+--------------------------------------------------------------------------------------------------------------------
 
-1. _{ more test cases …​ }_
+## **Appendix: Planned Enhancements**
+
+Team Size: 5
+
+1. **Preset Application Stages**
+    Define a list of preset application stage statuses for users to select from when using `update`. This will also provide support for sorting and filtering of applicants by application stage.
+2. **Extend sorting and searching capabilities**
+   Allow for more ways to search and sort applicants, such as by their `Tags`.
+3. **Improve clarity of error messages**
+   Currently, only general error messages are displayed upon inputting invalid command formats. By specifying exactly what parameters are missing or invalid, users will have an easier time identifying what's wrong with their command input.
+4. **Built-in Command Summary**
+   Instead of only providing a link to the User Guide as a response to the `help` command, we can directly display the command summary as provided in the User Guide, so that users will not have to navigate through the entire User Guide.
